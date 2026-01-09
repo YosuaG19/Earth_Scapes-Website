@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Aboreto, Artifika } from "next/font/google";
-import "./globals.css";
-
+import "../globals.css";
 
 
 const aboreto = Aboreto({
@@ -15,19 +14,21 @@ const artifika = Artifika({
 });
 
 export const metadata: Metadata = {
-  title: "EarthScape",
+  title: "Trips",
   description: "A Trip Give Back To The Earth",
 };
 
 
-export default function RootLayout({
+export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
-      <link rel="icon" href="./favicon.png" sizes="any" />
+      <head>
+        <link rel="icon" href="./favicon.png" sizes="any" />
+      </head>
       <body
         className={`${aboreto.className} ${artifika.className}`}
       >

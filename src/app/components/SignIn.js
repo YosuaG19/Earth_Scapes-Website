@@ -33,7 +33,7 @@ export default function SignIn(){
                         </div>
 
                         <div className="text-[#F5ECD5]">
-                            <span>Don't have account? <Link className="underline underline-offset-2" href="./SignUp">Sign Up</Link></span>
+                            <span>Don't have account? <Link className="underline underline-offset-2" href="../signup">Sign Up</Link></span>
                         </div>
                     </form>
                 </div>

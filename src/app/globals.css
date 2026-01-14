@@ -25,4 +25,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   min-height: 100vh;
   min-width: 100vw;
+  box-sizing: content-box;
+  overflow-x: hidden;
 }
+
+section {
+  margin-bottom: 3rem;
+}
+

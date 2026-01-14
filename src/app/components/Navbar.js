@@ -10,7 +10,7 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className="flex items-center justify-between pr-8 pt-6 pl-6 pb-6 bg-white">
+            <nav className="sticky top-0 flex items-center justify-between pr-8 pt-6 pl-6 pb-6 bg-white z-[10]">
                 <Link className={`link ${pathname === '/' ? 'active' : ''}`} href="../home">
                 <Image src={logofull} className='w-65' alt='EarthScapes'></Image>
                 </Link>
@@ -21,9 +21,9 @@ export default function Navbar() {
                     <li><Link className={`link ${pathname === '/' ? 'active' : ''}`} href="../bookings">Bookings</Link></li>
                 </ul>
                 
-                <button className='bg-[#C12E2E] pr-4 pt-3 pb-3 pl-4 rounded-lg'>
-                <p className='text-white'>Log Out</p>
-                </button>
+                <Link className='bg-[#C12E2E] pr-4 pt-3 pb-3 pl-4 rounded-lg' href='../signin'>
+                    <p className='text-white'>Log Out</p>
+                </Link>
             </nav> 
         </>
     )

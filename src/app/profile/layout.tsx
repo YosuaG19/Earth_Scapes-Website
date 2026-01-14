@@ -26,9 +26,6 @@ export default function Layout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="./favicon.png" sizes="any" />
-      </head>
       <body
         className={`${aboreto.className} ${artifika.className}`}
       >

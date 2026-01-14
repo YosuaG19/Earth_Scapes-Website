@@ -7,7 +7,7 @@ import bg_SignIn from "../../../public/login.png"
 export default function SignIn(){
     return(
         <>
-            <section className="w-screen h-screen flex justify-center items-center">
+            <div className="w-screen h-screen flex justify-center items-center">
                 <div className="bg-white w-[70vw] h-[70vh] rounded-[1rem] shadow-xl/30 overflow-hidden grid grid-cols-2">
                     
                     <div className="h-full w-full relative overflow-hidden">
@@ -15,29 +15,28 @@ export default function SignIn(){
                         <Image className="absolute right-[-125] min-h-[100%] min-w-[200%] z-[1]" src={bg_SignIn} alt="Disc"></Image>
                     </div>
                     
-                    <form className="h-full w-full bg-[#626F47] flex flex-col justify-center items-center gap-[1.5rem]" rel="../home/page">
+                    <form className="h-full w-full bg-[#626F47] flex flex-col justify-center items-center gap-[1.1rem]" rel="../home/page">
                         <h1 className="text-[2.5rem] text-[#F5ECD5]">EarthScape</h1>
-                        <div className="flex flex-col w-[60%]">
-                            <label className="text-lg text-[#F5ECD5]" htmlFor="email">Email Address :</label>
-                            <input className="text-[#626F47] bg-[#F5ECD5] p-[.3rem] rounded-[.5rem] h-[40px]" type="text" id="email" autoComplete="email"></input>
-                        </div>
 
                         <div className="flex flex-col w-[60%]">
-                            <label className="text-lg text-[#F5ECD5]" htmlFor="pass">Password :</label>
-                            <input className="text-[#626F47] bg-[#F5ECD5] p-[.3rem] rounded-[.5rem] h-[40px]" type="text" id="pass"></input>
-                            <a className="underline underline-offset-2 text-[#F5ECD5]" href="">forgot password?</a>
+                            <input placeholder="Email Address" className="text-[#626F47] bg-[#F5ECD5] p-[.3rem] rounded-[.5rem] h-[35px]" type="text" id="email" autoComplete="email"></input>
                         </div>
 
-                        <div className="flex flex-col w-[45%] mt-[1rem]">
-                            <button className="text-[#636F47] text-xl font-medium bg-[#F5ECD5] p-[.3rem] rounded-[.5rem] h-[40px]" type="submit">Sign In</button>
+                        <div className="flex flex-col w-[60%]">
+                            <input placeholder="Password" className="text-[#626F47] bg-[#F5ECD5] p-[.3rem] rounded-[.5rem] h-[35px]" type="text" id="pass"></input>
+                            <a className="underline underline-offset-2 text-[#F5ECD5] text-[11px]" href="">Forgot Password?</a>
                         </div>
 
-                        <div className="text-[#F5ECD5]">
+                        <div className="flex flex-col w-[30%] mt-[1rem]">
+                            <button className="text-[#636F47] text-[18px] font-medium bg-[#F5ECD5] p-[.3rem] rounded-[.5rem] h-[40px]" type="submit">Sign In</button>
+                        </div>
+
+                        <div className="text-[#F5ECD5] text-[13px]">
                             <span>Don't have account? <Link className="underline underline-offset-2" href="./SignUp">Sign Up</Link></span>
                         </div>
                     </form>
                 </div>
-            </section>
+            </div>
         </>
     )
 }

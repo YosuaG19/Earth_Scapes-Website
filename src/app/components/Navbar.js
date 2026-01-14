@@ -10,7 +10,7 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className="sticky top-0 flex items-center justify-between pr-8 pt-6 pl-6 pb-6 bg-white z-[10]">
+            <nav className="sticky top-0 flex items-center justify-between pl-[2rem] pr-[3rem] pt-[.5rem] pb-[.5rem] bg-white z-[10]">
                 <Link className={`link ${pathname === '/' ? 'active' : ''}`} href="../home">
                 <Image src={logofull} className='w-65' alt='EarthScapes'></Image>
                 </Link>

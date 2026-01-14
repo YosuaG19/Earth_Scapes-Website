@@ -1,22 +1,56 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* globals.css */
+
+@font-face {
+  font-family: "Aboreto";
+  src: url("/fonts/Aboreto-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
-/* @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-} */
+@font-face {
+  font-family: "Artifika";
+  src: url("/fonts/Artifika-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.abo {
+  font-family: "Aboreto", serif;
+}
+
+.arti {
+  font-family: "Artifika", serif;
+}
+
+#trips_page{
+  background: #ffffff;
+}
+
+#carou{
+  scrollbar-width: none;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #acacac; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+::-webkit-scrollbar{
+  width: 5px;
+  height: 8px;
 }
 
 body {
@@ -30,6 +64,10 @@ body {
 }
 
 section {
-  margin-bottom: 3rem;
+  margin-top: 3rem;
+}
+
+footer{
+  margin-top: 5rem;
 }
 

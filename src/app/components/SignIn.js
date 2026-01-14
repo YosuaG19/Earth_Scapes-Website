@@ -31,8 +31,13 @@ export default function SignIn(){
                             <button className="text-[#636F47] text-[18px] font-medium bg-[#F5ECD5] p-[.3rem] rounded-[.5rem] h-[40px]" type="submit">Sign In</button>
                         </div>
 
+<<<<<<< HEAD
                         <div className="text-[#F5ECD5] text-[13px]">
                             <span>Don't have account? <Link className="underline underline-offset-2" href="./SignUp">Sign Up</Link></span>
+=======
+                        <div className="text-[#F5ECD5]">
+                            <span>Don't have account? <Link className="underline underline-offset-2" href="../signup">Sign Up</Link></span>
+>>>>>>> 5ac441f9d822f7b39440629c39a51e725da4a51f
                         </div>
                     </form>
                 </div>

@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Aboreto, Artifika } from "next/font/google";
 import "./globals.css";
 
-
-
 const aboreto = Aboreto({
   weight:'400',
   style: 'normal'
@@ -28,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${aboreto.className} ${artifika.className}`}
+        className={`bg ${aboreto.className} ${artifika.className}`}
       >
         {children}
       </body>

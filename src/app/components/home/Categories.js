@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import Cat_Card from "./Cat_Card";
 import { useState } from "react";
 

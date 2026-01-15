@@ -2,7 +2,7 @@ import Image from "next/image"
 import arrow from "../../../../public/arrow.svg"
 function Cat_Card(props) {
     return(
-        <div id="cat" className="relative flex items-end h-full w-full bg-white rounded-r-[1rem] overflow-hidden p-[.5rem]">
+        <div id="cat" className="relative flex items-end h-full w-full bg-white rounded-r-[1rem] overflow-hidden p-[.5rem] shadow-xl/30">
             
             <div className="absolute w-full h-full top-0 left-0 z-[2]">
                 <div className="relative w-full h-full ">

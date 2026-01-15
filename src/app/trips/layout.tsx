@@ -26,7 +26,7 @@ export default function Layout({
 }>) {
   return (
     <html lang="en">
-      <body id="trips_page"
+      <body id="bg"
         className={`${aboreto.className} ${artifika.className}`}
       >
         {children}

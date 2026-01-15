@@ -3,7 +3,7 @@ import arrow from "../../../../public/arrow.svg"
 
 function Rec_Card(props) {
     return(
-        <div id="rec_card" className="w-[30%] min-w-[30%] h-full bg-white relative flex items-end rounded-tl-[2rem] rounded-br-[1rem] overflow-hidden">
+        <div id="rec_card" className="w-[30%] min-w-[30%] h-full bg-white relative flex items-end rounded-tl-[2rem] rounded-br-[1rem] overflow-hidden shadow-lg/30">
             <div className="absolute w-full h-full top-0 left-0 z-[2]">
                 <div className="relative w-full h-full ">
                     <div className="absolute z-[1] w-full h-full bg-black opacity-[40%]"></div>

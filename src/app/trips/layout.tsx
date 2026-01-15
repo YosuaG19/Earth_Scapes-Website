@@ -1,17 +1,5 @@
 import type { Metadata } from "next";
-import { Aboreto, Artifika } from "next/font/google";
 import "../globals.css";
-
-
-const aboreto = Aboreto({
-  weight:'400',
-  style: 'normal'
-});
-
-const artifika = Artifika({
-  weight:'400',
-  style: 'normal'
-});
 
 export const metadata: Metadata = {
   title: "Trips",
@@ -19,18 +7,14 @@ export const metadata: Metadata = {
 };
 
 
-export default function Layout({
+export default function TripsLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body id="bg"
-        className={`${aboreto.className} ${artifika.className}`}
-      >
+      <div>
         {children}
-      </body>
-    </html>
+      </div>
   );
 }

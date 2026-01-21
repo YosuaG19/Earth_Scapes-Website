@@ -225,7 +225,7 @@ export default function SignupCard() {
           </div>
 
           {/* Right Side - Form */}
-          <div className="w-full md:w-1/2 bg-[#626F47] p-4 md:p-5 flex flex-col justify-center overflow-y-auto">
+          <div className="w-full md:w-1/2 bg-[#242D13] p-4 md:p-5 flex flex-col justify-center overflow-y-auto">
             <div className="text-center mb-3">
               <h1 className="text-lg md:text-xl text-[#F5ECD5] mb-1">
                 EarthScape
@@ -298,7 +298,7 @@ export default function SignupCard() {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className={`text-[#626F47] bg-[#F5ECD5] p-1.5 rounded-[.5rem] h-8 text-xs focus:outline-none focus:ring-1 focus:ring-[#F5ECD5]/50 ${
+                  className={`text-[#626F47] bg-[#FFFFE3] p-1.5 rounded-[.5rem] h-8 text-xs focus:outline-none focus:ring-1 focus:ring-[#F5ECD5]/50 ${
                     errors.name ? 'border border-red-500' : ''
                   }`}
                   placeholder="Enter your full name"
@@ -322,7 +322,7 @@ export default function SignupCard() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`text-[#626F47] bg-[#F5ECD5] p-1.5 rounded-[.5rem] h-8 text-xs focus:outline-none focus:ring-1 focus:ring-[#F5ECD5]/50 ${
+                  className={`text-[#626F47] bg-[#FFFFE3] p-1.5 rounded-[.5rem] h-8 text-xs focus:outline-none focus:ring-1 focus:ring-[#F5ECD5]/50 ${
                     errors.email ? 'border border-red-500' : ''
                   }`}
                   placeholder="you@example.com"
@@ -346,7 +346,7 @@ export default function SignupCard() {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  className={`text-[#626F47] bg-[#F5ECD5] p-1.5 rounded-[.5rem] h-8 text-xs focus:outline-none focus:ring-1 focus:ring-[#F5ECD5]/50 ${
+                  className={`text-[#626F47] bg-[#FFFFE3] p-1.5 rounded-[.5rem] h-8 text-xs focus:outline-none focus:ring-1 focus:ring-[#F5ECD5]/50 ${
                     errors.password ? 'border border-red-500' : ''
                   }`}
                   placeholder="At least 8 characters"
@@ -370,7 +370,7 @@ export default function SignupCard() {
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  className={`text-[#626F47] bg-[#F5ECD5] p-1.5 rounded-[.5rem] h-8 text-xs focus:outline-none focus:ring-1 focus:ring-[#F5ECD5]/50 ${
+                  className={`text-[#626F47] bg-[#FFFFE3] p-1.5 rounded-[.5rem] h-8 text-xs focus:outline-none focus:ring-1 focus:ring-[#F5ECD5]/50 ${
                     errors.confirmPassword ? 'border border-red-500' : ''
                   }`}
                   placeholder="Confirm your password"
@@ -391,7 +391,7 @@ export default function SignupCard() {
                   name="agreeToTerms"
                   checked={formData.agreeToTerms}
                   onChange={handleChange}
-                  className={`mt-0.5 h-3 w-3 rounded focus:ring-[#F5ECD5] text-[#626F47] ${
+                  className={`mt-0.5 h-3 w-3 rounded focus:ring-[#FFFFE3] text-[#626F47] ${
                     errors.agreeToTerms ? 'border border-red-500' : ''
                   }`}
                   disabled={isLoading}
@@ -418,7 +418,7 @@ export default function SignupCard() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="text-[#636F47] text-xs font-medium bg-[#F5ECD5] p-1.5 rounded-[.5rem] h-8 hover:bg-[#F5ECD5]/90 focus:outline-none focus:ring-1 focus:ring-[#F5ECD5]/50 disabled:opacity-50 disabled:cursor-not-allowed transition flex items-center justify-center"
+                  className="text-[#636F47] text-xs font-medium bg-[#FFFFE3] p-1.5 rounded-[.5rem] h-8 hover:bg-[#FFFFE3]/90 focus:outline-none focus:ring-1 focus:ring-[#F5ECD5]/50 disabled:opacity-50 disabled:cursor-not-allowed transition flex items-center justify-center"
                 >
                   {isLoading ? (
                     <span className="flex items-center">

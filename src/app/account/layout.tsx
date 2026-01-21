@@ -1,5 +1,5 @@
-import Navbar from '@/app/components/Navbar';
-import Footer from '@/app/components/Footer';
+import Navbar from "@/app/components/Navbar";
+import Footer from "@/app/components/Footer";
 
 export default function AccountLayout({
   children,
@@ -7,7 +7,7 @@ export default function AccountLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-gradient-to-b from-green-900 via-green-800 to-green-700">
+    <div className="bg-linear-to-b from-green-900 via-green-800 to-green-700">
       <Navbar />
       {children}
       <Footer />

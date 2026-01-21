@@ -157,7 +157,7 @@ export default function AccountPage() {
           <div className="flex items-start gap-6 mb-8">
             {/* Avatar */}
             <div
-              className={`w-50 h-50 bg-gray-400 rounded-full flex-shrink-0 flex items-center justify-center text-white text-3xl font-bold overflow-hidden relative ${isEditing ? "cursor-pointer hover:opacity-80" : ""}`}
+              className={`w-50 h-50 bg-gray-400 rounded-full shrink-0 flex items-center justify-center text-white text-3xl font-bold overflow-hidden relative ${isEditing ? "cursor-pointer hover:opacity-80" : ""}`}
               onClick={handlePhotoClick}
             >
               {formData.profilePhoto ? (
@@ -333,7 +333,7 @@ export default function AccountPage() {
               Crop Photo
             </h2>
 
-            <div className="relative w-full h-[400px] bg-gray-200 rounded-lg overflow-hidden">
+            <div className="relative w-full h-100 bg-gray-200 rounded-lg overflow-hidden">
               <Cropper
                 image={imageToCrop}
                 crop={crop}

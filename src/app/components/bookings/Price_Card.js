@@ -21,7 +21,7 @@ const Price_Card = () =>{
     ]);
     return(
         <>
-            <div className="min-h-[70vh] h-[70vh] bg-[#242D13] text-[#fffff3] flex flex-col gap-[1rem] items-center justify-between p-[1rem] shadow-xl/30 rounded-r-[1rem]">
+            <div className="min-h-[70vh] h-[70vh] bg-[#242D13] text-[#e8e8da] flex flex-col gap-[1rem] items-center justify-between p-[1rem] shadow-xl/30 rounded-r-[1rem]">
                 <div className="flex flex-col h-[80%] max-h-[80%] w-full items-center gap-[.5rem]">
                     <div className="min-h-[65%] w-full flex flex-col gap-[.3rem] overflow-y-scroll">
                         {Booked.map((Books) => {
@@ -35,7 +35,7 @@ const Price_Card = () =>{
                         })}
                     </div>
 
-                    <div className="h-[2px] bg-[#fffff3] w-full "></div>
+                    <div className="h-[2px] bg-[#e8e8da] w-full "></div>
 
                     <div className="flex justify-between w-full">
                         <p>Total Price</p>
@@ -45,7 +45,7 @@ const Price_Card = () =>{
 
                 
 
-                <button className="bg-[#fffff3] text-[#242D13] w-full rounded-r-[.5rem] text-center text-[20px] p-[.2rem]">Pay Now</button>
+                <button className="bg-[#e8e8da] text-[#242D13] w-full rounded-r-[.5rem] text-center text-[20px] p-[.2rem]">Pay Now</button>
                 
             </div>
         </>

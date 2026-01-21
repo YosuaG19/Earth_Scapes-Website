@@ -1,9 +1,9 @@
-// app/components/SignupCard.js
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { createClient } from '@/lib/supabase/client'; // Tambahkan import ini
 
 export default function SignupCard() {
   const router = useRouter();
@@ -18,7 +18,11 @@ export default function SignupCard() {
   const [isLoading, setIsLoading] = useState(false);
   const [submitError, setSubmitError] = useState('');
   const [isClient, setIsClient] = useState(false);
+  const [success, setSuccess] = useState(false); // Tambahkan state untuk success
   const originalOverflowRef = useRef('');
+  
+  // Inisialisasi Supabase client
+  const supabase = createClient();
 
   useEffect(() => {
     setIsClient(true);
@@ -97,36 +101,89 @@ export default function SignupCard() {
     setSubmitError('');
     
     try {
-      const response = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-        }),
+      // Gunakan Supabase Auth langsung
+      const { data, error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            full_name: formData.name,
+            name: formData.name,
+          },
+          emailRedirectTo: `${window.location.origin}/auth/callback`
+        }
       });
       
-      const data = await response.json();
-      
-      if (response.ok) {
-        alert('Registration successful! You can now login.');
-        router.push('/login');
-      } else {
-        setSubmitError(data.message || 'Registration failed');
+      if (error) {
+        // Handle specific Supabase errors
+        if (error.message.includes('already registered')) {
+          throw new Error('Email already registered');
+        } else if (error.message.includes('password')) {
+          throw new Error('Password is too weak');
+        } else if (error.message.includes('email')) {
+          throw new Error('Invalid email format');
+        } else {
+          throw error;
+        }
       }
+      
+      // Success - show verification message
+      setSuccess(true);
+      
     } catch (err) {
-      setSubmitError('Network error. Please try again.');
+      setSubmitError(err.message || 'Registration failed. Please try again.');
       console.error('Registration error:', err);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleSocialSignup = (provider) => {
-    alert(`Sign up with ${provider} - This would normally redirect to ${provider} OAuth`);
+  const handleSocialSignup = async (provider) => {
+    try {
+      let authOptions = {
+        redirectTo: `${window.location.origin}/auth/callback`
+      };
+      
+      if (provider === 'Google') {
+        await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: authOptions
+        });
+      } else if (provider === 'Apple') {
+        // Apple might require additional setup
+        alert('Apple signup requires additional configuration');
+        // Uncomment when Apple OAuth is configured
+        // await supabase.auth.signInWithOAuth({
+        //   provider: 'apple',
+        //   options: authOptions
+        // });
+      }
+    } catch (error) {
+      console.error(`${provider} signup error:`, error);
+      setSubmitError(`Failed to sign up with ${provider}`);
+    }
+  };
+
+  const handleResendVerification = async () => {
+    setIsLoading(true);
+    try {
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: formData.email,
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`
+        }
+      });
+
+      if (error) throw error;
+      
+      setSubmitError('');
+      alert('Verification email has been resent!');
+    } catch (err) {
+      setSubmitError(err.message || 'Failed to resend verification email');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (!isClient) {
@@ -137,6 +194,102 @@ export default function SignupCard() {
     );
   }
 
+  // Success state UI
+  if (success) {
+    return (
+      <>
+        {/* Background */}
+        <div 
+          className="fixed inset-0"
+          style={{
+            backgroundImage: 'url(/background-image.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            zIndex: -1,
+          }}
+        >
+          <div className="absolute inset-0 bg-black/30"></div>
+        </div>
+        
+        {/* Success Message Card */}
+        <div className="fixed inset-0 flex items-center justify-center p-0">
+          <div className="bg-white rounded-[1rem] shadow-2xl/30 w-[80vw] max-w-[500px] h-auto mx-auto p-6 relative z-10">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg 
+                  className="w-8 h-8 text-green-600" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    strokeWidth={2} 
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" 
+                  />
+                </svg>
+              </div>
+              
+              <h2 className="text-xl font-bold text-gray-800 mb-2">
+                Check Your Email!
+              </h2>
+              
+              <p className="text-gray-600 mb-4">
+                We've sent a verification link to:
+                <br />
+                <strong className="text-green-600">{formData.email}</strong>
+              </p>
+              
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4 text-left">
+                <div className="flex items-start">
+                  <svg 
+                    className="w-4 h-4 text-yellow-600 mt-0.5 mr-2 flex-shrink-0" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth={2} 
+                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.998-.833-2.732 0L4.346 16.5c-.77.833.192 2.5 1.732 2.5z" 
+                    />
+                  </svg>
+                  <div>
+                    <p className="text-sm font-medium text-yellow-800">
+                      Verification link expires in 1 hour!
+                    </p>
+                    <p className="text-xs text-yellow-700 mt-1">
+                      Check your inbox or spam folder and click the link to activate your account.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                onClick={handleResendVerification}
+                disabled={isLoading}
+                className="w-full mb-3 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg transition disabled:bg-gray-400 disabled:cursor-not-allowed text-sm"
+              >
+                {isLoading ? 'Sending...' : 'Resend Verification Email'}
+              </button>
+
+              <button
+                onClick={() => router.push('/login')}
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 rounded-lg transition text-sm"
+              >
+                Back to Login
+              </button>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  // Original signup form
   return (
     <>
       {/* Background */}
@@ -153,7 +306,7 @@ export default function SignupCard() {
         <div className="absolute inset-0 bg-black/30"></div>
       </div>
       
-      {/* Main Container - Diubah menjadi 80vw */}
+      {/* Main Container */}
       <div 
         className="fixed inset-0 flex items-center justify-center p-0"
         style={{
@@ -161,7 +314,7 @@ export default function SignupCard() {
           padding: 0,
         }}
       >
-        {/* Card container diubah width-nya menjadi 80vw */}
+        {/* Card container */}
         <div className="bg-white rounded-[1rem] shadow-2xl/30 overflow-hidden flex flex-col md:flex-row w-[80vw] max-w-[800px] h-[80vh] max-h-[90vh] mx-auto relative z-10">
           
           {/* Left Side */}

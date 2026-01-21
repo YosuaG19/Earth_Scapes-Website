@@ -5,13 +5,13 @@ const Book_Items = (props) =>{
 
     return(
         <>
-            <div className="bg-black w-full min-h-[30vh] rounded-l-xl overflow-hidden shadow-xl/30 flex">
-                <div className="overflow-hidden bg-gray h-full w-[30%] text-[#fffff3] flex items-center justify-center">
+            <div className="bg-black w-full min-h-[25vh] rounded-l-xl overflow-hidden shadow-xl/30 flex">
+                <div className="overflow-hidden bg-gray h-full w-[25%] text-[#e8e8da] flex items-center justify-center">
                     {/* <Image fill src={props.img}></Image> */}
                     IMG
                 </div>
 
-                <div className="text-[#242D13] h-full w-[70%] p-[1rem] flex flex-col gap-[.5rem] bg-[#fffff3]">
+                <div className="text-[#242D13] h-full w-[75%] p-[1rem] flex flex-col gap-[.5rem] bg-[#e8e8da]">
                     <div className="flex w-full justify-between items-start min-h-[30%]">
                         <div className="flex flex-col">
                             <h2 className="text-[24px]">{props.name}</h2>

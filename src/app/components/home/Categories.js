@@ -40,7 +40,7 @@ const Categories = () =>{
         <>
             <section className="min-w-full h-[90vh] flex flex-col items-center">
                 <div className="h-[20%] text-[#242D13] flex justify-center items-center">
-                    <h1 className="text-[4rem] abo" >Categories</h1>
+                    <h1 className="text-[3rem] abo" >Categories</h1>
                 </div>
 
                 <div className="h-[80%] w-full grid grid-cols-3 grid-rows-2 gap-[1.5rem] pb-[.5rem] pt-[.5rem] pl-[2.5rem] pr-[2.5rem]">

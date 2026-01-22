@@ -1,6 +1,11 @@
+'use client'
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const List_Items = () =>{
+    const router = useRouter()
+
     return(
         <>
             <div className="w-full flex justify-between min-h-[25vh] h-[25vh]">
@@ -42,7 +47,8 @@ const List_Items = () =>{
                         <p className="text-[#324018] text-[20px]">Rp x.xxx.xxx</p>
                         <p className="text-[#324018] text-[12px] -mt-[.5rem]">per person</p>
                     </div>
-                    <button className="w-full h-[45px] bg-[#324018] rounded-br-[.5rem] text-[#e8e8da] text-[18px]">Book Now</button>
+                    
+                    <button type="button" onClick={() => router.push('/book_trip')} className="cursor-pointer w-full h-[45px] bg-[#324018] rounded-br-[.5rem] text-[#e8e8da] text-[18px]">Book Now</button>
                 </div>
             </div>
         </>

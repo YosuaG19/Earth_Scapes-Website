@@ -402,7 +402,7 @@ export default function SignupCard() {
                 type="button"
                 onClick={() => handleSocialSignup('Google')}
                 disabled={isLoading}
-                className="flex items-center justify-center px-2 py-1.5 border border-[#F5ECD5]/30 rounded-[.5rem] bg-[#F5ECD5]/10 text-[#F5ECD5] hover:bg-[#F5ECD5]/20 transition disabled:opacity-50 text-xs"
+                className="flex items-center justify-center px-2 py-1.5 border border-[#F5ECD5]/30 rounded-lg bg-[#F5ECD5]/10 text-[#F5ECD5] hover:bg-[#F5ECD5]/20 transition disabled:opacity-50 text-xs"
               >
                 <svg className="w-3 h-3 mr-1" viewBox="0 0 24 24">
                   <path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>

@@ -100,3 +100,72 @@ html, body {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.3);
 }
+
+
+/* Range Slider Trips */
+.range-slider{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  justify-content: space-between;
+  gap: 7.5px;
+}
+
+.range-slider > input{
+  border: none;
+  outline: none;
+  width: 30%;
+  text-align: center;
+
+  /* text-align: left;
+  padding-left: .5rem; */
+  color: #e8e8da;
+  background-color: #5a7527;
+  border-top-right-radius: .5rem;
+  /* border-bottom-left-radius: .5rem; */
+  font-size: 12px;
+  line-height: 2rem;
+}
+
+.range{
+  width: 100%;
+  display: grid;
+  position: relative;
+  z-index: 1;
+}
+
+.range input{
+  grid-row: 2;
+  grid-column: 1;
+  pointer-events: none;
+  appearance: none;
+  background: transparent;
+}
+
+.range input::-webkit-slider-thumb{
+  pointer-events: auto;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: #38471c;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.slider{
+  position: absolute;
+  height: 6px;
+  width: 100%;
+  background: #c8c8c8;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.progress{
+  position: absolute;
+  height: 100%;
+  background: #5a7527; 
+}

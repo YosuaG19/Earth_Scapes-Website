@@ -4,7 +4,7 @@ import banner_bg from "../../../../public/banner_bg.png"
 const Banner = () => {
     return(
         <>
-            <div className="relative flex flex-col justify-end items-center min-w-full h-[40vh] bg-black/30 shadow-xl/30">
+            <div className="sticky top-[-13vh] flex flex-col justify-end items-center min-w-full h-[35vh] bg-black/30 shadow-xl/30 z-[5]">
                 <div className="z-[2] absolute w-[100%] h-[100%] bg-black opacity-[40%]"></div>
 
                 <div className="z-[1] absolute flex justify-center items-center overflow-hidden w-[100%] h-[100%]">

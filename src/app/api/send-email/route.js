@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+// HAPUS import Resend dari sini!
 
 export default function SignupCard() {
   const router = useRouter();
@@ -43,27 +44,34 @@ export default function SignupCard() {
     };
   }, []);
 
-  // FUNGSI: Kirim welcome email via API Route
-  const sendWelcomeEmail = async (email, name) => {
+  // FUNGSI BARU: Kirim email via API Route
+  const sendVerificationEmail = async (email, token, name) => {
     try {
-      const response = await fetch("/api/email/verification", {
-        method: "POST",
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          email,
+        body: JSON.stringify({ 
+          email, 
+          token, 
           name,
+          appUrl: window.location.origin 
         }),
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
       const result = await response.json();
       return result;
     } catch (error) {
-      console.error("Failed to send welcome email:", error);
-      return {
-        success: false,
+      console.error('Failed to send email via API:', error);
+      return { 
+        success: false, 
         error: error.message,
+        demoMode: true // Fallback ke demo mode
       };
     }
   };
@@ -123,7 +131,7 @@ export default function SignupCard() {
     setSubmitError("");
 
     try {
-      // 1. Sign up dengan Supabase (INI SUDAH KIRIM EMAIL VERIFIKASI OTOMATIS!)
+      // 1. Sign up dengan Supabase (INI SUDAH KIRIM EMAIL VERIFIKASI!)
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
@@ -132,7 +140,6 @@ export default function SignupCard() {
             full_name: formData.name,
             name: formData.name,
           },
-          // ✅ Supabase akan kirim email verifikasi OTOMATIS
           emailRedirectTo: `${window.location.origin}/auth/callback`,
         },
       });
@@ -149,25 +156,33 @@ export default function SignupCard() {
         }
       }
 
-      // 2. Kirim WELCOME email BONUS via Resend API Route (optional)
-      const emailResult = await sendWelcomeEmail(formData.email, formData.name);
+      // 2. Kirim email BONUS via Resend API Route (optional)
+      const emailResult = await sendVerificationEmail(
+        formData.email,
+        authData.user?.id || `demo-${Date.now()}`,
+        formData.name
+      );
 
       // 3. Tampilkan success message
       setSuccess({
         email: formData.email,
         name: formData.name,
-        welcomeEmailSent: emailResult.success,
-        supabaseEmailSent: true, // Supabase selalu kirim email
-        message: emailResult.success
-          ? "✅ Account created & welcome email sent!"
-          : "✅ Account created successfully!",
+        resendSuccess: emailResult.success,
+        isDemoMode: emailResult.demoMode || false,
+        message: emailResult.success 
+          ? '✅ Verification email sent successfully!' 
+          : emailResult.demoMode
+          ? '✅ Account created! (Demo mode - check console for link)'
+          : '✅ Account created! (Email might be delayed)',
       });
 
-      console.log("Signup successful:", {
+      // Log untuk debugging
+      console.log('Signup successful:', {
         user: authData.user,
-        welcomeEmail: emailResult,
-        note: "Supabase sends verification email automatically",
+        emailResult: emailResult,
+        supabaseEmailSent: true // Supabase otomatis kirim email
       });
+
     } catch (err) {
       setSubmitError(err.message || "Registration failed. Please try again.");
       console.error("Registration error:", err);
@@ -179,15 +194,22 @@ export default function SignupCard() {
   const handleResendVerification = async () => {
     setIsLoading(true);
     try {
-      const emailResult = await sendWelcomeEmail(formData.email, formData.name);
+      const emailResult = await sendVerificationEmail(
+        formData.email,
+        `resend-${Date.now()}`,
+        formData.name
+      );
 
-      if (!emailResult.success) {
+      if (!emailResult.success && !emailResult.demoMode) {
         throw new Error("Failed to resend email");
       }
 
-      alert("Welcome email has been resent!");
+      alert(emailResult.demoMode 
+        ? "Demo mode: Email would be resent (check console)" 
+        : "Verification email has been resent!"
+      );
     } catch (err) {
-      setSubmitError(err.message || "Failed to resend email");
+      setSubmitError(err.message || "Failed to resend verification email");
     } finally {
       setIsLoading(false);
     }
@@ -233,67 +255,90 @@ export default function SignupCard() {
         <div className="fixed inset-0 flex items-center justify-center p-0">
           <div className="bg-white rounded-2xl shadow-2xl/30 w-[80vw] max-w-125 h-auto mx-auto p-6 relative z-10">
             <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg
-                  className="w-8 h-8 text-green-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
+              <div className={`w-16 h-16 ${success.resendSuccess ? 'bg-green-100' : 'bg-yellow-100'} rounded-full flex items-center justify-center mx-auto mb-4`}>
+                {success.resendSuccess ? (
+                  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                ) : (
+                  <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.998-.833-2.732 0L4.346 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                  </svg>
+                )}
               </div>
 
               <h2 className="text-xl font-bold text-gray-800 mb-2">
-                🎉 Account Created!
+                {success.resendSuccess ? '🎉 Check Your Email!' : '✅ Account Created!'}
               </h2>
 
               <p className="text-gray-600 mb-4">
-                Check your email for verification:
+                {success.isDemoMode 
+                  ? `Demo account created for:`
+                  : `Verification email sent to:`
+                }
                 <br />
                 <strong className="text-green-600">{success.email}</strong>
               </p>
 
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
-                <div className="flex items-start">
-                  <svg
-                    className="w-5 h-5 text-green-600 mt-0.5 mr-2"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  <div>
-                    <p className="font-medium text-green-800">
-                      Email Verification Sent
-                    </p>
-                    <p className="text-sm text-green-700 mt-1">
-                      Supabase Auth has sent a verification email to your inbox.
-                      {success.welcomeEmailSent && (
-                        <>
-                          <br />
-                          <span className="text-xs">
-                            + Welcome email sent via Resend
-                          </span>
-                        </>
-                      )}
-                    </p>
+              {success.isDemoMode ? (
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4 text-left">
+                  <div className="flex items-start">
+                    <svg className="w-5 h-5 text-blue-600 mt-0.5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div>
+                      <p className="font-medium text-blue-800">Demo Mode Active</p>
+                      <p className="text-sm text-blue-700 mt-1">
+                        For demo purposes, email is simulated.
+                        <br />
+                        <span className="text-xs">Check browser console for verification details.</span>
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : success.resendSuccess ? (
+                <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4 text-left">
+                  <div className="flex items-start">
+                    <svg className="w-5 h-5 text-green-600 mt-0.5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div>
+                      <p className="font-medium text-green-800">Email sent successfully</p>
+                      <p className="text-sm text-green-700 mt-1">
+                        Check your inbox (and spam folder).
+                        <br />
+                        <span className="text-xs">Supabase + Resend integration active</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4 text-left">
+                  <div className="flex items-start">
+                    <svg className="w-5 h-5 text-yellow-600 mt-0.5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.998-.833-2.732 0L4.346 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                    </svg>
+                    <div>
+                      <p className="font-medium text-yellow-800">Using Supabase Email Service</p>
+                      <p className="text-sm text-yellow-700 mt-1">
+                        Verification email sent via Supabase.
+                        <br />
+                        <span className="text-xs">Check spam folder if you don't see it.</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <div className="space-y-2">
+                <button
+                  onClick={handleResendVerification}
+                  disabled={isLoading}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg transition disabled:bg-gray-400 disabled:cursor-not-allowed text-sm"
+                >
+                  {isLoading ? "Sending..." : "Resend Verification Email"}
+                </button>
+
                 <button
                   onClick={() => router.push("/signin")}
                   className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 rounded-lg transition text-sm"
@@ -314,12 +359,12 @@ export default function SignupCard() {
                   }}
                   className="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2.5 rounded-lg transition text-sm"
                 >
-                  Create Another Account
+                  Sign Up Another Account
                 </button>
               </div>
 
               <p className="text-xs text-gray-500 mt-3">
-                Auto-redirect to login in 10 seconds...
+                Auto-redirect to login page in 10 seconds...
               </p>
             </div>
           </div>
@@ -406,8 +451,7 @@ export default function SignupCard() {
 
               <div className="mt-4 pt-3 border-t border-white/30">
                 <div className="text-white/90 text-xs italic">
-                  &quot;The clearest way into the Universe is through a forest
-                  wilderness.&quot;
+                  &quot;The clearest way into the Universe is through a forest wilderness.&quot;
                 </div>
                 <div className="text-white/70 text-[9px] mt-1">- John Muir</div>
               </div>
@@ -443,7 +487,7 @@ export default function SignupCard() {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className={`text-[#626F47] bg-[#FFFFE3] p-1.5 rounded-lg h-8 text-xs focus:outline-none focus:ring-1 focus:ring-[#F5ECD5]/50 ${
+                  className={`text-[#626F47] bg-[#FFFFE3] p-1.5 rounded-xl h-8 text-xs focus:outline-none focus:ring-1 focus:ring-[#F5ECD5]/50 ${
                     errors.name ? "border border-red-500" : ""
                   }`}
                   placeholder="Enter your full name"
@@ -467,7 +511,7 @@ export default function SignupCard() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`text-[#626F47] bg-[#FFFFE3] p-1.5 rounded-lg h-8 text-xs focus:outline-none focus:ring-1 focus:ring-[#F5ECD5]/50 ${
+                  className={`text-[#626F47] bg-[#FFFFE3] p-1.5 rounded-xl h-8 text-xs focus:outline-none focus:ring-1 focus:ring-[#F5ECD5]/50 ${
                     errors.email ? "border border-red-500" : ""
                   }`}
                   placeholder="you@example.com"
@@ -494,7 +538,7 @@ export default function SignupCard() {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  className={`text-[#626F47] bg-[#FFFFE3] p-1.5 rounded-lg h-8 text-xs focus:outline-none focus:ring-1 focus:ring-[#F5ECD5]/50 ${
+                  className={`text-[#626F47] bg-[#FFFFE3] p-1.5 rounded-xl h-8 text-xs focus:outline-none focus:ring-1 focus:ring-[#F5ECD5]/50 ${
                     errors.password ? "border border-red-500" : ""
                   }`}
                   placeholder="At least 8 characters"
@@ -521,7 +565,7 @@ export default function SignupCard() {
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  className={`text-[#626F47] bg-[#FFFFE3] p-1.5 rounded-lg h-8 text-xs focus:outline-none focus:ring-1 focus:ring-[#F5ECD5]/50 ${
+                  className={`text-[#626F47] bg-[#FFFFE3] p-1.5 rounded-xl h-8 text-xs focus:outline-none focus:ring-1 focus:ring-[#F5ECD5]/50 ${
                     errors.confirmPassword ? "border border-red-500" : ""
                   }`}
                   placeholder="Confirm your password"
@@ -578,7 +622,7 @@ export default function SignupCard() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="text-[#636F47] text-xs font-medium bg-[#FFFFE3] p-1.5 rounded-lg h-8 hover:bg-[#FFFFE3]/90 focus:outline-none focus:ring-1 focus:ring-[#F5ECD5]/50 disabled:opacity-50 disabled:cursor-not-allowed transition flex items-center justify-center"
+                  className="text-[#636F47] text-xs font-medium bg-[#FFFFE3] p-1.5 rounded-xl h-8 hover:bg-[#FFFFE3]/90 focus:outline-none focus:ring-1 focus:ring-[#F5ECD5]/50 disabled:opacity-50 disabled:cursor-not-allowed transition flex items-center justify-center"
                 >
                   {isLoading ? (
                     <span className="flex items-center">

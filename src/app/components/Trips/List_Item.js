@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-const List_Items = () =>{
+const List_Items = (props) =>{
     const router = useRouter()
 
     return(
@@ -48,7 +48,7 @@ const List_Items = () =>{
                         <p className="text-[#324018] text-[12px] -mt-[.5rem]">per person</p>
                     </div>
                     
-                    <button type="button" onClick={() => router.push('/book_trip')} className="cursor-pointer w-full h-[45px] bg-[#324018] rounded-br-[.5rem] text-[#e8e8da] text-[18px]">Book Now</button>
+                    <button type="button" onClick={() => router.push('/trips/' + props.slug)} className="cursor-pointer w-full h-[45px] bg-[#324018] rounded-br-[.5rem] text-[#e8e8da] text-[18px]">Book Now</button>
                 </div>
             </div>
         </>

@@ -1,7 +1,5 @@
-import { useState } from "react";
-
 const Price_Card = () =>{
-    const [Booked, setBooked] = useState([
+    const Booked = [
         {
             name: "Bromo",
             price: "2.000.000"
@@ -18,7 +16,7 @@ const Price_Card = () =>{
             name: "Tung Tung Sahur",
             price: "2.000.000"
         },
-    ]);
+    ];
     return(
         <>
             <div className="min-h-[70vh] h-[70vh] bg-[#242D13] text-[#e8e8da] flex flex-col gap-[1rem] items-center justify-between p-[1rem] shadow-xl/30 rounded-r-[1rem]">

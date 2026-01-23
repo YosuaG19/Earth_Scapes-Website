@@ -30,6 +30,6 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts",
     "**/*.js"
-  ],
+, "src/app/donate/[slug]"  ],
   "exclude": ["node_modules"]
 }

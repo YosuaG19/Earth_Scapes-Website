@@ -1,9 +1,8 @@
 import Link from "next/link";
 import Cat_Card from "./Cat_Card";
-import { useState } from "react";
 
 const Categories = () =>{
-    const [Cats, setCats] = useState([
+    const Cats = [
         {
             name: "Mountain",
             detail: "Scenic mountain landscapes and highland trails.",
@@ -34,7 +33,7 @@ const Categories = () =>{
             detail: "Volcanic regions and geological formations.",
             img: "/Volcano.png"
         }
-    ]);
+    ];
 
     return(
         <>

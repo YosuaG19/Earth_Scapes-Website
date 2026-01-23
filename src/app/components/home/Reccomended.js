@@ -1,8 +1,7 @@
-import { useState } from "react";
 import Rec_Card from "./Rec_Card";
 
 const Recommended = () => {
-    const [Recs, setRecs] = useState([
+    const Recs = [
         {
             name: "Bromo",
             loc: "Jawa Timur",
@@ -33,7 +32,7 @@ const Recommended = () => {
             rate: "4.5",
             img: "/Coastal.png"
         },
-    ])
+    ];
 
     return(
         <>

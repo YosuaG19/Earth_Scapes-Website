@@ -1,11 +1,10 @@
 import List_Items from "./List_Item";
 import Trip_Filter from "./Trip_Filter";
 import Trip_Page from "./Trip_Page";
-import { useState } from "react";
 
 
 const Trip_List = () =>{
-    const [Items, setItems] = useState([
+    const Items = [
         {
             name: "Mountain"            
         },
@@ -21,7 +20,7 @@ const Trip_List = () =>{
         {
             name: "Coastal"
         }
-    ]);
+    ];
 
 
     return(
@@ -36,7 +35,7 @@ const Trip_List = () =>{
                     {Items.map((item) => {
                         // console.log(item)
                         return(
-                            <List_Items key={item.name}></List_Items>
+                            <List_Items key={item.name} slug={item.name}></List_Items>
                         )        
                     })}
                 </div>

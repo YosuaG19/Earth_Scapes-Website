@@ -26,9 +26,9 @@ const Trip_List = () =>{
 
     return(
         <>
-            <div className="w-full p-[1.5rem] min-h-[70vh] flex justify-between items-start relative">
+            <div className="w-full p-[1.5rem] flex justify-between items-start relative">
                 
-                <div className="w-[33.5%] h-full sticky top-[15vh] left-[1.5rem]">
+                <div className="w-[33.5%] h-full sticky top-[25vh] left-[1.5rem]">
                     <Trip_Filter></Trip_Filter>
                 </div>
                 
@@ -39,10 +39,9 @@ const Trip_List = () =>{
                             <List_Items key={item.name}></List_Items>
                         )        
                     })}
-
-                    <Trip_Page></Trip_Page>
                 </div>
             </div>
+            <Trip_Page></Trip_Page>
         </>
     )
 }

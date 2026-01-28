@@ -8,7 +8,7 @@ function Cat_Card(props) {
                 <div className="absolute w-full h-full top-0 left-0 z-[2]">
                     <div className="relative w-full h-full ">
                         <div className="absolute z-[1] w-full h-full bg-black opacity-[25%]"></div>
-                        <Image fill className="z-[0] absolute h-full" src={props.img} alt={props.img}></Image>
+                        <Image width={500} height={300} className="object-cover w-full h-full z-[0] absolute h-full" src={props.img} alt={props.img}></Image>
                     </div>
                 </div>
 

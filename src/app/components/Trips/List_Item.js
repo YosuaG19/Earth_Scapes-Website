@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Image_Damper from "../Image_Damper";
 
 const List_Items = (props) =>{
     const router = useRouter()
@@ -9,16 +10,17 @@ const List_Items = (props) =>{
     return(
         <>
             <div className="w-full flex justify-between min-h-[25vh] h-[25vh]">
-                <div className="flex w-[70.5%] h-full bg-[#324018] rounded-l-[1rem] shadow-xl/30 overflow-hidden">
+                <div className="flex w-[70.5%] h-full bg-[#324018] rounded-bl-[1rem] shadow-xl/30 overflow-hidden">
                     <div className="flex w-[30%] h-full bg-[#e8e8da] items-center justify-center">
-                        <p>IMG</p>
+                        <Image_Damper name={props.name} img={props.img}></Image_Damper>
                     </div>
+                    
                     <div className="text-[#e8e8da] flex flex-col w-[70%] p-[1rem] justify-start gap-[.2rem] items-center">
                         <div className="w-full flex flex-col">
                             <div className="flex justify-between w-full">
                                 <div className="flex flex-col items-start">
-                                    <h2 className="text-[20px]">Dest. name</h2>
-                                    <p className="-mt-[.2rem] text-[12px]">Categories</p>
+                                    <h2 className="text-[20px]">{props.name}</h2>
+                                    <p className="-mt-[.2rem] text-[12px]">{props.cat}</p>
                                 </div>
                                 
                                 <div className="flex flex-col items-end">

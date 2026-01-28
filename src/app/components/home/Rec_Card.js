@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link";
 import arrow from "../../../../public/arrow.svg"
 
 function Rec_Card(props) {
@@ -8,7 +9,7 @@ function Rec_Card(props) {
                 <div className="absolute w-full h-full top-0 left-0 z-[2]">
                     <div className="relative w-full h-full ">
                         <div className="absolute z-[1] w-full h-full bg-black opacity-[40%]"></div>
-                        <Image id="img" fill className="z-[0] absolute h-full" src={props.img} alt={props.img}></Image>
+                        <Image id="img" width={500} height={500} className="object-cover w-[100%] h-full z-[0] absolute" src={props.img} alt={props.img}></Image>
                     </div>
                 </div>
 
@@ -18,7 +19,7 @@ function Rec_Card(props) {
                         <p className="abo text-[15px] max-w-[100%]">{props.loc}</p>
                     </div>
                     <div className="absolute right-[1rem] top-[.5rem] arti text-[30px] text-[#e8e8da]">{props.rate}</div>
-                    <button className="absolute bottom-4 right-4 p-[.5rem] text-[14px] bg-[#e8e8da] rounded-lg">Look up</button>
+                    <Link href={`/trips/${props.name}`} className="absolute bottom-4 right-4 p-[.5rem] text-[14px] bg-[#e8e8da] rounded-lg">Look up</Link>
                 </div>
             </div>
         </>

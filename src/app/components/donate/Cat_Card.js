@@ -9,7 +9,7 @@ function Cat_Card({ name, detail, img, slug }) {
       <div className="absolute w-full h-full top-0 left-0 z-[2]">
         <div className="relative w-full h-full">
           <div className="absolute z-[1] w-full h-full bg-black opacity-[25%]"></div>
-          <Image fill src={img} alt={name} />
+          <Image width={500} height={300} className="object-cover w-full h-full" src={img} alt={name} />
         </div>
       </div>
 

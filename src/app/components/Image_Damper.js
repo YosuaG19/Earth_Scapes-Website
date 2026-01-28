@@ -8,7 +8,7 @@ const Image_Damper = (props) =>{
             <div className="w-full h-full relative">
                 <div className="z-[2] absolute w-full h-full bg-black/30"></div>
                 <div className="z-[1] absolute w-full h-full flex items-center justify-center">
-                    <Image fill src={props.img} alt={props.name}></Image>
+                    <Image width={500} height={300} className="w-full h-full object-cover" src={props.img} alt={props.name}></Image>
                 </div>
             </div>
         </>

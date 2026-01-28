@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import { donateData } from "../donate";
 import Banner from "@/app/components/donate_info/Banner";
+import Information from "@/app/components/donate_info/Information";
+import Footer from "@/app/components/Footer";
 
 type PageProps = {
   params: Promise<{
@@ -16,9 +18,9 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <>
-      <Banner title={data.title}></Banner>
-      <h1>{data.title}</h1>
-      <p>{data.desc}</p>
+      <Banner title={data.title} desc={data.desc} hero={data.hero} color={data.color}></Banner>
+      <Information color={data.color}></Information>
+      <Footer></Footer>
     </>
   );
 }

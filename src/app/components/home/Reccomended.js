@@ -4,30 +4,35 @@ const Recommended = () => {
     const Recs = [
         {
             name: "Bromo",
+            slug: "Bromo",
             loc: "Jawa Timur",
             rate: "4.5",
             img: "/Volcano.png"
         },
         {
             name: "Kawah Ijen",
+            slug: "Kawah Ijen",
             loc: "Jawa Timur",
             rate: "4.5",
             img: "/Mountain.png"
         },
         {
             name: "Karimun Jawa",
+            slug: "Karimun Jawa",
             loc: "Jawa Timur",
             rate: "4.5",
             img: "/Turtle.png"
         },
         {
             name: "Raja Ampat",
+            slug: "Raja Ampat",
             loc: "Jawa Timur",
             rate: "4.5",
             img: "/Fresh_Water.png"
         },
         {
             name: "Pulau Seribu",
+            slug: "Pulau Seribu",
             loc: "Jawa Timur",
             rate: "4.5",
             img: "/Coastal.png"

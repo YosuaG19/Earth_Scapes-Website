@@ -1,10 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+import x_logo from "../../../public/x.svg"
+import yt_logo from "../../../public/youtube.svg"
+import ig_logo from "../../../public/instagram.svg"
 
 const Footer = () => {
     return(
         <>
-            <footer className="relative flex flex-col justify-around content-center items-center bg-[#242D13] min-h-[30vh] h-[30vh] p-[0.5rem]">
+            <footer className="relative flex flex-col justify-around content-center items-center bg-[#242D13] min-h-[25vh] h-[25vh] p-[0.5rem]">
                 <div className="flex justify-center  items-center min-h-[50%] w-[50%] gap-[1.5rem]">
                     <div className="overflow-hidden flex items-center justify-center w-[77px] h-[77px] rounded-full bg-white max-w-[100px] max-h-[100px]">
                         <Image width='70' height='70' src="/logo.png" alt="logo"></Image>
@@ -15,30 +18,21 @@ const Footer = () => {
                     </div>
                 </div>
 
-                <div className="p-[0.5rem] min-h-[20%] text-[#e8e8da] w-full flex justify-center items-center gap-[2rem]">
-                    <Link href="../">Explore Trips</Link>
-                    <span className="h-[65%] w-[1px] bg-[#e8e8da]"></span>
-                    <Link href="../">Donate</Link>
-                    <span className="h-[65%] w-[1px] bg-[#e8e8da]"></span>
-                    <Link href="../">About Us</Link>
-                </div>
-
                 <div className="min-h-[10%] text-[#e8e8da] w-full flex flex-col items-center justify-center text-[10px]">
-                    {/* <p></p> */}
                     <p>© 2026 EarthScape All rights reserved. Together, we explore and protect the earth.</p>
                 </div>
 
-                <div className="absolute top-0 right-0 h-full w-[5%] grid gird-rows-3 justify-center items-center pt-[1.5rem] pb-[1.5rem]">
+                <div className="absolute top-0 right-0 h-full w-[5%] grid gird-rows-3 justify-center items-center py-[1rem]">
                     <Link href="../">
-                        <Image width="30" height="30" src="./instagram.svg" alt="Instagram"></Image>
+                        <Image width="25" height="25" src={ig_logo} alt="Instagram"></Image>
                     </Link>
 
                     <Link href="../">
-                        <Image width="30" height="30" src="./youtube.svg" alt="Youtube"></Image>
+                        <Image width="25" height="25" src={yt_logo} alt="Youtube"></Image>
                     </Link>
 
                     <Link href="../">
-                        <Image width="30" height="30" src="./x.svg" alt="X"></Image>
+                        <Image width="25" height="25" src={x_logo} alt="X"></Image>
                     </Link>
                 </div>
             </footer>

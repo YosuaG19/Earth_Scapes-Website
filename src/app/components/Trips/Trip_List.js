@@ -6,19 +6,29 @@ import Trip_Page from "./Trip_Page";
 const Trip_List = () =>{
     const Items = [
         {
-            name: "Mountain"            
+            name: "Mount Bromo",
+            cat: "Mountain",
+            img : "/trip_img/bromo1.png"
         },
         {
-            name: "Forest"
+            name: "Dieng Pleteau",
+            cat: "Mountain",
+            img : "/trip_img/dieng1.png"
         },
         {
-            name: "Marine"
+            name: "Mount Rinjani",
+            cat: "Volcano",
+            img : "/trip_img/rinjani1.png"
         },
         {
-            name: "Fresh Water"
+            name: "Mount Merapi",
+            cat: "Volcano",
+            img : "/trip_img/merapi1.png"
         },
         {
-            name: "Coastal"
+            name: "Sedari Mangrove Forest",
+            cat: "Forest",
+            img : "/trip_img/sedari1.png"
         }
     ];
 
@@ -27,7 +37,7 @@ const Trip_List = () =>{
         <>
             <div className="w-full p-[1.5rem] flex justify-between items-start relative">
                 
-                <div className="w-[33.5%] h-full sticky top-[25vh] left-[1.5rem]">
+                <div className="w-[32.5%] h-full sticky top-[25vh] left-[1.5rem]">
                     <Trip_Filter></Trip_Filter>
                 </div>
                 
@@ -35,7 +45,7 @@ const Trip_List = () =>{
                     {Items.map((item) => {
                         // console.log(item)
                         return(
-                            <List_Items key={item.name} slug={item.name}></List_Items>
+                            <List_Items key={item.name} slug={item.name} img={item.img} name={item.name} cat={item.cat}></List_Items>
                         )        
                     })}
                 </div>

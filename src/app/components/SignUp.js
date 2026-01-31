@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import validator from "validator";
 
 export default function SignupCard() {
   const router = useRouter();
@@ -83,26 +84,39 @@ export default function SignupCard() {
   const validateForm = () => {
     const newErrors = {};
 
+    // 1. Validasi Nama
     if (!formData.name.trim()) {
       newErrors.name = "Full name is required";
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = "Name must be at least 2 characters";
     }
 
+    // 2. Validasi Email (FIXED - lebih fleksibel)
     if (!formData.email) {
       newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Email is invalid";
+    } else {
+      if (!validator.isEmail(formData.email)) {
+        newErrors.email = "Please enter a valid email address";
+      }
     }
 
+    // 3. Validasi Password
     if (!formData.password) {
       newErrors.password = "Password is required";
     } else if (formData.password.length < 8) {
       newErrors.password = "Password must be at least 8 characters";
+    } else if (!/(?=.*[a-zA-Z])/.test(formData.password)) {
+      newErrors.password = "Password must contain at least one letter";
     }
 
-    if (formData.password !== formData.confirmPassword) {
+    // 4. Validasi Confirm Password
+    if (!formData.confirmPassword) {
+      newErrors.confirmPassword = "Please confirm your password";
+    } else if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = "Passwords do not match";
     }
 
+    // 5. Validasi Terms
     if (!formData.agreeToTerms) {
       newErrors.agreeToTerms = "You must agree to the terms and conditions";
     }

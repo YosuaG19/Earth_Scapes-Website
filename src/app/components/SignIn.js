@@ -3,8 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import bg_SignIn from "../../../public/login.png";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 
 export default function SignIn() {
@@ -18,11 +18,20 @@ export default function SignIn() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   // Initialize Supabase client
   const supabase = createClient();
 
-  // Handle Email/Password Login - SIMPLE VERSION
+  // Check for error messages from URL params
+  useEffect(() => {
+    const errorParam = searchParams.get('error');
+    if (errorParam === 'auth_failed') {
+      setError("Authentication failed. Please try again.");
+    }
+  }, [searchParams]);
+
+  // Handle Email/Password Login
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -30,12 +39,16 @@ export default function SignIn() {
     setSuccess("");
 
     try {
-      // Validate inputs
       if (!email.trim() || !password) {
         throw new Error("Email dan password harus diisi");
       }
 
-      // Sign in dengan email dan password
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email.trim())) {
+        throw new Error("Please enter a valid email address");
+      }
+
       const { data, error } = await supabase.auth.signInWithPassword({
         email: email.trim(),
         password: password,
@@ -46,7 +59,6 @@ export default function SignIn() {
       }
 
       if (data.user) {
-        // Login berhasil, langsung redirect
         setSuccess("Login berhasil! Mengalihkan...");
         
         setTimeout(() => {
@@ -57,13 +69,15 @@ export default function SignIn() {
     } catch (error) {
       console.error("Login error:", error);
       
-      // Handle error messages yang simple
       if (error.message.includes("Invalid login credentials")) {
         setError("Email atau password salah. Silakan coba lagi.");
-      } else if (error.message.includes("Email rate limit exceeded")) {
+      } else if (error.message.includes("Email rate limit exceeded") || 
+                 error.message.includes("rate limit")) {
         setError("Terlalu banyak percobaan login. Silakan coba beberapa saat lagi.");
       } else if (error.message.includes("Network error")) {
         setError("Koneksi jaringan bermasalah. Silakan coba lagi.");
+      } else if (error.message.includes("email")) {
+        setError("Please enter a valid email address");
       } else {
         setError("Terjadi kesalahan saat login: " + error.message);
       }
@@ -72,16 +86,23 @@ export default function SignIn() {
     }
   };
 
-  // Handle OAuth Login (Google & Apple)
+  // Handle OAuth Login - FIXED VERSION
   const handleOAuthLogin = async (provider) => {
     setOauthLoading(prev => ({ ...prev, [provider]: true }));
     setError("");
     
     try {
+      // Save current path to return after login
+      const currentPath = window.location.pathname;
+      const returnPath = currentPath === '/signin' ? '/' : currentPath;
+      
+      // Encode the return path to pass in query params
+      const encodedReturnPath = encodeURIComponent(returnPath);
+      
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: provider,
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          redirectTo: `${window.location.origin}/auth/callback?next=${encodedReturnPath}`,
         }
       });
 
@@ -89,11 +110,20 @@ export default function SignIn() {
         throw error;
       }
 
-      // Redirect akan dilakukan otomatis oleh Supabase
+      // Supabase will handle redirect automatically
       
     } catch (error) {
       console.error(`${provider} OAuth error:`, error);
-      setError(`Gagal login dengan ${provider === 'google' ? 'Google' : 'Apple'}`);
+      
+      let errorMessage = `Gagal login dengan ${provider === 'google' ? 'Google' : 'Apple'}`;
+      
+      if (error.message.includes("popup")) {
+        errorMessage = "Login popup was blocked. Please allow popups.";
+      } else if (error.message.includes("configuration")) {
+        errorMessage = `${provider === 'google' ? 'Google' : 'Apple'} login not configured.`;
+      }
+      
+      setError(errorMessage);
       setOauthLoading(prev => ({ ...prev, [provider]: false }));
     }
   };

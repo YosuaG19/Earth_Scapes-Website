@@ -1,5 +1,9 @@
 'use client';
-import { useState, useMemo } from 'react';
+import { useState, useMemo} from 'react';
+import { useRouter } from "next/navigation";
+import Payment from '../payment/Payment';
+
+const RANGE_DAYS = 3; // 👉 ganti sesuai kebutuhan
 
 const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
@@ -17,6 +21,12 @@ const formatDate = (date) =>
     year: 'numeric',
   });
 
+const addDays = (date, days) => {
+  const d = new Date(date);
+  d.setDate(d.getDate() + days);
+  return d;
+};
+
 const buildCalendar = (year, month) => {
   const start = new Date(year, month, 1);
   start.setDate(start.getDate() - start.getDay());
@@ -29,16 +39,19 @@ const buildCalendar = (year, month) => {
       date: d,
       day: d.getDate(),
       isDisabled: d.getMonth() !== month,
-      key: formatDate(d),
+      key: d.toDateString(),
     };
   });
 };
 
 export default function DateSelection() {
+  const router = useRouter();
   const [baseDate, setBaseDate] = useState(new Date());
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [result, setResult] = useState('');
+  const [showPayment, setShowPayment] = useState(false);
+
 
   const leftDate = baseDate;
   const rightDate = new Date(baseDate.getFullYear(), baseDate.getMonth() + 1);
@@ -55,28 +68,20 @@ export default function DateSelection() {
   );
 
   const isInRange = (date) =>
-    startDate && endDate && startDate < date && date < endDate;
+    startDate && endDate && date > startDate && date < endDate;
 
   const handleSelect = (date, isDisabled) => {
     if (isDisabled) return;
 
-    if (!startDate || (startDate && endDate)) {
-      setStartDate(date);
-      setEndDate(null);
-      return;
-    }
+    const autoEnd = addDays(date, RANGE_DAYS);
 
-    if (date < startDate) {
-      setStartDate(date);
-    } else {
-      setEndDate(date);
-    }
+    setStartDate(date);
+    setEndDate(autoEnd);
   };
 
   const apply = () => {
-    if (startDate && endDate) {
-      setResult(`${formatDate(startDate)} - ${formatDate(endDate)}`);
-    }
+    if (!startDate || !endDate) return;
+    setShowPayment(true);
   };
 
   const cancel = () => {
@@ -86,52 +91,61 @@ export default function DateSelection() {
   };
 
   return (
-    <div className="datepicker">
-      <div className="calendar">
-        <Calendar
-          title={leftDate}
-          dates={leftCalendar}
-          today={today}
-          startDate={startDate}
-          endDate={endDate}
-          isInRange={isInRange}
-          onSelect={handleSelect}
-          onPrev={() =>
-            setBaseDate(new Date(baseDate.getFullYear(), baseDate.getMonth() - 1))
-          }
+    <>
+      {showPayment && (
+        <Payment
+          startDate={startDate} endDate={endDate}
+          onClose={() => setShowPayment(false)}
         />
+      )}
 
-        <Calendar
-          title={rightDate}
-          dates={rightCalendar}
-          today={today}
-          startDate={startDate}
-          endDate={endDate}
-          isInRange={isInRange}
-          onSelect={handleSelect}
-          onNext={() =>
-            setBaseDate(new Date(baseDate.getFullYear(), baseDate.getMonth() + 1))
-          }
-        />
+      <div className="datepicker">
+        <div className="calendar">
+          <Calendar
+            title={leftDate}
+            dates={leftCalendar}
+            today={today}
+            startDate={startDate}
+            endDate={endDate}
+            isInRange={isInRange}
+            onSelect={handleSelect}
+            onPrev={() =>
+              setBaseDate(new Date(baseDate.getFullYear(), baseDate.getMonth() - 1))
+            }
+          />
 
-        <div className="action-menu">
-          <span className="selection">
-            {startDate && endDate
-              ? `${formatDate(startDate)} - ${formatDate(endDate)}`
-              : 'Month Day, Year - Month Day, Year'}
-          </span>
+          <Calendar
+            title={rightDate}
+            dates={rightCalendar}
+            today={today}
+            startDate={startDate}
+            endDate={endDate}
+            isInRange={isInRange}
+            onSelect={handleSelect}
+            onNext={() =>
+              setBaseDate(new Date(baseDate.getFullYear(), baseDate.getMonth() + 1))
+            }
+          />
 
-          <div className='flex gap-[.5rem]'>
-            <button type="button" onClick={cancel} className='cancel'>
-              Cancel
-            </button>
-            <button type="button" onClick={apply} className='apply'>
-              Apply
-            </button>
+          <div className="action-menu">
+            <span className="selection">
+              {startDate && endDate
+                ? `${formatDate(startDate)} - ${formatDate(endDate)}`
+                : 'Month Day, Year - Month Day, Year'}
+            </span>
+
+            <div className="flex gap-[.5rem]">
+              <button onClick={cancel} type='button' className="cancel">
+                Cancel
+              </button>
+              <button onClick={apply} type='button' className="apply">
+                Apply
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -149,19 +163,11 @@ function Calendar({
   return (
     <div className="side">
       <div className="controls">
-        {onPrev && (
-          <button type="button" onClick={onPrev}>
-            prev
-          </button>
-        )}
-        <strong className="label">
+        {onPrev && <button onClick={onPrev}>prev</button>}
+        <strong>
           {title.toLocaleString('en-US', { month: 'long', year: 'numeric' })}
         </strong>
-        {onNext && (
-          <button type="button" onClick={onNext}>
-            next
-          </button>
-        )}
+        {onNext && <button onClick={onNext}>next</button>}
       </div>
 
       <div className="days">

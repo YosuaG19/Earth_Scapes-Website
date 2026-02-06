@@ -3,7 +3,6 @@
 import { useState } from "react";
 import DateSelection from "./Date_Selection";
 import Description from "./Description";
-import Date_Selection from "./otak";
 
 const Information = (props) => {
   const [activeTab, setActiveTab] = useState("Description");

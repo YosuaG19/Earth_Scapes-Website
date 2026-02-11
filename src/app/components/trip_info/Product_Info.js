@@ -2,16 +2,22 @@
 
 import Banner from "./Banner"
 import Book_Form from "./Book_Form"
-import Payment from "../payment/Payment"
 
-const Product_Info = () =>{
+const Product_Info = (props) =>{
     return(
         <>
             <div className="flex flex-col min-h-[90vh] w-full">
-                {/* <Payment></Payment> */}
-                <Banner></Banner>
+                <Banner
+                    title={props.title} loc={props.loc}
+                    price={props.price} img={props.banner}
+                    rating={props.rating}
+                ></Banner>
 
-                <Book_Form></Book_Form>
+                <Book_Form 
+                    desc={props.desc} days={props.days}
+                    slot={props.slot} img={props.img}
+                    svg={props.others} 
+                ></Book_Form>
             </div>
         </>
     )

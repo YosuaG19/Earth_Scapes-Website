@@ -10,7 +10,7 @@ export default function Trips() {
     <>
       <Navbar></Navbar>
       <Banner></Banner>
-      <Trip_List></Trip_List>
+      <Trip_List ></Trip_List>
       <Footer></Footer>
     </>
   );

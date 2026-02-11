@@ -17,7 +17,6 @@ const Book_Items = (props) =>{
                             <h2 className="text-[24px]">{props.name}</h2>
                             <p className="text-[14px] -mt-[0.3rem]">{props.loc}</p>
                         </div>
-                        <input className="h-[20px] w-[20px] bg-[#242D13]" id="Include" type="checkbox"></input>
                     </div>
                     <div className="flex flex-col items-end justify-between min-h-[65%]">
                         <span className="text-[12px] text-left w-full">{props.desc}</span>

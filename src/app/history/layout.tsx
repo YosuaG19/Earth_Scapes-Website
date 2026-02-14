@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import "../globals.css";
 
 export const metadata: Metadata = {
-  title: "Profile",
+  title: "History",
   description: "A Trip Give Back To The Earth",
 };
 
 
-export default function ProfileLayout({
+export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;

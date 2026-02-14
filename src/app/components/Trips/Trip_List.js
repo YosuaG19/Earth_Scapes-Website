@@ -1,37 +1,11 @@
 import List_Items from "./List_Item";
 import Trip_Filter from "./Trip_Filter";
 import Trip_Page from "./Trip_Page";
+import { tripsData } from "@/app/trips/trips";
 
 
 const Trip_List = () =>{
-    const Items = [
-        {
-            name: "Mount Bromo",
-            cat: "Mountain",
-            img : "/trip_img/bromo1.png"
-        },
-        {
-            name: "Dieng Pleteau",
-            cat: "Mountain",
-            img : "/trip_img/dieng1.png"
-        },
-        {
-            name: "Mount Rinjani",
-            cat: "Volcano",
-            img : "/trip_img/rinjani1.png"
-        },
-        {
-            name: "Mount Merapi",
-            cat: "Volcano",
-            img : "/trip_img/merapi1.png"
-        },
-        {
-            name: "Sedari Mangrove Forest",
-            cat: "Forest",
-            img : "/trip_img/sedari1.png"
-        }
-    ];
-
+    const items = Object.entries(tripsData);
 
     return(
         <>
@@ -42,10 +16,17 @@ const Trip_List = () =>{
                 </div>
                 
                 <div className="w-[65%] h-full gap-[1rem] flex flex-col items-end">
-                    {Items.map((item) => {
+                    {items.map(([slug, item]) => {
                         // console.log(item)
                         return(
-                            <List_Items key={item.name} slug={item.name} img={item.img} name={item.name} cat={item.cat}></List_Items>
+                            <List_Items 
+                                key={slug} slug={slug} 
+                                img={item.banner} name={item.title} 
+                                cat={item.cat} desc={item.desc}
+                                loc={item.loc} rating={item.rating}
+                                days={item.days} price={item.price}
+                            >
+                            </List_Items>
                         )        
                     })}
                 </div>

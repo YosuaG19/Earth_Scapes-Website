@@ -4,7 +4,8 @@ import Link from "next/link";
 
 function Cat_Card({ name, detail, img, slug }) {
   return (
-    <div className="relative flex items-end h-full w-full bg-white rounded-r-[1rem] overflow-hidden p-[.5rem] shadow-xl/30">
+    <Link href={`/donate/${slug}`}
+    className="relative flex items-end h-full w-full bg-white rounded-r-[1rem] overflow-hidden p-[.5rem] shadow-xl/30">
 
       <div className="absolute w-full h-full top-0 left-0 z-[2]">
         <div className="relative w-full h-full">
@@ -13,18 +14,17 @@ function Cat_Card({ name, detail, img, slug }) {
         </div>
       </div>
 
-      <Link
-        href={`/donate/${slug}`}
+      <div
         className="z-[3] absolute flex items-center justify-center h-full w-[20%] bg-black/40 top-0 right-0"
       >
         <Image className="h-[40%]" src={arrow} alt="arrow" />
-      </Link>
+      </div>
 
       <div className="z-[3] w-[75%] absolute text-white">
         <h2 className="text-[24px] arti">{name}</h2>
         <p className="text-[11px] arti">{detail}</p>
       </div>
-    </div>
+    </Link>
   );
 }
 

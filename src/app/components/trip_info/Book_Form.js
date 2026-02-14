@@ -3,16 +3,19 @@
 import Image_Damper from "../Image_Damper";
 import Information from "./Information";
 
-const Book_Form = () =>{
-
+const Book_Form = (props) =>{
+    const img = Object.values(props.img)
     return(
         <> 
             <form className="flex w-full px-6 gap-4 h-[60vh]">
                 <div className="w-[30%] h-full bg-white flex flex-col">
-                    <Image_Damper name='Forest' img='/Forest.png'></Image_Damper>
+                    <Image_Damper name='Forest' img={img[1]}></Image_Damper>
                 </div>
                 <div className="w-[70%] h-full flex justify-center">
-                    <Information></Information>
+                    <Information 
+                        desc={props.desc} days={props.days}
+                        slot={props.slot} svg={props.svg} 
+                    ></Information>
                 </div>
             </form>
         </>

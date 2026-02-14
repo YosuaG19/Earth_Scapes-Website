@@ -7,6 +7,9 @@ import Image_Damper from "../Image_Damper";
 const List_Items = (props) =>{
     const router = useRouter()
 
+    const formatIDR = (v) =>
+        v === "" ? "" : "Rp " + new Intl.NumberFormat("id-ID").format(v);
+
     return(
         <>
             <div className="w-full flex justify-between min-h-[25vh] h-[25vh]">
@@ -24,8 +27,8 @@ const List_Items = (props) =>{
                                 </div>
                                 
                                 <div className="flex flex-col items-end">
-                                    <p className="text-[18px]">4.5</p>
-                                    <p className="-mt-[.2rem] text-[12px]">3 Days</p>
+                                    <p className="text-[18px]">{props.rating}</p>
+                                    <p className="-mt-[.2rem] text-[12px]">{props.days} Days</p>
                                 </div>
                             </div>
         
@@ -33,20 +36,20 @@ const List_Items = (props) =>{
                             
                             <div className="w-full flex items-center gap-[.5rem] mt-[.75rem]">
                                 <Image width="20" height="20" src="./location.svg" alt="X"></Image>
-                                <p className="text-[16px]">Location</p>
+                                <p className="text-[16px]">{props.loc}</p>
                             </div>
                         </div>
 
 
                         <div className="text-[10px]">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur at venenatis nisl, at mattis nisi. Suspendisse sagittis venenatis nunc. Pellentesque fermentum diam vel.</p>
+                            <p>{props.desc}</p>
                         </div>
                     </div>
                 </div>
 
                 <div className="flex flex-col p-[.5rem] justify-between w-[28.5%] h-full bg-[#e8e8da] border-[5px] border-[#324018] rounded-r-[1rem] shadow-xl/10">
                     <div className="flex flex-col items-end">
-                        <p className="text-[#324018] text-[20px]">Rp x.xxx.xxx</p>
+                        <p className="text-[#324018] text-[20px]">{formatIDR(props.price)}</p>
                         <p className="text-[#324018] text-[12px] -mt-[.5rem]">per person</p>
                     </div>
                     

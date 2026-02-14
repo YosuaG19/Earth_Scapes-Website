@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from "react";
+// import "../../globals.css";
 import DateSelection from "./Date_Selection";
 import Description from "./Description";
-import Date_Selection from "./otak";
 
 const Information = (props) => {
   const [activeTab, setActiveTab] = useState("Description");
@@ -35,7 +35,10 @@ const Information = (props) => {
 
       {/* Content (PAKE HIDDEN → STATE AMAN) */}
       <div hidden={activeTab !== "Description"}>
-        <Description />
+        <Description 
+          desc={props.desc} days={props.days}
+          slot={props.slot} svg={props.svg} 
+        />
       </div>
 
       <div hidden={activeTab !== "Select Date"}>

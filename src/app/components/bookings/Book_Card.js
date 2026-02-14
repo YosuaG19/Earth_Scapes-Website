@@ -37,7 +37,7 @@ function Book_Card() {
 
     return (
         <>
-            <div className="grid grid-rows-<1> gap-[1rem]">
+            <div className="grid grid-rows-<1> gap-4">
                 {Books.map((Book) => {
                     // console.log(Book)
                     return(

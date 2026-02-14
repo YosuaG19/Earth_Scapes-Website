@@ -11,13 +11,13 @@ const Book_Items = (props) =>{
                     IMG
                 </div>
 
-                <div className="text-[#242D13] h-full w-[75%] p-[1rem] flex flex-col gap-[.5rem] bg-[#e8e8da]">
+                <div className="text-[#242D13] h-full w-[75%] p-4 flex flex-col gap-2 bg-[#e8e8da]">
                     <div className="flex w-full justify-between items-start min-h-[30%]">
                         <div className="flex flex-col">
                             <h2 className="text-[24px]">{props.name}</h2>
                             <p className="text-[14px] -mt-[0.3rem]">{props.loc}</p>
                         </div>
-                        <input className="h-[20px] w-[20px] bg-[#242D13]" id="Include" type="checkbox"></input>
+                        <input className="h-5 w-5 bg-[#242D13]" id="Include" type="checkbox"></input>
                     </div>
                     <div className="flex flex-col items-end justify-between min-h-[65%]">
                         <span className="text-[12px] text-left w-full">{props.desc}</span>

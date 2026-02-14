@@ -121,7 +121,7 @@ export default function DateSelection() {
               : 'Month Day, Year - Month Day, Year'}
           </span>
 
-          <div className='flex gap-[.5rem]'>
+          <div className='flex gap-2'>
             <button type="button" onClick={cancel} className='cancel'>
               Cancel
             </button>

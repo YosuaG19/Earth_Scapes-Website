@@ -5,7 +5,7 @@ import Price_Card from "./Price_Card";
 const Price_Detail = () => {
     return(
         <>
-            <div className="min-w-full flex justify-around p-[2rem]">
+            <div className="min-w-full flex justify-around p-8">
                 <div className="w-[60%]">
                     <Book_Card></Book_Card>
                 </div>

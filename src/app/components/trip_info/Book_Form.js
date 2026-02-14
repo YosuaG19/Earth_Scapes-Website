@@ -8,13 +8,14 @@ const Book_Form = (props) =>{
     return(
         <> 
             <form className="flex w-full px-[1.5rem] gap-[1rem] h-[60vh]">
-                <div className="w-[30%] h-full bg-white flex flex-col">
+                <div className="w-[30%] h-full bg-white flex flex-col rounded-tr-[1.5rem] rounded-bl-[1.5rem] overflow-hidden">
                     <Image_Damper name='Forest' img={img[1]}></Image_Damper>
                 </div>
                 <div className="w-[70%] h-full flex justify-center">
                     <Information 
                         desc={props.desc} days={props.days}
                         slot={props.slot} svg={props.svg} 
+                        map={props.map}
                     ></Information>
                 </div>
             </form>

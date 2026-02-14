@@ -163,11 +163,11 @@ function Calendar({
   return (
     <div className="side">
       <div className="controls">
-        {onPrev && <button onClick={onPrev}>prev</button>}
+        {onPrev && <button type='button' onClick={onPrev}>prev</button>}
         <strong>
           {title.toLocaleString('en-US', { month: 'long', year: 'numeric' })}
         </strong>
-        {onNext && <button onClick={onNext}>next</button>}
+        {onNext && <button type='button' onClick={onNext}>next</button>}
       </div>
 
       <div className="days">

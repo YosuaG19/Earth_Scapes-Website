@@ -34,10 +34,11 @@ const Information = (props) => {
       </div>
 
       {/* Content (PAKE HIDDEN → STATE AMAN) */}
-      <div hidden={activeTab !== "Description"}>
+      <div hidden={activeTab !== "Description"} className="h-full">
         <Description 
           desc={props.desc} days={props.days}
           slot={props.slot} svg={props.svg} 
+          map={props.map}
         />
       </div>
 

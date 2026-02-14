@@ -118,7 +118,7 @@ const Add_Guest = ({ booking, setBooking }) => {
                 {ownerFields.map((field) => (
                     <div key={field.id} className='flex relative flex-col px-[.5rem] gap-[.3rem]'>
                         <label className='z-[12] px-[.5rem] bg-[#5a7527] text-[12px] w-fit' htmlFor={field.id}>{field.label}</label>
-                        <input className='abo z-[12] -mt-[.5rem]' id={field.id} type='text' disabled value={field.value}></input>
+                        <input className='z-[12] -mt-[.5rem]' id={field.id} type='text' disabled value={field.value}></input>
                         <span className='z-[11] w-full h-[80%] border-[#e8e8da] border-[2px] absolute -bottom-0 left-0 rounded-tr-[1rem]'></span>
                     </div>
                 ))}
@@ -173,7 +173,7 @@ const Add_Guest = ({ booking, setBooking }) => {
                         </label>
 
                         <input
-                        className="abo z-[12] -mt-[.5rem]"
+                        className="z-[12] -mt-[.5rem]"
                         type="text"
                         disabled
                         value={field.value}
@@ -220,7 +220,7 @@ const Add_Guest = ({ booking, setBooking }) => {
             {addFields.map((field) => (
                 <div key={field.id} className='flex relative flex-col px-[.5rem] gap-[.3rem] text-[#e8e8da]'>
                     <label className='z-[12] px-[.5rem] bg-[#5a7527] text-[12px] w-fit' htmlFor={field.id}>{field.label}</label>
-                    <input className='abo lowercase z-[12] -mt-[.5rem] border-none focus:outline-none focus:ring-0' id={field.id} type='text' placeholder={field.holder} value={field.value}
+                    <input className='z-[12] -mt-[.5rem] border-none focus:outline-none focus:ring-0' id={field.id} type='text' placeholder={field.holder} value={field.value}
                         onChange={(e) =>setForm({ ...form, [field.id]: e.target.value })}>
 
                     </input>

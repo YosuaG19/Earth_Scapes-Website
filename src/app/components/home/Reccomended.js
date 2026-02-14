@@ -4,7 +4,7 @@ const Recommended = () => {
     const Recs = [
         {
             name: "Bromo",
-            slug: "Bromo",
+            slug: "Mount_Bromo",
             loc: "Jawa Timur",
             rate: "4.5",
             img: "/Volcano.png"

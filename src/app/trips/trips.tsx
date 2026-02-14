@@ -1,6 +1,7 @@
 export const tripsData = {
   Mount_Bromo :{
     title: "Mount Bromo",
+    map: "https://www.google.com/maps?q=-7.9425,112.9530&output=embed&z=13&t=k",
     loc: "East Java",
     cat: "Volcano",
     desc: "This trip features sunrise trekking across volcanic landscapes while introducing participants to the Tengger community’s culture and environmental preservation practices around active volcanoes.",
@@ -25,6 +26,7 @@ export const tripsData = {
         
   Dieng_Pleteau:{
     title: "Dieng Pleteau",
+    map: "https://www.google.com/maps?q=-7.2043,109.9103&output=embed&z=13&t=k",
     loc: "Central Java",
     cat: "Mountain",
     desc: "The trip explores Dieng’s highland landscapes, volcanic craters, and cultural heritage sites while introducing sustainable agriculture and eco-tourism practices.",
@@ -33,7 +35,7 @@ export const tripsData = {
     slot: 8,
     rating: 4.7, 
     others: {
-      Electricity: "Electricity",
+      Electricity: "/electricity.svg",
       Water: "/water.svg",
       Insured: "/insured.svg",
       Signal: "/connection.svg",
@@ -49,6 +51,7 @@ export const tripsData = {
         
   Mount_Rinjani:{
     title: "Mount Rinjani",
+    map: "https://www.google.com/maps?q=-8.4113,116.4573&output=embed&z=12&t=k",
     loc: "West Nusa Tenggara",
     cat: "Mountain",
     desc: "A multi-day trekking trip that leads participants to Lake Segara Anak while promoting trail clean-up activities and environmental responsibility in mountain conservation.",
@@ -73,6 +76,7 @@ export const tripsData = {
             
   Mount_Merapi:{
     title: "Mount Merapi",
+    map: "https://www.google.com/maps?q=-7.5407,110.4461&output=embed&z=13&t=k",
     loc: "Yogyakarta",
     cat: "Volcano",
     desc: "This educational volcano trip combines lava tours with disaster awareness programs and village visits, offering insights into volcanic activity and community resilience.",
@@ -81,7 +85,7 @@ export const tripsData = {
     slot: 15,
     rating: 4.6, 
     others: {
-      Electricity: "Electricity",
+      Electricity: "/electricity.svg",
       Water: "/water.svg",
       Insured: "/insured.svg",
       Guided: "/guided.svg",
@@ -96,6 +100,7 @@ export const tripsData = {
         
   Sedari_Mangrove_Forest:{
     title: "Sedari Manggrove Forest",
+    map: "https://www.google.com/maps?q=-6.0135,107.3285&output=embed&z=14&t=",
     loc: "Karawang, West Java",
     cat: "Forest",
     desc: "This urban conservation trip emphasizes mangrove planting, bird watching, and coastal ecosystem education to raise awareness of environmental protection in city areas.",

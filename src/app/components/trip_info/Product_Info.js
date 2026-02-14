@@ -16,7 +16,7 @@ const Product_Info = (props) =>{
                 <Book_Form 
                     desc={props.desc} days={props.days}
                     slot={props.slot} img={props.img}
-                    svg={props.others} 
+                    svg={props.others} map={props.map}
                 ></Book_Form>
             </div>
         </>

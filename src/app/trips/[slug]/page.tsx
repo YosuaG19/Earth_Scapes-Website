@@ -25,6 +25,7 @@ export default async function BookTripPage({params}: PageProps) {
         price={data.price} slot={data.slot}
         rating={data.rating} others={data.others}
         img={data.img} banner={data.banner}
+        map={data.map}
       ></Product_Info>
       <Footer></Footer>
     </>

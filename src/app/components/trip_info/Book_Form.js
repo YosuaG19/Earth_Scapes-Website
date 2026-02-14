@@ -15,6 +15,7 @@ const Book_Form = (props) =>{
                     <Information 
                         desc={props.desc} days={props.days}
                         slot={props.slot} svg={props.svg} 
+                        map={props.map}
                     ></Information>
                 </div>
             </form>

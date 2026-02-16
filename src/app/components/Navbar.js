@@ -2,33 +2,89 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { createClient } from '@/lib/supabase/client';
 
 export default function Navbar() {
-    const pathname = usePathname()
+    const pathname = usePathname();
+    const router = useRouter();
+    const supabase = createClient();
+    
+    const [user, setUser] = useState(null);
+    const [isInitialCheckDone, setIsInitialCheckDone] = useState(false);
+
+    useEffect(() => {
+        const checkSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            setUser(session?.user ?? null);
+            setIsInitialCheckDone(true);
+        };
+
+        checkSession();
+
+        const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+            if (event === 'SIGNED_IN') setUser(session?.user);
+            if (event === 'SIGNED_OUT') {
+                setUser(null);
+                router.push('/signin');
+            }
+        });
+
+        return () => {
+            authListener.subscription.unsubscribe();
+        };
+    }, [supabase, router]);
 
     return (
-        <>
-            <nav className="sticky top-0 flex items-center justify-between px-[2rem] py-[.5rem] bg-[#e8e8da] z-[10] shadow-xl/30">
-                <Link className={`link ${pathname === '/' ? 'active' : ''}`} href="../">
-                    <div className='flex items-center gap-[1rem]'>
-                        <div className="overflow-hidden flex items-center justify-center w-[55px] h-[55px] rounded-full bg-[#324018] max-w-[65px] max-h-[65px]">
-                            <Image width='50' height='50' src="/logo.png" alt='logo'></Image>
-                        </div>
-                        <h1 className='text-[#242D13] text-[1.5rem]'>EarthScapes</h1>
+        <nav className="sticky top-0 flex items-center justify-between px-[2rem] py-[.5rem] bg-[#e8e8da] z-[50] shadow-sm">
+            {/* SISI KIRI: LOGO */}
+            <Link href="/">
+                <div className='flex items-center gap-[1rem]'>
+                    <div className="flex items-center justify-center w-[55px] h-[55px] rounded-full bg-[#324018]">
+                        <Image width={50} height={50} src="/logo.png" alt='logo' priority />
                     </div>
-                </Link>
-                
-                <ul className='text-[#242D13] text-[1.25rem] grid grid-cols-3 gap-10 jus'>
-                    <li><Link className={`link ${pathname === '/' ? 'active' : ''}`} href="../trips">Trips</Link></li>
-                    <li><Link className={`link ${pathname === '/' ? 'active' : ''}`} href="../donate">Donate</Link></li>
-                    <li><Link className={`link ${pathname === '/' ? 'active' : ''}`} href="../history">History</Link></li>
+                    <h1 className='text-[#242D13] text-[1.5rem] font-bold tracking-tighter'>EarthScapes</h1>
+                </div>
+            </Link>
+            
+            {/* TENGAH: SEKARANG KOSONG */}
+            <div></div>
+            
+            {/* SISI KANAN: SEMUA MENU JADI SATU DI SINI */}
+            <div className="flex items-center gap-10">
+                {/* Menu Navigasi */}
+                <ul className='text-[#242D13] text-[1.1rem] flex gap-10'>
+                    <li>
+                        <Link href="/trips" className={`hover:opacity-70 ${pathname === '/trips' ? 'font-bold border-b-2 border-[#242D13]' : ''}`}>Trips</Link>
+                    </li>
+                    <li>
+                        <Link href="/donate" className={`hover:opacity-70 ${pathname === '/donate' ? 'font-bold border-b-2 border-[#242D13]' : ''}`}>Donate</Link>
+                    </li>
                 </ul>
-                
-                <Link className='bg-[#242D13] px-[2rem] py-[.75rem] rounded-lg' href='../account'>
-                    <p className='text-[#e8e8da]'>Profile</p>
-                </Link>
-            </nav> 
-        </>
-    )
+
+                {/* Auth Section */}
+                <div className="flex items-center border-l border-[#242D13]/20 pl-10">
+                    {!isInitialCheckDone ? (
+                        <div className="h-8 w-20 bg-[#242D13]/10 animate-pulse rounded-lg"></div>
+                    ) : user ? (
+                        /* DASHBOARD SEBAGAI PENGGANTI DROPDOWN */
+                        <Link href="/account">
+                            <div className={`flex items-center gap-2 px-5 py-2 rounded-lg transition-all ${pathname === '/account' ? 'bg-[#324018] text-[#e8e8da]' : 'bg-[#242D13] text-[#e8e8da] hover:bg-[#324018]'}`}>
+                                <div className="w-6 h-6 rounded-full bg-[#e8e8da] flex items-center justify-center text-[#242D13] text-[10px] font-bold">
+                                    {user.email?.charAt(0).toUpperCase()}
+                                </div>
+                                <p className='text-sm font-medium'>Dashboard</p>
+                            </div>
+                        </Link>
+                    ) : (
+                        <div className="flex gap-4 items-center">
+                            <Link href='/signin' className='text-[#242D13] text-sm font-medium'>Login</Link>
+                            <Link href='/signup' className='bg-[#242D13] px-5 py-2 rounded-lg text-[#e8e8da] text-sm font-medium hover:bg-[#324018] transition-colors'>Sign Up</Link>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </nav> 
+    );
 }

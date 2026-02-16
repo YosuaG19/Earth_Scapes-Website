@@ -6,7 +6,6 @@ export const metadata: Metadata = {
   description: "A Trip Give Back To The Earth",
 };
 
-
 export default function TripsLayout({
   children,
 }: Readonly<{

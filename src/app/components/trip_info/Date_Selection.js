@@ -1,15 +1,13 @@
 'use client';
-import { useState, useMemo} from 'react';
+import { useState, useMemo } from 'react';
 import { useRouter } from "next/navigation";
 import Payment from '../payment/Payment';
 
-const RANGE_DAYS = 3; // 👉 ganti sesuai kebutuhan
-
+const RANGE_DAYS = 3; 
 const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
 const isSameDay = (a, b) =>
-  a &&
-  b &&
+  a && b &&
   a.getFullYear() === b.getFullYear() &&
   a.getMonth() === b.getMonth() &&
   a.getDate() === b.getDate();
@@ -30,11 +28,9 @@ const addDays = (date, days) => {
 const buildCalendar = (year, month) => {
   const start = new Date(year, month, 1);
   start.setDate(start.getDate() - start.getDay());
-
   return Array.from({ length: 42 }, (_, i) => {
     const d = new Date(start);
     d.setDate(start.getDate() + i);
-
     return {
       date: d,
       day: d.getDate(),
@@ -44,57 +40,47 @@ const buildCalendar = (year, month) => {
   });
 };
 
-export default function DateSelection() {
+export default function DateSelection(props) {
   const router = useRouter();
   const [baseDate, setBaseDate] = useState(new Date());
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [result, setResult] = useState('');
   const [showPayment, setShowPayment] = useState(false);
-
 
   const leftDate = baseDate;
   const rightDate = new Date(baseDate.getFullYear(), baseDate.getMonth() + 1);
   const today = new Date();
 
-  const leftCalendar = useMemo(
-    () => buildCalendar(leftDate.getFullYear(), leftDate.getMonth()),
-    [leftDate]
-  );
+  const leftCalendar = useMemo(() => buildCalendar(leftDate.getFullYear(), leftDate.getMonth()), [leftDate]);
+  const rightCalendar = useMemo(() => buildCalendar(rightDate.getFullYear(), rightDate.getMonth()), [rightDate]);
 
-  const rightCalendar = useMemo(
-    () => buildCalendar(rightDate.getFullYear(), rightDate.getMonth()),
-    [rightDate]
-  );
-
-  const isInRange = (date) =>
-    startDate && endDate && date > startDate && date < endDate;
+  const isInRange = (date) => startDate && endDate && date > startDate && date < endDate;
 
   const handleSelect = (date, isDisabled) => {
     if (isDisabled) return;
-
-    const autoEnd = addDays(date, RANGE_DAYS);
-
+    const todayNormalized = new Date();
+    todayNormalized.setHours(0, 0, 0, 0);
+    if (date < todayNormalized) return;
     setStartDate(date);
-    setEndDate(autoEnd);
+    setEndDate(addDays(date, RANGE_DAYS));
   };
 
   const apply = () => {
-    if (!startDate || !endDate) return;
+    if (!startDate || !endDate) {
+      alert("Please select a date first!");
+      return;
+    }
     setShowPayment(true);
-  };
-
-  const cancel = () => {
-    setStartDate(null);
-    setEndDate(null);
-    setResult('');
   };
 
   return (
     <>
       {showPayment && (
         <Payment
-          startDate={startDate} endDate={endDate}
+          startDate={startDate} 
+          endDate={endDate}
+          tripData={props.tripData} // DATA DITERUSKAN KE PAYMENT
+          trip_price={props.price}
           onClose={() => setShowPayment(false)}
         />
       )}
@@ -102,45 +88,24 @@ export default function DateSelection() {
       <div className="datepicker">
         <div className="calendar">
           <Calendar
-            title={leftDate}
-            dates={leftCalendar}
-            today={today}
-            startDate={startDate}
-            endDate={endDate}
-            isInRange={isInRange}
+            title={leftDate} dates={leftCalendar} today={today}
+            startDate={startDate} endDate={endDate} isInRange={isInRange}
             onSelect={handleSelect}
-            onPrev={() =>
-              setBaseDate(new Date(baseDate.getFullYear(), baseDate.getMonth() - 1))
-            }
+            onPrev={() => setBaseDate(new Date(baseDate.getFullYear(), baseDate.getMonth() - 1))}
           />
-
           <Calendar
-            title={rightDate}
-            dates={rightCalendar}
-            today={today}
-            startDate={startDate}
-            endDate={endDate}
-            isInRange={isInRange}
+            title={rightDate} dates={rightCalendar} today={today}
+            startDate={startDate} endDate={endDate} isInRange={isInRange}
             onSelect={handleSelect}
-            onNext={() =>
-              setBaseDate(new Date(baseDate.getFullYear(), baseDate.getMonth() + 1))
-            }
+            onNext={() => setBaseDate(new Date(baseDate.getFullYear(), baseDate.getMonth() + 1))}
           />
-
           <div className="action-menu">
             <span className="selection">
-              {startDate && endDate
-                ? `${formatDate(startDate)} - ${formatDate(endDate)}`
-                : 'Month Day, Year - Month Day, Year'}
+              {startDate && endDate ? `${formatDate(startDate)} - ${formatDate(endDate)}` : 'Month Day, Year - Month Day, Year'}
             </span>
-
             <div className="flex gap-[.5rem]">
-              <button onClick={cancel} type='button' className="cancel">
-                Cancel
-              </button>
-              <button onClick={apply} type='button' className="apply">
-                Apply
-              </button>
+              <button onClick={() => {setStartDate(null); setEndDate(null);}} type='button' className="cancel">Cancel</button>
+              <button onClick={apply} type='button' className="apply">Apply</button>
             </div>
           </div>
         </div>
@@ -149,55 +114,26 @@ export default function DateSelection() {
   );
 }
 
-function Calendar({
-  title,
-  dates,
-  today,
-  startDate,
-  endDate,
-  isInRange,
-  onSelect,
-  onPrev,
-  onNext,
-}) {
+function Calendar({ title, dates, today, startDate, endDate, isInRange, onSelect, onPrev, onNext }) {
+  const todayNormalized = new Date();
+  todayNormalized.setHours(0, 0, 0, 0);
   return (
     <div className="side">
       <div className="controls">
         {onPrev && <button type='button' onClick={onPrev}>prev</button>}
-        <strong>
-          {title.toLocaleString('en-US', { month: 'long', year: 'numeric' })}
-        </strong>
+        <strong>{title.toLocaleString('en-US', { month: 'long', year: 'numeric' })}</strong>
         {onNext && <button type='button' onClick={onNext}>next</button>}
       </div>
-
-      <div className="days">
-        {days.map((d) => (
-          <span key={d}>{d}</span>
-        ))}
-      </div>
-
+      <div className="days">{days.map((d) => (<span key={d}>{d}</span>))}</div>
       <div className="dates">
         {dates.map((d) => {
-          const isToday = isSameDay(d.date, today);
-          const isStart = isSameDay(d.date, startDate);
-          const isEnd = isSameDay(d.date, endDate);
-
+          const isPast = d.date < todayNormalized;
           return (
             <span
               key={d.key}
-              className={[
-                d.isDisabled && 'disabled',
-                isToday && 'today',
-                isStart && 'start_range',
-                isEnd && 'end_range',
-                isInRange(d.date) && 'in_range',
-              ]
-                .filter(Boolean)
-                .join(' ')}
-              onClick={() => onSelect(d.date, d.isDisabled)}
-            >
-              {d.day}
-            </span>
+              className={[(d.isDisabled || isPast) && 'disabled', isSameDay(d.date, today) && 'today', isSameDay(d.date, startDate) && 'start_range', isSameDay(d.date, endDate) && 'end_range', isInRange(d.date) && 'in_range'].filter(Boolean).join(' ')}
+              onClick={() => onSelect(d.date, d.isDisabled || isPast)}
+            >{d.day}</span>
           );
         })}
       </div>

@@ -32,7 +32,7 @@ const List_Items = (props) =>{
                                 </div>
                             </div>
         
-                           
+                        
                             
                             <div className="w-full flex items-center gap-[.5rem] mt-[.75rem]">
                                 <Image width="20" height="20" src="./location.svg" alt="X"></Image>

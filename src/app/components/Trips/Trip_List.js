@@ -6,8 +6,8 @@ import List_Items from "./List_Item";
 import Trip_Filter from "./Trip_Filter";
 import Trip_Page from "./Trip_Page";
 
-// 1. Terima searchQuery dari parent (page.js)
-const Trip_List = ({ searchQuery = "" }) => {
+// 1. Terima searchQuery DAN categoryFilter dari parent
+const Trip_List = ({ searchQuery = "", categoryFilter = "" }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -16,6 +16,15 @@ const Trip_List = ({ searchQuery = "" }) => {
   const [sortBy, setSortBy] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+
+  // Sync kategori dari URL ke State Filter
+  useEffect(() => {
+    if (categoryFilter) {
+      // Masukkan kategori dari URL ke dalam array selectedCat
+      // Kita bungkus array agar logic .includes() di bawah tetap jalan
+      setSelectedCat([categoryFilter]);
+    }
+  }, [categoryFilter]);
 
   useEffect(() => {
     const fetchTrips = async () => {
@@ -31,7 +40,7 @@ const Trip_List = ({ searchQuery = "" }) => {
   const filteredAndSortedItems = useMemo(() => {
     let result = [...items];
 
-    // A. SEARCH LOGIC (Filter berdasarkan ketikan user)
+    // A. SEARCH LOGIC
     if (searchQuery) {
       const lowQuery = searchQuery.toLowerCase();
       result = result.filter((item) => 
@@ -40,9 +49,12 @@ const Trip_List = ({ searchQuery = "" }) => {
       );
     }
 
-    // B. Filter by Category
+    // B. Filter by Category (Logic ini sudah benar, kita tinggal pastikan state-nya terisi)
     if (selectedCat.length > 0) {
-      result = result.filter((item) => selectedCat.includes(item.category));
+      result = result.filter((item) => {
+        // Pastikan pembandingnya sama-sama lowercase atau sesuai dengan slug di Home tadi
+        return selectedCat.some(cat => cat.toLowerCase() === (item.category || "").toLowerCase());
+      });
     }
 
     // C. Filter by Price Range
@@ -50,7 +62,7 @@ const Trip_List = ({ searchQuery = "" }) => {
       (item) => item.price >= priceRange.min && item.price <= priceRange.max,
     );
 
-    // D. Sort Logic
+    // D. Sort Logic (Tetap sama)
     if (sortBy === "Name A-Z") {
       result.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
     } else if (sortBy === "Name Z-A") {
@@ -66,7 +78,6 @@ const Trip_List = ({ searchQuery = "" }) => {
     }
 
     return result;
-    // Tambahkan searchQuery ke dependency array
   }, [items, selectedCat, priceRange, sortBy, searchQuery]);
 
   // Reset ke halaman 1 setiap kali filter/sort/search berubah
@@ -122,7 +133,7 @@ const Trip_List = ({ searchQuery = "" }) => {
           ) : (
             <div className="w-full text-center py-20">
               <p className="text-[#324018] italic opacity-60">
-                No trips found for "{searchQuery}". Try another keyword.
+                No trips found. Try another filter or keyword.
               </p>
             </div>
           )}

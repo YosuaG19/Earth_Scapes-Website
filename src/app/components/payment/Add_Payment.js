@@ -13,10 +13,10 @@ const Add_Payment = ({
 }) => {
   const [loading, setLoading] = useState(false);
 
-  // Mengambil harga dari tripData (database) untuk memastikan akurasi
+  // Perhitungan Harga
   const actualPrice = Number(tripData?.price || trip_price || 0);
-  const total = (booking?.passengers?.length || 0) + (booking?.includeOwner ? 1 : 0);
-  const total_spent = total * actualPrice;
+  const totalGuests = (booking?.passengers?.length || 0) + (booking?.includeOwner ? 1 : 0);
+  const total_spent = totalGuests * actualPrice;
 
   const handleConfirmAndPay = async () => {
     if (typeof window !== "undefined" && !window.snap) {
@@ -24,41 +24,74 @@ const Add_Payment = ({
       return;
     }
 
+    // MEMBUAT ORDER ID UNIK
+    const generatedOrderId = `TRP-${Date.now()}`;
+
     setLoading(true);
     try {
+      // 1. Ambil Token Midtrans
       const response = await fetch("/api/tokenizer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          id: `ES-${Date.now()}`,
+          id: generatedOrderId,
           productName: tripData?.title || "Earthscapes Trip",
           price: actualPrice,
-          quantity: total,
+          quantity: totalGuests,
         }),
       });
 
       const resData = await response.json();
       if (!resData.token) throw new Error(resData.error || "Failed to get token");
 
+      // 2. Buka Snap Midtrans
       window.snap.pay(resData.token, {
         onSuccess: async (result) => {
-          const { data: { user } } = await supabase.auth.getUser();
-          await supabase.from("bookings").insert([
-            {
+          try {
+            const { data: { user } } = await supabase.auth.getUser();
+            
+            // PAYLOAD DATA (Sudah termasuk order_id dan kolom-kolom baru)
+            const payload = {
               user_id: user?.id,
-              trip_id: tripData?.id,
+              order_id: generatedOrderId,
+              trip_title: tripData?.title || "Trip Selection",
               start_date: startDate,
               end_date: endDate,
               total_price: total_spent,
-              status: "paid",
+              status: "settlement",
               passengers: booking?.passengers || [],
-            },
-          ]);
-          alert("Payment Successful!");
-          window.location.href = "/profile";
+            };
+
+            // Validasi UUID untuk trip_id agar tidak error jika id statis
+            const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+            if (tripData?.id && isUUID.test(tripData.id)) {
+              payload.trip_id = tripData.id;
+            }
+
+            // SIMPAN KE SUPABASE
+            const { error: dbError } = await supabase
+              .from("bookings")
+              .insert([payload]);
+
+            if (dbError) {
+              console.error("Database Error:", dbError.message);
+              alert("Gagal simpan ke database: " + dbError.message);
+            } else {
+              alert("Payment & Booking Successful!");
+              window.location.href = "/dashboard/trips";
+            }
+          } catch (err) {
+            console.error("Runtime Error in onSuccess:", err);
+          }
         },
-        onPending: () => alert("Waiting for your payment..."),
-        onError: () => alert("Payment failed!"),
+        onPending: () => {
+          alert("Waiting for payment...");
+          window.location.href = "/dashboard/trips";
+        },
+        onError: (err) => {
+          console.error("Midtrans Error:", err);
+          alert("Payment failed!");
+        },
         onClose: () => alert("Payment cancelled."),
       });
     } catch (err) {
@@ -77,15 +110,21 @@ const Add_Payment = ({
   const formatIDR = (v) => "Rp " + new Intl.NumberFormat("id-ID").format(v);
 
   return (
-    <div className="w-full flex flex-col gap-6 p-2">
+    <div className="w-full flex flex-col gap-6 p-2 text-[#242D13]">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-[#242D13]">Finalize Booking</h2>
-        <button onClick={onClose} className="text-[#242D13] opacity-50 hover:opacity-100 text-xl">✕</button>
+        <h2 className="text-2xl font-bold">Finalize Booking</h2>
+        <button onClick={onClose} className="opacity-50 hover:opacity-100 text-xl">✕</button>
       </div>
 
       <span className="w-full h-[1px] bg-[#242D13]/10"></span>
 
-      <div className="flex flex-col gap-4 text-[#242D13]">
+      <div className="flex flex-col gap-4">
+        {/* INFO NAMA TRIP */}
+        <div className="bg-white/40 p-4 rounded-xl">
+           <p className="text-[12px] opacity-60 uppercase font-bold tracking-wider">Trip Name</p>
+           <p className="font-bold text-lg">{tripData?.title}</p>
+        </div>
+
         <div className="flex justify-between items-center bg-white/40 p-4 rounded-xl">
           <div>
             <p className="text-[12px] opacity-60 uppercase font-bold tracking-wider">Dates</p>
@@ -93,7 +132,7 @@ const Add_Payment = ({
           </div>
           <div className="text-right">
             <p className="text-[12px] opacity-60 uppercase font-bold tracking-wider">Total Guest</p>
-            <p className="font-semibold">{total} Person</p>
+            <p className="font-semibold">{totalGuests} Person</p>
           </div>
         </div>
 

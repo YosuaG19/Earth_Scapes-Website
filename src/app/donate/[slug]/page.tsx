@@ -18,9 +18,27 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <>
-      <Banner title={data.title} desc={data.desc2} hero={data.hero} color={data.color}></Banner>
-      <Information color={data.color} orv={data.overview} desc={data.desc1} impact={data.impact} proggNow={data.proggNow} proggLim={data.progLim}></Information>
-      <Footer></Footer>
+      <Banner 
+        title={data.title} 
+        desc={data.desc2} 
+        hero={data.hero} 
+        color={data.color} 
+      />
+      
+      <Information 
+        // --- BAGIAN YANG DITAMBAHKAN AGAR DATA TIDAK UNDEFINED ---
+        title={data.title} 
+        hero={data.hero}
+        // -------------------------------------------------------
+        color={data.color} 
+        orv={data.overview} 
+        desc={data.desc1} 
+        impact={data.impact} 
+        proggNow={data.proggNow} 
+        proggLim={data.progLim}
+      />
+      
+      <Footer />
     </>
   );
 }

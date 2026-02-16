@@ -25,6 +25,10 @@ export default function Navbar() {
 
         const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
             if (event === 'SIGNED_IN') setUser(session?.user);
+            
+            // LOGIC PENTING: Mendeteksi perubahan metadata (seperti foto profil)
+            if (event === 'USER_UPDATED') setUser(session?.user);
+
             if (event === 'SIGNED_OUT') {
                 setUser(null);
                 router.push('/signin');
@@ -48,12 +52,11 @@ export default function Navbar() {
                 </div>
             </Link>
             
-            {/* TENGAH: SEKARANG KOSONG */}
+            {/* TENGAH */}
             <div></div>
             
-            {/* SISI KANAN: SEMUA MENU JADI SATU DI SINI */}
+            {/* SISI KANAN */}
             <div className="flex items-center gap-10">
-                {/* Menu Navigasi */}
                 <ul className='text-[#242D13] text-[1.1rem] flex gap-10'>
                     <li>
                         <Link href="/trips" className={`hover:opacity-70 ${pathname === '/trips' ? 'font-bold border-b-2 border-[#242D13]' : ''}`}>Trips</Link>
@@ -63,18 +66,27 @@ export default function Navbar() {
                     </li>
                 </ul>
 
-                {/* Auth Section */}
                 <div className="flex items-center border-l border-[#242D13]/20 pl-10">
                     {!isInitialCheckDone ? (
                         <div className="h-8 w-20 bg-[#242D13]/10 animate-pulse rounded-lg"></div>
                     ) : user ? (
-                        /* DASHBOARD SEBAGAI PENGGANTI DROPDOWN */
-                        <Link href="/account">
-                            <div className={`flex items-center gap-2 px-5 py-2 rounded-lg transition-all ${pathname === '/account' ? 'bg-[#324018] text-[#e8e8da]' : 'bg-[#242D13] text-[#e8e8da] hover:bg-[#324018]'}`}>
-                                <div className="w-6 h-6 rounded-full bg-[#e8e8da] flex items-center justify-center text-[#242D13] text-[10px] font-bold">
-                                    {user.email?.charAt(0).toUpperCase()}
+                        <Link href="/dashboard">
+                            <div className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all ${pathname.startsWith('/dashboard') ? 'bg-[#324018] text-[#e8e8da]' : 'bg-[#242D13] text-[#e8e8da] hover:bg-[#324018]'}`}>
+                                
+                                {/* LINGKARAN FOTO/INISIAL */}
+                                <div className="w-7 h-7 rounded-full bg-[#e8e8da] overflow-hidden flex items-center justify-center text-[#242D13] text-[10px] font-bold border border-white/20">
+                                    {user.user_metadata?.avatar_url ? (
+                                        <img 
+                                            src={user.user_metadata.avatar_url} 
+                                            alt="avatar" 
+                                            className="w-full h-full object-cover"
+                                        />
+                                    ) : (
+                                        user.email?.charAt(0).toUpperCase()
+                                    )}
                                 </div>
-                                <p className='text-sm font-medium'>Dashboard</p>
+
+                                <p className='text-xs font-bold tracking-tight'>Dashboard</p>
                             </div>
                         </Link>
                     ) : (

@@ -75,7 +75,7 @@ const Information = (props) => {
       </div>
 
       {showGuestPopup && (
-        <div className="fixed inset-0 bg-black/50 z-[999] flex items-center justify-center">
+        <div className="fixed inset-0 bg-black/50 z-999 flex items-center justify-center">
            <div className="bg-[#e8e8da] p-6 rounded-2xl w-full max-w-md">
               <Add_Guest 
                 booking={{ passengers, includeOwner }}
@@ -89,7 +89,7 @@ const Information = (props) => {
       )}
 
       {showPaymentPopup && (
-        <div className="fixed inset-0 bg-black/50 z-[999] flex items-center justify-center">
+        <div className="fixed inset-0 bg-black/50 z-999 flex items-center justify-center">
            <div className="bg-[#e8e8da] p-6 rounded-2xl w-full max-w-2xl overflow-y-auto max-h-[90vh]">
               <Add_Payment 
                 booking={{ passengers, includeOwner }}

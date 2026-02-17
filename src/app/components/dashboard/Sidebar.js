@@ -2,13 +2,14 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-// Import Ikon Modern
+// Tambahkan ShoppingBag ke daftar import
 import { 
   LayoutDashboard, 
   Map, 
   Sprout, 
   LogOut, 
   User,
+  ShoppingBag, // Import ikon baru
   Settings 
 } from 'lucide-react';
 
@@ -18,11 +19,11 @@ export default function Sidebar() {
     const supabase = createClient();
 
     const menuItems = [
-        // { 
-        //     name: 'Overview', 
-        //     path: '/dashboard/overview', 
-        //     icon: <LayoutDashboard size={20} strokeWidth={1.5} /> 
-        // },
+        { 
+            name: 'Overview', 
+            path: '/dashboard/overview', 
+            icon: <LayoutDashboard size={20} strokeWidth={1.5} /> 
+        },
         { 
             name: 'Riwayat Trip', 
             path: '/dashboard/trips', 
@@ -32,6 +33,12 @@ export default function Sidebar() {
             name: 'Donasi Saya', 
             path: '/dashboard/donations', 
             icon: <Sprout size={20} strokeWidth={1.5} /> 
+        },
+        { 
+            // MENU BARU: Riwayat Belanja EcoShop
+            name: 'EcoShop Transaksi', 
+            path: '/dashboard/transactions', 
+            icon: <ShoppingBag size={20} strokeWidth={1.5} /> 
         },
         { 
             name: 'Profil Saya', 

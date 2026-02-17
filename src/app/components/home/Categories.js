@@ -48,7 +48,7 @@ const Categories = () => {
                     <h1 className="text-[3rem] abo">Categories</h1>
                 </div>
 
-                <div className="h-[80%] w-full grid grid-cols-3 grid-rows-2 gap-[1.5rem] pb-[.5rem] pt-[.5rem] pl-[2.5rem] pr-[2.5rem]">
+                <div className="h-[80%] w-full grid grid-cols-3 grid-rows-2 gap-6 pb-2 pt-2 pl-10 pr-10">
                     {Cats.map((cat) => {
                         return (
                             /* Bungkus Cat_Card dengan Link. 

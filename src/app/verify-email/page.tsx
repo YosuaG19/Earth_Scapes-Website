@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { createClient } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/client";
 
 export default function VerifyEmailPage() {
   const [status, setStatus] = useState("verifying");
@@ -37,9 +37,10 @@ export default function VerifyEmailPage() {
         setTimeout(() => {
           router.push("/");
         }, 3000);
-      } catch (error) {
+      } catch (error: any) {
         console.error("Verification error:", error);
         setStatus("error");
+        // Menggunakan error: any agar TypeScript mengizinkan akses ke properti .message
         setMessage(error.message || "Gagal memverifikasi email");
 
         // Redirect ke signin setelah 5 detik
@@ -79,6 +80,7 @@ export default function VerifyEmailPage() {
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
                     strokeLinecap="round"
@@ -101,6 +103,7 @@ export default function VerifyEmailPage() {
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
                     strokeLinecap="round"
@@ -114,7 +117,7 @@ export default function VerifyEmailPage() {
               <p className="text-gray-600">Mengalihkan ke halaman login...</p>
               <button
                 onClick={() => router.push("/signin")}
-                className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
               >
                 Kembali ke Login
               </button>

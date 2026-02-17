@@ -124,13 +124,13 @@ const Add_Guest = ({ booking, setBooking }) => {
   return (
     <>
       <div className="w-full h-full flex flex-col justify-between">
-        <span className="w-full h-[2px] bg-[#242D13]"></span>
+        <span className="w-full h-0.5 bg-[#242D13]"></span>
 
         {/* TOP COUNTER + ADD */}
-        <div className="w-full text-[18px] text-[#e8e8da] flex justify-end gap-[.75rem]">
+        <div className="w-full text-[18px] text-[#e8e8da] flex justify-end gap-3">
           <input
             type="text"
-            className="w-[20px] text-center border-b-[2px] text-[#5a7527] bg-transparent outline-none"
+            className="w-5 text-center border-b-2 text-[#5a7527] bg-transparent outline-none"
             value={passengers.length + (includeOwner ? 1 : 0)}
             readOnly
           />
@@ -138,40 +138,40 @@ const Add_Guest = ({ booking, setBooking }) => {
           <button
             type="button"
             onClick={openAdd}
-            className="h-[30px] w-[30px] rounded-full bg-[#5a7527] flex items-center justify-center"
+            className="h-7.5 w-7.5 rounded-full bg-[#5a7527] flex items-center justify-center"
           >
             +
           </button>
         </div>
 
         {/* LIST */}
-        <div className="h-[90%] w-full grid auto-rows-[30%] gap-[.5rem] overflow-y-scroll pr-[.25rem] custom-scrollbar">
+        <div className="h-[90%] w-full grid auto-rows-[30%] gap-2 overflow-y-scroll pr-1 custom-scrollbar">
           {/* OWNER (DYNAMICALLY FROM SUPABASE) */}
-          <div className="h-full w-full bg-[#5a7527] flex flex-col justify-between p-[.75rem] text-[#e8e8da]">
-            <div className="grid grid-cols-2 gap-[.5rem] h-full">
+          <div className="h-full w-full bg-[#5a7527] flex flex-col justify-between p-3 text-[#e8e8da]">
+            <div className="grid grid-cols-2 gap-2 h-full">
               {ownerFields.map((field) => (
                 <div
                   key={field.id}
-                  className="flex relative flex-col px-[.5rem] gap-[.3rem]"
+                  className="flex relative flex-col px-2 gap-[.3rem]"
                 >
                   <label
-                    className="z-[12] px-[.5rem] bg-[#5a7527] text-[12px] w-fit"
+                    className="z-12 px-2 bg-[#5a7527] text-[12px] w-fit"
                     htmlFor={field.id}
                   >
                     {field.label}
                   </label>
                   <input
-                    className="z-[12] -mt-[.5rem] bg-transparent border-none outline-none"
+                    className="z-12 -mt-2 bg-transparent border-none outline-none"
                     id={field.id}
                     type="text"
                     disabled
                     value={field.value}
                   ></input>
-                  <span className="z-[11] w-full h-[80%] border-[#e8e8da] border-[2px] absolute -bottom-0 left-0 rounded-tr-[1rem]"></span>
+                  <span className="z-11 w-full h-[80%] border-[#e8e8da] border-2 absolute bottom-0 left-0 rounded-tr-2xl"></span>
                 </div>
               ))}
 
-              <div className="flex justify-end items-end gap-[.5rem]">
+              <div className="flex justify-end items-end gap-2">
                 <p className="text-[12px]">Add as Guest</p>
 
                 <label className="relative inline-flex items-center cursor-pointer">
@@ -189,9 +189,9 @@ const Add_Guest = ({ booking, setBooking }) => {
                     }
                   />
                   <div
-                    className="w-11 h-6 bg-[#242D13]/30 rounded-full peer outline-[2px]
+                    className="w-11 h-6 bg-[#242D13]/30 rounded-full peer outline-2
                         peer-checked:bg-[#242D13]
-                        after:content-[''] after:absolute after:top-[2px] after:left-[2px]
+                        after:content-[''] after:absolute after:top-0.5 after:left-0.5
                         after:bg-[#e8e8da] after:rounded-full after:h-5 after:w-5
                         after:transition-all peer-checked:after:translate-x-full"
                   ></div>
@@ -207,39 +207,39 @@ const Add_Guest = ({ booking, setBooking }) => {
             return (
               <div
                 key={idx}
-                className="h-full w-full bg-[#5a7527] p-[.75rem] text-[#e8e8da]"
+                className="h-full w-full bg-[#5a7527] p-3 text-[#e8e8da]"
               >
-                <div className="grid grid-cols-2 gap-[.5rem] h-full">
+                <div className="grid grid-cols-2 gap-2 h-full">
                   {passengerFields.map((field) => (
                     <div
                       key={field.id}
-                      className="flex relative flex-col px-[.5rem] gap-[.3rem]"
+                      className="flex relative flex-col px-2 gap-[.3rem]"
                     >
-                      <label className="z-[12] px-[.5rem] bg-[#5a7527] text-[12px] w-fit">
+                      <label className="z-12 px-2 bg-[#5a7527] text-[12px] w-fit">
                         {field.label}
                       </label>
                       <input
-                        className="z-[12] -mt-[.5rem] bg-transparent border-none outline-none"
+                        className="z-12 -mt-2 bg-transparent border-none outline-none"
                         type="text"
                         disabled
                         value={field.value}
                       />
-                      <span className="z-[11] w-full h-[80%] border-[#e8e8da] border-[2px] absolute -bottom-0 left-0 rounded-tr-[1rem]" />
+                      <span className="z-11 w-full h-[80%] border-[#e8e8da] border-2 absolute bottom-0 left-0 rounded-tr-2xl" />
                     </div>
                   ))}
 
-                  <div className="flex justify-end items-end gap-[.5rem]">
+                  <div className="flex justify-end items-end gap-2">
                     <button
                       type="button"
                       onClick={() => openEdit(idx)}
-                      className="px-3 py-1 bg-[#e8e8da] text-[#5a7527] rounded-r-[.5rem] rounded-bl-[.5rem] text-[12px]"
+                      className="px-3 py-1 bg-[#e8e8da] text-[#5a7527] rounded-r-lg rounded-bl-lg text-[12px]"
                     >
                       Edit
                     </button>
                     <button
                       type="button"
                       onClick={() => deleteGuest(idx)}
-                      className="px-3 py-1 bg-[#b82525] text-[#e8e8da] rounded-r-[.5rem] rounded-bl-[.5rem] text-[12px]"
+                      className="px-3 py-1 bg-[#b82525] text-[#e8e8da] rounded-r-lg rounded-bl-lg text-[12px]"
                     >
                       Delete
                     </button>
@@ -255,7 +255,7 @@ const Add_Guest = ({ booking, setBooking }) => {
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div
-            className="z-[12] bg-[#5a7527] w-[90%] max-w-[400px] p-[1rem] flex flex-col gap-[.5rem]"
+            className="z-12 bg-[#5a7527] w-[90%] max-w-100 p-4 flex flex-col gap-2"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
@@ -271,16 +271,16 @@ const Add_Guest = ({ booking, setBooking }) => {
             {addFields.map((field) => (
               <div
                 key={field.id}
-                className="flex relative flex-col px-[.5rem] gap-[.3rem] text-[#e8e8da]"
+                className="flex relative flex-col px-2 gap-[.3rem] text-[#e8e8da]"
               >
                 <label
-                  className="z-[12] px-[.5rem] bg-[#5a7527] text-[12px] w-fit"
+                  className="z-12 px-2 bg-[#5a7527] text-[12px] w-fit"
                   htmlFor={field.id}
                 >
                   {field.label}
                 </label>
                 <input
-                  className="z-[12] -mt-[.5rem] border-none focus:outline-none focus:ring-0 bg-transparent"
+                  className="z-12 -mt-2 border-none focus:outline-none focus:ring-0 bg-transparent"
                   id={field.id}
                   type="text"
                   placeholder={field.holder}
@@ -289,28 +289,28 @@ const Add_Guest = ({ booking, setBooking }) => {
                     setForm({ ...form, [field.id]: e.target.value })
                   }
                 ></input>
-                <span className="w-full h-[85%] border-[#e8e8da] border-[2px] absolute -bottom-1 left-0 rounded-tr-[1rem]"></span>
+                <span className="w-full h-[85%] border-[#e8e8da] border-2 absolute -bottom-1 left-0 rounded-tr-2xl"></span>
               </div>
             ))}
 
-            <div className="flex justify-end gap-[.5rem] mt-[.5rem]">
+            <div className="flex justify-end gap-2 mt-2">
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="px-3 py-1 bg-[#e8e8da] text-[#5a7527] rounded-[.25rem]"
+                className="px-3 py-1 bg-[#e8e8da] text-[#5a7527] rounded-sm"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 onClick={saveGuest}
-                className="px-3 py-1 bg-[#242D13] text-[#e8e8da] rounded-[.25rem]"
+                className="px-3 py-1 bg-[#242D13] text-[#e8e8da] rounded-sm"
               >
                 {mode === "add" ? "Save" : "Update"}
               </button>
             </div>
           </div>
           <div
-            className="z-[10] fixed inset-0 "
+            className="z-10 fixed inset-0 "
             onClick={() => setIsModalOpen(false)}
           />
         </div>

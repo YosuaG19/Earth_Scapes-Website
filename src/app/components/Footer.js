@@ -7,9 +7,9 @@ import ig_logo from "../../../public/instagram.svg"
 const Footer = () => {
     return(
         <>
-            <footer className="relative flex flex-col justify-around content-center items-center bg-[#242D13] min-h-[25vh] h-[25vh] p-[0.5rem]">
-                <div className="flex justify-center  items-center min-h-[50%] w-[50%] gap-[1.5rem]">
-                    <div className="overflow-hidden flex items-center justify-center w-[77px] h-[77px] rounded-full bg-white max-w-[100px] max-h-[100px]">
+            <footer className="relative flex flex-col justify-around content-center items-center bg-[#242D13] min-h-[25vh] h-[25vh] p-2">
+                <div className="flex justify-center  items-center min-h-[50%] w-[50%] gap-6">
+                    <div className="overflow-hidden flex items-center justify-center w-19.25 h-19.25 rounded-full bg-white max-w-25 max-h-25">
                         <Image width='70' height='70' src="/logo.png" alt="logo"></Image>
                     </div>
                     <div className="text-[#e8e8da] flex flex-col items-start">
@@ -22,7 +22,7 @@ const Footer = () => {
                     <p>© 2026 EarthScape All rights reserved. Together, we explore and protect the earth.</p>
                 </div>
 
-                <div className="absolute top-0 right-0 h-full w-[5%] grid gird-rows-3 justify-center items-center py-[1rem]">
+                <div className="absolute top-0 right-0 h-full w-[5%] grid gird-rows-3 justify-center items-center py-4">
                     <Link href="../">
                         <Image width="25" height="25" src={ig_logo} alt="Instagram"></Image>
                     </Link>

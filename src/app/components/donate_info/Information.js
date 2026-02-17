@@ -97,16 +97,16 @@ const Information = (props) => {
         data-client-key={process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY}
       />
 
-      <div className="flex flex-col w-full px-[1.5rem]">
-        <div className="flex items-start gap-[1rem] py-[1rem]">
-          <div className="w-[60%] flex flex-col justify-center pr-[1rem] border-r-[2.5px]">
+      <div className="flex flex-col w-full px-6">
+        <div className="flex items-start gap-4 py-4">
+          <div className="w-[60%] flex flex-col justify-center pr-4 border-r-[2.5px]">
             <h2 style={{ color: props.color }} className="text-[2.5rem]">
               Description
             </h2>
             <p className="text-[14px] text-justify">{props.desc}</p>
           </div>
-          <div className="w-[40%] flex flex-col justify-end h-full gap-[1rem] pt-[1rem]">
-            <div className="flex gap-[1rem]">
+          <div className="w-[40%] flex flex-col justify-end h-full gap-4 pt-4">
+            <div className="flex gap-4">
               <button
                 onClick={() => setActiveTab("overview")}
                 style={
@@ -138,26 +138,26 @@ const Information = (props) => {
             </div>
           </div>
         </div>
-        <div className="flex pt-[1rem] h-[50vh] gap-[1rem]">
+        <div className="flex pt-4 h-[50vh] gap-4">
           <div className="w-[50%] h-full flex flex-col">
             <Image_Damper name={props.title} img={props.hero}></Image_Damper>
           </div>
           <div className="w-[50%] h-full flex flex-col justify-between items-center">
             <h2
               style={{ color: props.color }}
-              className="border-b-[4px] w-fit px-[2rem] text-[2.5rem]"
+              className="border-b-4 w-fit px-8 text-[2.5rem]"
             >
               Monthly Target
             </h2>
 
-            <div className="w-full flex flex-col gap-[1.25rem]">
+            <div className="w-full flex flex-col gap-5">
               <div className="w-full flex flex-col gap-[.2rem]">
                 <p className="text-right text-[14px]">
                   {formatIDR(currentProgress)} / {formatIDR(Limit)}
                 </p>
                 <div
                   style={{ outlineColor: props.color }}
-                  className="outline-[3px] w-full relative h-[30px] rounded-full overflow-hidden"
+                  className="outline-[3px] w-full relative h-7.5 rounded-full overflow-hidden"
                 >
                   <span
                     style={{ width: percentage + "%", background: props.color }}
@@ -168,13 +168,13 @@ const Information = (props) => {
 
               <div>
                 <p>Select a donation ammount</p>
-                <div className="grid grid-cols-4 w-full gap-[.25rem]">
+                <div className="grid grid-cols-4 w-full gap-1">
                   {ammount.map((choice) => {
                     return (
                       <button
                         onClick={() => setSelectedAmount(choice)}
                         key={choice}
-                        className="px-[1rem] py-[.5rem] border-[1px] text-[12px]"
+                        className="px-4 py-2 border text-[12px]"
                         style={
                           selectedAmount === choice
                             ? {
@@ -197,7 +197,7 @@ const Information = (props) => {
                       const rawValue = parseIDR(e.target.value);
                       setSelectedAmount(rawValue);
                     }}
-                    className="col-span-2 px-[1rem] py-[.5rem] border-[1px] text-[12px]"
+                    className="col-span-2 px-4 py-2 border text-[12px]"
                   />
                 </div>
               </div>
@@ -206,7 +206,7 @@ const Information = (props) => {
                 onClick={handlePayment}
                 disabled={isLoading}
                 type="button"
-                className="self-center text-white w-[50%] py-[.5rem] rounded-[.5rem] disabled:opacity-50"
+                className="self-center text-white w-[50%] py-2 rounded-lg disabled:opacity-50"
               >
                 {isLoading ? "Processing..." : "Donate"}
               </button>

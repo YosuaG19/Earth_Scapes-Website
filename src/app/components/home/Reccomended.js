@@ -52,7 +52,7 @@ const Recommended = () => {
             {/* Carousel Container */}
             <div 
                 id="carou" 
-                className="h-[75%] w-full flex overflow-x-auto gap-[1.5rem] pb-[2.5rem] pt-[.5rem] px-[2rem] no-scrollbar shrink-0"
+                className="h-[75%] w-full flex overflow-x-auto gap-6 pb-10 pt-2 px-8 no-scrollbar shrink-0"
             >
                 {Recs.map((rec) => (
                     /* contents: Membuat Link 'transparan' secara layout 

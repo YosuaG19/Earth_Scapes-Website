@@ -51,9 +51,9 @@ export default function MyTripsPage() {
                 <p className="text-gray-500 mt-2 font-medium">Daftar petualangan konservasi yang telah kamu agendakan.</p>
             </header>
 
-            <div className="bg-[#F5F5F0] p-6 md:p-10 rounded-[3rem] border border-gray-200/50 min-h-[500px]">
+            <div className="bg-[#F5F5F0] p-6 md:p-10 rounded-[3rem] border border-gray-200/50 min-h-125">
                 {loading ? (
-                    <div className="flex flex-col items-center justify-center h-[300px] gap-4">
+                    <div className="flex flex-col items-center justify-center h-75 gap-4">
                         <div className="w-12 h-12 border-4 border-[#242D13]/10 border-t-[#242D13] rounded-full animate-spin"></div>
                     </div>
                 ) : trips.length > 0 ? (

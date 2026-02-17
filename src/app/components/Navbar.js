@@ -25,8 +25,6 @@ export default function Navbar() {
 
         const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
             if (event === 'SIGNED_IN') setUser(session?.user);
-            
-            // LOGIC PENTING: Mendeteksi perubahan metadata (seperti foto profil)
             if (event === 'USER_UPDATED') setUser(session?.user);
 
             if (event === 'SIGNED_OUT') {
@@ -41,28 +39,31 @@ export default function Navbar() {
     }, [supabase, router]);
 
     return (
-        <nav className="sticky top-0 flex items-center justify-between px-[2rem] py-[.5rem] bg-[#e8e8da] z-[50] shadow-sm">
+        <nav className="sticky top-0 flex items-center justify-between px-8 py-2 bg-[#e8e8da] z-50 shadow-sm">
             {/* SISI KIRI: LOGO */}
             <Link href="/">
-                <div className='flex items-center gap-[1rem]'>
-                    <div className="flex items-center justify-center w-[55px] h-[55px] rounded-full bg-[#324018]">
+                <div className='flex items-center gap-4'>
+                    <div className="flex items-center justify-center w-13.75 h-13.75 rounded-full bg-[#324018]">
                         <Image width={50} height={50} src="/logo.png" alt='logo' priority />
                     </div>
                     <h1 className='text-[#242D13] text-[1.5rem] font-bold tracking-tighter'>EarthScapes</h1>
                 </div>
             </Link>
             
-            {/* TENGAH */}
-            <div></div>
-            
             {/* SISI KANAN */}
             <div className="flex items-center gap-10">
                 <ul className='text-[#242D13] text-[1.1rem] flex gap-10'>
                     <li>
-                        <Link href="/trips" className={`hover:opacity-70 ${pathname === '/trips' ? 'font-bold border-b-2 border-[#242D13]' : ''}`}>Trips</Link>
+                        <Link href="/trips" className={`hover:opacity-70 transition-all ${pathname === '/trips' ? 'font-bold border-b-2 border-[#242D13]' : ''}`}>Trips</Link>
                     </li>
                     <li>
-                        <Link href="/donate" className={`hover:opacity-70 ${pathname === '/donate' ? 'font-bold border-b-2 border-[#242D13]' : ''}`}>Donate</Link>
+                        <Link href="/donate" className={`hover:opacity-70 transition-all ${pathname === '/donate' ? 'font-bold border-b-2 border-[#242D13]' : ''}`}>Donate</Link>
+                    </li>
+                    {/* MENU BARU: ECOSHOP */}
+                    <li>
+                        <Link href="/ecoshop" className={`hover:opacity-70 transition-all flex items-center gap-1 ${pathname === '/ecoshop' ? 'font-bold border-b-2 border-[#242D13]' : ''}`}>
+                            EcoShop
+                        </Link>
                     </li>
                 </ul>
 
@@ -91,7 +92,7 @@ export default function Navbar() {
                         </Link>
                     ) : (
                         <div className="flex gap-4 items-center">
-                            <Link href='/signin' className='text-[#242D13] text-sm font-medium'>Login</Link>
+                            <Link href='/signin' className='text-[#242D13] text-sm font-medium hover:opacity-70'>Login</Link>
                             <Link href='/signup' className='bg-[#242D13] px-5 py-2 rounded-lg text-[#e8e8da] text-sm font-medium hover:bg-[#324018] transition-colors'>Sign Up</Link>
                         </div>
                     )}

@@ -32,12 +32,12 @@ const Book_Form = (props) => {
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           >
             {imageList.map((url, index) => (
-              <div key={index} className="w-full h-full flex-shrink-0">
+              <div key={index} className="w-full h-full shrink-0">
                 <Image_Damper name={`Trip Image ${index + 1}`} img={url} />
               </div>
             ))}
           </div>
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-[10]">
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
             {imageList.map((_, index) => (
               <div
                 key={index}

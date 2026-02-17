@@ -28,7 +28,7 @@ const Categories = () => {
         <h1 className="text-[3rem] abo">Donations</h1>
       </div>
 
-      <div className="h-[70%] w-full grid grid-cols-3 gap-[1.5rem] px-[2.5rem]">
+      <div className="h-[70%] w-full grid grid-cols-3 gap-6 px-10">
         {Cats.map((cat) => (
           <Cat_Card key={cat.slug} {...cat} />
         ))}

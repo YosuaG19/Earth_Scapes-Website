@@ -103,7 +103,7 @@ export default function DateSelection(props) {
             <span className="selection">
               {startDate && endDate ? `${formatDate(startDate)} - ${formatDate(endDate)}` : 'Month Day, Year - Month Day, Year'}
             </span>
-            <div className="flex gap-[.5rem]">
+            <div className="flex gap-2">
               <button onClick={() => {setStartDate(null); setEndDate(null);}} type='button' className="cancel">Cancel</button>
               <button onClick={apply} type='button' className="apply">Apply</button>
             </div>

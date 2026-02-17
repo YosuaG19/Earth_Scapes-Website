@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react"; // Tambahkan useEffect
 import { supabase } from "@/lib/supabase/client";
 
 const Add_Payment = ({
@@ -12,6 +12,25 @@ const Add_Payment = ({
   onClose,
 }) => {
   const [loading, setLoading] = useState(false);
+  const [snapReady, setSnapReady] = useState(false); // State baru untuk cek status Snap
+
+  // 1. OTOMATIS LOAD SCRIPT MIDTRANS JIKA BELUM ADA
+  useEffect(() => {
+    const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js"; // Ganti ke app.midtrans.com jika sudah produksi
+    const clientKey = process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY;
+
+    let script = document.querySelector(`script[src="${midtransScriptUrl}"]`);
+
+    if (!script) {
+      script = document.createElement("script");
+      script.src = midtransScriptUrl;
+      script.setAttribute("data-client-key", clientKey);
+      script.onload = () => setSnapReady(true);
+      document.body.appendChild(script);
+    } else {
+      setSnapReady(true);
+    }
+  }, []);
 
   // Perhitungan Harga
   const actualPrice = Number(tripData?.price || trip_price || 0);
@@ -19,17 +38,16 @@ const Add_Payment = ({
   const total_spent = totalGuests * actualPrice;
 
   const handleConfirmAndPay = async () => {
-    if (typeof window !== "undefined" && !window.snap) {
-      alert("Payment system is still loading. Please wait...");
+    // Cek apakah Snap sudah siap di window
+    if (!window.snap) {
+      alert("Payment system is still initializing. Please try again in a second.");
       return;
     }
 
-    // MEMBUAT ORDER ID UNIK
     const generatedOrderId = `TRP-${Date.now()}`;
-
     setLoading(true);
+
     try {
-      // 1. Ambil Token Midtrans
       const response = await fetch("/api/tokenizer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -44,13 +62,11 @@ const Add_Payment = ({
       const resData = await response.json();
       if (!resData.token) throw new Error(resData.error || "Failed to get token");
 
-      // 2. Buka Snap Midtrans
       window.snap.pay(resData.token, {
         onSuccess: async (result) => {
           try {
             const { data: { user } } = await supabase.auth.getUser();
             
-            // PAYLOAD DATA (Sudah termasuk order_id dan kolom-kolom baru)
             const payload = {
               user_id: user?.id,
               order_id: generatedOrderId,
@@ -58,30 +74,26 @@ const Add_Payment = ({
               start_date: startDate,
               end_date: endDate,
               total_price: total_spent,
-              status: "settlement",
+              status: "settlement", // Idealnya ini diupdate via webhook, tapi untuk demo ini oke
               passengers: booking?.passengers || [],
             };
 
-            // Validasi UUID untuk trip_id agar tidak error jika id statis
             const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
             if (tripData?.id && isUUID.test(tripData.id)) {
               payload.trip_id = tripData.id;
             }
 
-            // SIMPAN KE SUPABASE
             const { error: dbError } = await supabase
               .from("bookings")
               .insert([payload]);
 
-            if (dbError) {
-              console.error("Database Error:", dbError.message);
-              alert("Gagal simpan ke database: " + dbError.message);
-            } else {
-              alert("Payment & Booking Successful!");
-              window.location.href = "/dashboard/trips";
-            }
+            if (dbError) throw dbError;
+
+            alert("Payment & Booking Successful!");
+            window.location.href = "/dashboard/trips";
           } catch (err) {
-            console.error("Runtime Error in onSuccess:", err);
+            console.error("DB Error:", err);
+            alert("Payment success, but failed to save booking. Please contact support.");
           }
         },
         onPending: () => {
@@ -91,12 +103,15 @@ const Add_Payment = ({
         onError: (err) => {
           console.error("Midtrans Error:", err);
           alert("Payment failed!");
+          setLoading(false);
         },
-        onClose: () => alert("Payment cancelled."),
+        onClose: () => {
+          alert("Payment cancelled.");
+          setLoading(false);
+        },
       });
     } catch (err) {
       alert(err.message);
-    } finally {
       setLoading(false);
     }
   };
@@ -112,33 +127,32 @@ const Add_Payment = ({
   return (
     <div className="w-full flex flex-col gap-6 p-2 text-[#242D13]">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Finalize Booking</h2>
-        <button onClick={onClose} className="opacity-50 hover:opacity-100 text-xl">✕</button>
+        <h2 className="text-2xl font-bold tracking-tight">Finalize Booking</h2>
+        <button onClick={onClose} className="opacity-50 hover:opacity-100 text-xl transition-opacity">✕</button>
       </div>
 
-      <span className="w-full h-[1px] bg-[#242D13]/10"></span>
+      <span className="w-full h-px bg-[#242D13]/10"></span>
 
       <div className="flex flex-col gap-4">
-        {/* INFO NAMA TRIP */}
-        <div className="bg-white/40 p-4 rounded-xl">
-           <p className="text-[12px] opacity-60 uppercase font-bold tracking-wider">Trip Name</p>
-           <p className="font-bold text-lg">{tripData?.title}</p>
+        <div className="bg-[#fcfcf9] p-5 rounded-3xl border border-[#242D13]/5">
+           <p className="text-[10px] opacity-40 uppercase font-black tracking-[0.2em] mb-1">Destinasi Petualangan</p>
+           <p className="font-black text-xl text-[#242D13]">{tripData?.title}</p>
         </div>
 
-        <div className="flex justify-between items-center bg-white/40 p-4 rounded-xl">
+        <div className="grid grid-cols-2 gap-4 bg-[#fcfcf9] p-5 rounded-3xl border border-[#242D13]/5">
           <div>
-            <p className="text-[12px] opacity-60 uppercase font-bold tracking-wider">Dates</p>
-            <p className="font-semibold">{formatDate(startDate)} - {formatDate(endDate)}</p>
+            <p className="text-[10px] opacity-40 uppercase font-black tracking-[0.2em] mb-1">Jadwal</p>
+            <p className="font-bold text-sm">{formatDate(startDate)}</p>
           </div>
           <div className="text-right">
-            <p className="text-[12px] opacity-60 uppercase font-bold tracking-wider">Total Guest</p>
-            <p className="font-semibold">{totalGuests} Person</p>
+            <p className="text-[10px] opacity-40 uppercase font-black tracking-[0.2em] mb-1">Personil</p>
+            <p className="font-bold text-sm">{totalGuests} Traveler</p>
           </div>
         </div>
 
-        <div className="flex justify-between items-center px-2 py-4 border-t border-dashed border-[#242D13]/20">
-          <p className="text-[18px] font-medium">Amount to Pay</p>
-          <p className="text-[24px] font-bold text-[#5a7527]">
+        <div className="flex justify-between items-center px-4 py-6 mt-2 bg-[#242D13]/5 rounded-4xl">
+          <p className="text-sm font-bold opacity-60 uppercase tracking-widest">Total Bayar</p>
+          <p className="text-3xl font-black text-[#242D13]">
             {formatIDR(total_spent)}
           </p>
         </div>
@@ -147,13 +161,13 @@ const Add_Payment = ({
       <div className="flex flex-col gap-3">
         <button
           onClick={handleConfirmAndPay}
-          disabled={loading}
-          className="w-full py-4 bg-[#242D13] text-[#e8e8da] rounded-full font-bold text-[18px] shadow-xl hover:bg-[#2c3818] transition-all disabled:opacity-50"
+          disabled={loading || !snapReady} // Tombol mati jika script belum siap
+          className="w-full py-5 bg-[#242D13] text-[#e8e8da] rounded-3xl font-black text-lg shadow-xl shadow-[#242D13]/20 hover:bg-[#2c3818] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
         >
-          {loading ? "PREPARING PAYMENT..." : "PAY NOW"}
+          {!snapReady ? "INITIALIZING..." : loading ? "PREPARING..." : "CONFIRM & PAY"}
         </button>
-        <p className="text-center text-[11px] opacity-50 px-6">
-          By clicking Pay Now, you will be redirected to our secure payment partner to complete your transaction.
+        <p className="text-center text-[10px] opacity-40 font-medium px-8 leading-relaxed">
+          Pembayaran aman & terenkripsi melalui Midtrans Secure Gateway.
         </p>
       </div>
     </div>

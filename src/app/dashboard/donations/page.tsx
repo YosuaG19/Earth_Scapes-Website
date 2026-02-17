@@ -47,9 +47,9 @@ export default function MyDonationsPage() {
                 <p className="text-gray-500 mt-2 font-medium">Jejak kontribusi kamu dalam menghijaukan kembali bumi kita.</p>
             </header>
 
-            <div className="bg-white p-6 md:p-10 rounded-[3rem] shadow-xl shadow-gray-200/50 border border-gray-100 min-h-[500px]">
+            <div className="bg-white p-6 md:p-10 rounded-[3rem] shadow-xl shadow-gray-200/50 border border-gray-100 min-h-125">
                 {loading ? (
-                    <div className="flex flex-col items-center justify-center h-[300px] gap-4">
+                    <div className="flex flex-col items-center justify-center h-75 gap-4">
                         <div className="w-12 h-12 border-4 border-[#242D13]/10 border-t-[#242D13] rounded-full animate-spin"></div>
                         <p className="text-[#242D13]/40 font-bold text-sm uppercase tracking-widest">Memuat Data...</p>
                     </div>

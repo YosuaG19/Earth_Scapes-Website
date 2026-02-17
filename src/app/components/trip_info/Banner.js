@@ -12,18 +12,18 @@ const Banner = (props) =>{
 
     return(
         <>
-            <div className="relative flex items-end justify-center min-h-[85vh] h-[85vh] w-full p-[1.5rem] text-[#e8e8da]">
-                <button type="button" onClick={() => router.back()} className="flex item-center justify-center z-[5] cursor-pointer bg-white absolute w-[50px] h-[50px] rounded-br-[50%] top-[2rem] left-[2rem]">
+            <div className="relative flex items-end justify-center min-h-[85vh] h-[85vh] w-full p-6 text-[#e8e8da]">
+                <button type="button" onClick={() => router.back()} className="flex item-center justify-center z-5 cursor-pointer bg-white absolute w-12.5 h-12.5 rounded-br-[50%] top-8 left-8">
                     <Image width="30" height="30" src="/back.svg" alt="back"></Image>
                 </button>
 
-                <p className="text-[2.5rem] absolute top-[2.5rem] right-[3rem] z-[5]">{props.rating}</p>
+                <p className="text-[2.5rem] absolute top-10 right-12 z-5">{props.rating}</p>
 
-                <div className="relative w-full h-full flex items-center justify-center items-end rounded-bl-[2rem] rounded-tr-[2rem] overflow-hidden">
+                <div className="relative w-full h-full flex items-center justify-center rounded-bl-4xl rounded-tr-4xl overflow-hidden">
                     <Image_Damper name='Volcano' img={props.img}></Image_Damper>
-                    <div className="z-[3] absolute bottom-[1.5rem] px-[1.5rem] flex justify-between items-end w-full">
+                    <div className="z-3 absolute bottom-6 px-6 flex justify-between items-end w-full">
                         <div className="flex flex-col min-w-[30%] max-w-[60%]">
-                            <p className="text-[22px] -mb-[1rem]">{props.loc}</p>
+                            <p className="text-[22px] -mb-4">{props.loc}</p>
                             <h1 className="text-[2.5rem]">{props.title}</h1>
                         </div>
                         <div className="flex min-w-[30%] max-w-[40%] items-end justify-end">

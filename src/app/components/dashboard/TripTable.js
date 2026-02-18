@@ -6,8 +6,8 @@ export default function TripTable({ trips }) {
             <table className="w-full text-left border-separate border-spacing-y-3">
                 <thead>
                     <tr className="text-[#242D13]/40 text-[11px] uppercase tracking-[0.2em] font-bold">
-                        <th className="px-6 py-2">Trip & Petualangan</th>
-                        <th className="px-6 py-2">Tanggal Berangkat</th>
+                        <th className="px-6 py-2">Trips</th>
+                        <th className="px-6 py-2">Date of Departure</th>
                         <th className="px-6 py-2 text-right">Status</th>
                     </tr>
                 </thead>

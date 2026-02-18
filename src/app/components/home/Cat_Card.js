@@ -33,10 +33,10 @@ function Cat_Card(props) {
             </div>
 
             {/* TEXT CONTENT (Sisi Kiri) */}
-            <div className="z-3 w-[75%] bg-t absolute text-white p-4 transition-transform duration-500 group-hover:-translate-y-2">
-                <h2 className="w-full text-[24px] arti font-bold">{props.name}</h2>
+            <div className="z-3 w-[75%] bg-t absolute text-white py-2 pl-2 transition-transform duration-500 group-hover:-translate-y-2">
+                <h2 className="w-full text-[24px] arti font-medium">{props.name}</h2>
                 {/* Detail muncul lebih jelas atau bergeser halus */}
-                <p className="w-full text-[11px] arti opacity-80 group-hover:opacity-100 transition-opacity">
+                <p className="w-full text-[11px] arti opacity-80 group-hover:opacity-90 transition-opacity">
                     {props.detail}
                 </p>
             </div>

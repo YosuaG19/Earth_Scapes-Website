@@ -8,37 +8,30 @@ const Recommended = () => {
         {
             name: "Bromo",
             slug: "mount-bromo", 
-            loc: "Jawa Timur",
-            rate: "4.5",
+            loc: "East Java",
+            rate: "4.7",
             img: "/Volcano.png"
         },
         {
             name: "Kawah Ijen",
-            slug: "kawah-ijen",
-            loc: "Jawa Timur",
-            rate: "4.5",
+            slug: "mount-ijen",
+            loc: "Banyuwangi, East Java",
+            rate: "4.7",
             img: "/Mountain.png"
         },
         {
             name: "Karimun Jawa",
-            slug: "karimun-jawa",
-            loc: "Jawa Tengah",
-            rate: "4.5",
+            slug: "karimunjawa",
+            loc: "Central Java",
+            rate: "4.7",
             img: "/Turtle.png"
         },
         {
-            name: "Raja Ampat",
+            name: "Raja Ampat Island",
             slug: "raja-ampat",
-            loc: "Papua Barat",
-            rate: "4.5",
+            loc: "West Papua",
+            rate: "4.6",
             img: "/Fresh_Water.png"
-        },
-        {
-            name: "Pulau Seribu",
-            slug: "pulau-seribu",
-            loc: "DKI Jakarta",
-            rate: "4.5",
-            img: "/Coastal.png"
         },
     ];
 
@@ -52,7 +45,7 @@ const Recommended = () => {
             {/* Carousel Container */}
             <div 
                 id="carou" 
-                className="h-[75%] w-full flex overflow-x-auto gap-6 pb-10 pt-2 px-8 no-scrollbar shrink-0"
+                className="h-[75%] w-full grid grid-cols-4 gap-6 pb-10 pt-2 px-4 shrink-0"
             >
                 {Recs.map((rec) => (
                     /* contents: Membuat Link 'transparan' secara layout 

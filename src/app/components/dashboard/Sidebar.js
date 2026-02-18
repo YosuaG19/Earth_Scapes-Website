@@ -25,23 +25,23 @@ export default function Sidebar() {
             icon: <LayoutDashboard size={20} strokeWidth={1.5} /> 
         },
         { 
-            name: 'Riwayat Trip', 
+            name: 'Trip Logs', 
             path: '/dashboard/trips', 
             icon: <Map size={20} strokeWidth={1.5} /> 
         },
         { 
-            name: 'Donasi Saya', 
+            name: 'My Donation', 
             path: '/dashboard/donations', 
             icon: <Sprout size={20} strokeWidth={1.5} /> 
         },
         { 
             // MENU BARU: Riwayat Belanja EcoShop
-            name: 'EcoShop Transaksi', 
+            name: 'EcoShop Transaction', 
             path: '/dashboard/transactions', 
             icon: <ShoppingBag size={20} strokeWidth={1.5} /> 
         },
         { 
-            name: 'Profil Saya', 
+            name: 'My Profile', 
             path: '/dashboard/profile', 
             icon: <User size={20} strokeWidth={1.5} /> 
         },
@@ -96,7 +96,7 @@ export default function Sidebar() {
                     className="w-full flex items-center justify-center gap-3 px-4 py-4 text-red-400 bg-red-500/5 hover:bg-red-500/10 border border-red-500/20 rounded-2xl transition-all duration-300 group"
                 >
                     <LogOut size={18} strokeWidth={2} className="group-hover:-translate-x-1 transition-transform" />
-                    <span className="text-xs font-bold uppercase tracking-widest">Keluar Akun</span>
+                    <span className="text-xs font-bold uppercase tracking-widest">Log Out</span>
                 </button>
             </div>
         </aside>

@@ -42,25 +42,25 @@ export default function MyDonationsPage() {
         <div className="space-y-10">
             <header>
                 <h1 className="text-4xl font-extrabold text-[#242D13] tracking-tight">
-                    Donasi <span className="text-[#242D13]/30 font-light">Saya</span>
+                    My <span className="text-[#242D13]/30 font-light">Donation</span>
                 </h1>
-                <p className="text-gray-500 mt-2 font-medium">Jejak kontribusi kamu dalam menghijaukan kembali bumi kita.</p>
+                <p className="text-gray-500 mt-2 font-medium">Your contribution on restoring Earth.</p>
             </header>
 
             <div className="bg-white p-6 md:p-10 rounded-[3rem] shadow-xl shadow-gray-200/50 border border-gray-100 min-h-125">
                 {loading ? (
                     <div className="flex flex-col items-center justify-center h-75 gap-4">
                         <div className="w-12 h-12 border-4 border-[#242D13]/10 border-t-[#242D13] rounded-full animate-spin"></div>
-                        <p className="text-[#242D13]/40 font-bold text-sm uppercase tracking-widest">Memuat Data...</p>
+                        <p className="text-[#242D13]/40 font-bold text-sm uppercase tracking-widest">Load Data...</p>
                     </div>
                 ) : donations.length > 0 ? (
                     <DonationTable donations={donations} />
                 ) : (
                     <div className="flex flex-col items-center justify-center py-20 text-center">
                         <span className="text-7xl mb-6 grayscale opacity-30">🌳</span>
-                        <h3 className="text-xl font-bold text-[#242D13]">Belum ada riwayat donasi</h3>
+                        <h3 className="text-xl font-bold text-[#242D13]">No donations have been made yet</h3>
                         <p className="text-gray-400 text-sm max-w-xs mt-2">
-                            Ayo mulai kontribusi pertamamu dan lihat dampaknya di sini.
+                            Start your fisrt contribution and look at the impact here.
                         </p>
                     </div>
                 )}

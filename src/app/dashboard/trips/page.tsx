@@ -46,9 +46,9 @@ export default function MyTripsPage() {
         <div className="space-y-10">
             <header>
                 <h1 className="text-4xl font-extrabold text-[#242D13] tracking-tight">
-                    Riwayat <span className="text-[#242D13]/30 font-light">Perjalanan</span>
+                    Trips <span className="text-[#242D13]/30 font-light">Logs</span>
                 </h1>
-                <p className="text-gray-500 mt-2 font-medium">Daftar petualangan konservasi yang telah kamu agendakan.</p>
+                <p className="text-gray-500 mt-2 font-medium">Logs of your journey around Indonesia.</p>
             </header>
 
             <div className="bg-[#F5F5F0] p-6 md:p-10 rounded-[3rem] border border-gray-200/50 min-h-125">

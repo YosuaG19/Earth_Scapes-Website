@@ -5,7 +5,7 @@ function Rec_Card(props) {
     return (
         /* Ganti Link jadi div, karena Link sudah ada di file Recommended.js */
         /* Pastikan lebar w-[25%] tetap ada di sini agar proporsi kembali normal */
-        <div id="rec_card" className="group w-[25vw] min-w-75 h-full bg-[#e8e8da] relative flex items-end rounded-tl-4xl rounded-br-2xl overflow-hidden shadow-lg cursor-pointer">
+        <div id="rec_card" className="group w-[full] min-w-75 h-full bg-[#e8e8da] relative flex items-end rounded-tl-4xl rounded-br-2xl overflow-hidden shadow-lg cursor-pointer">
             
             {/* BACKGROUND IMAGE SECTION */}
             <div className="absolute w-full h-full top-0 left-0 z-2">
@@ -27,15 +27,18 @@ function Rec_Card(props) {
                 view more
             </span>
 
+
             {/* TEXT CONTENT */}
             <div className="relative flex w-full items-end p-6 z-3">
                 <div className="text-[#e8e8da]">
                     <h2 className="abo text-[25px] font-bold leading-tight">{props.name},</h2>
                     <p className="abo text-[15px] max-w-full opacity-80">{props.loc}</p>
                 </div>
-                <div className="absolute right-6 bottom-6 arti text-[30px] text-[#e8e8da] font-light">
-                    {props.rate}
-                </div>
+            </div>
+
+            <div className="absolute flex gap-[.25rem] right-4 top-4 arti z-[2] text-[28px] items-center justify-center text-[#e8e8da] font-light">
+                <p>{props.rate}</p>
+                <Image width={28} height={28} src={"/star.svg"} alt="star"></Image>
             </div>
         </div>
     )

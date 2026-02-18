@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { createClient } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/client";
 import Navbar from "./components/Navbar";
 import Banner from "./components/home/Banner";
 import Categories from "./components/home/Categories";

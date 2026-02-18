@@ -1,0 +1,322 @@
+"use client";
+import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabase/client"; // Pastikan path ke supabase client benar
+
+const Add_Guest = ({ booking, setBooking }) => {
+  // State untuk menampung data user yang login
+  const [owner, setOwner] = useState({
+    name: "Loading...",
+    phone: "-",
+    email: "...",
+  });
+
+  // Ambil data user dari Supabase Auth saat komponen di-mount
+  useEffect(() => {
+    const getUserData = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (user) {
+        setOwner({
+          // Mengambil nama dari metadata, atau email sebagai fallback
+          name: user.user_metadata?.full_name || user.email.split("@")[0],
+          phone: user.user_metadata?.phone || user.phone || "Not Set",
+          email: user.email,
+        });
+      } else {
+        setOwner({
+          name: "Guest User",
+          phone: "-",
+          email: "Not Logged In",
+        });
+      }
+    };
+
+    getUserData();
+  }, []);
+
+  const ownerFields = [
+    { id: "owner_name", label: "Name", value: owner.name },
+    { id: "owner_phone", label: "Phone Number", value: owner.phone },
+    { id: "owner_email", label: "Email", value: owner.email },
+  ];
+
+  const { passengers, includeOwner } = booking;
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [mode, setMode] = useState("add"); // add | edit
+  const [editIndex, setEditIndex] = useState(null);
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  });
+
+  const addFields = [
+    { id: "name", label: "Name", value: form.name, holder: "Input your Name" },
+    {
+      id: "phone",
+      label: "Phone Number",
+      value: form.phone,
+      holder: "Input your Phone Number",
+    },
+    {
+      id: "email",
+      label: "Email",
+      value: form.email,
+      holder: "Input your Email",
+    },
+  ];
+
+  const getPassengerFields = (p) => [
+    { id: "name", label: "Name", value: p.name },
+    { id: "phone", label: "Phone Number", value: p.phone },
+    { id: "email", label: "Email", value: p.email },
+  ];
+
+  /* =====================
+        HANDLERS
+    ===================== */
+
+  const openAdd = () => {
+    setMode("add");
+    setForm({ name: "", email: "", phone: "" });
+    setIsModalOpen(true);
+  };
+
+  const openEdit = (index) => {
+    setMode("edit");
+    setEditIndex(index);
+    setForm(passengers[index]);
+    setIsModalOpen(true);
+  };
+
+  const saveGuest = () => {
+    if (!form.name || !form.email || !form.phone) return;
+
+    if (mode === "add") {
+      setBooking({
+        ...booking,
+        passengers: [...passengers, form],
+      });
+    } else {
+      const updated = [...passengers];
+      updated[editIndex] = form;
+
+      setBooking({
+        ...booking,
+        passengers: updated,
+      });
+    }
+
+    setIsModalOpen(false);
+  };
+
+  const deleteGuest = (index) => {
+    setBooking({
+      ...booking,
+      passengers: passengers.filter((_, i) => i !== index),
+    });
+  };
+
+  return (
+    <>
+      <div className="w-full h-full flex flex-col justify-between">
+        <span className="w-full h-0.5 bg-[#242D13]"></span>
+
+        {/* TOP COUNTER + ADD */}
+        <div className="w-full text-[18px] text-[#e8e8da] flex justify-end gap-3">
+          <input
+            type="text"
+            className="w-5 text-center border-b-2 text-[#5a7527] bg-transparent outline-none"
+            value={passengers.length + (includeOwner ? 1 : 0)}
+            readOnly
+          />
+          {/* TAMBAHKAN type="button" DI SINI */}
+          <button
+            type="button"
+            onClick={openAdd}
+            className="h-7.5 w-7.5 rounded-full bg-[#5a7527] flex items-center justify-center"
+          >
+            +
+          </button>
+        </div>
+
+        {/* LIST */}
+        <div className="h-[90%] w-full grid auto-rows-[30%] gap-2 overflow-y-scroll pr-1 custom-scrollbar">
+          {/* OWNER (DYNAMICALLY FROM SUPABASE) */}
+          <div className="h-full w-full bg-[#5a7527] flex flex-col justify-between p-3 text-[#e8e8da]">
+            <div className="grid grid-cols-2 gap-2 h-full">
+              {ownerFields.map((field) => (
+                <div
+                  key={field.id}
+                  className="flex relative flex-col px-2 gap-[.3rem]"
+                >
+                  <label
+                    className="z-12 px-2 bg-[#5a7527] text-[12px] w-fit"
+                    htmlFor={field.id}
+                  >
+                    {field.label}
+                  </label>
+                  <input
+                    className="z-12 -mt-2 bg-transparent border-none outline-none"
+                    id={field.id}
+                    type="text"
+                    disabled
+                    value={field.value}
+                  ></input>
+                  <span className="z-11 w-full h-[80%] border-[#e8e8da] border-2 absolute bottom-0 left-0 rounded-tr-2xl"></span>
+                </div>
+              ))}
+
+              <div className="flex justify-end items-end gap-2">
+                <p className="text-[12px]">Add as Guest</p>
+
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="sr-only peer"
+                    checked={includeOwner}
+                    onChange={() =>
+                      setBooking({
+                        ...booking,
+                        includeOwner: !includeOwner,
+                        // Secara teknis, ownerData bisa disimpan di sini jika ingin dibawa ke Payment
+                        ownerData: !includeOwner ? owner : null,
+                      })
+                    }
+                  />
+                  <div
+                    className="w-11 h-6 bg-[#242D13]/30 rounded-full peer outline-2
+                        peer-checked:bg-[#242D13]
+                        after:content-[''] after:absolute after:top-0.5 after:left-0.5
+                        after:bg-[#e8e8da] after:rounded-full after:h-5 after:w-5
+                        after:transition-all peer-checked:after:translate-x-full"
+                  ></div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          {/* PASSENGERS */}
+          {passengers.map((p, idx) => {
+            const passengerFields = getPassengerFields(p);
+
+            return (
+              <div
+                key={idx}
+                className="h-full w-full bg-[#5a7527] p-3 text-[#e8e8da]"
+              >
+                <div className="grid grid-cols-2 gap-2 h-full">
+                  {passengerFields.map((field) => (
+                    <div
+                      key={field.id}
+                      className="flex relative flex-col px-2 gap-[.3rem]"
+                    >
+                      <label className="z-12 px-2 bg-[#5a7527] text-[12px] w-fit">
+                        {field.label}
+                      </label>
+                      <input
+                        className="z-12 -mt-2 bg-transparent border-none outline-none"
+                        type="text"
+                        disabled
+                        value={field.value}
+                      />
+                      <span className="z-11 w-full h-[80%] border-[#e8e8da] border-2 absolute bottom-0 left-0 rounded-tr-2xl" />
+                    </div>
+                  ))}
+
+                  <div className="flex justify-end items-end gap-2">
+                    <button
+                      type="button"
+                      onClick={() => openEdit(idx)}
+                      className="px-3 py-1 bg-[#e8e8da] text-[#5a7527] rounded-r-lg rounded-bl-lg text-[12px]"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => deleteGuest(idx)}
+                      className="px-3 py-1 bg-[#b82525] text-[#e8e8da] rounded-r-lg rounded-bl-lg text-[12px]"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* MODAL */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div
+            className="z-12 bg-[#5a7527] w-[90%] max-w-100 p-4 flex flex-col gap-2"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                saveGuest();
+              }
+              e.stopPropagation();
+            }}
+          >
+            <p className="text-[#e8e8da] text-[18px]">
+              {mode === "add" ? "Add Passenger" : "Edit Passenger"}
+            </p>
+
+            {addFields.map((field) => (
+              <div
+                key={field.id}
+                className="flex relative flex-col px-2 gap-[.3rem] text-[#e8e8da]"
+              >
+                <label
+                  className="z-12 px-2 bg-[#5a7527] text-[12px] w-fit"
+                  htmlFor={field.id}
+                >
+                  {field.label}
+                </label>
+                <input
+                  className="z-12 -mt-2 border-none focus:outline-none focus:ring-0 bg-transparent"
+                  id={field.id}
+                  type="text"
+                  placeholder={field.holder}
+                  value={field.value}
+                  onChange={(e) =>
+                    setForm({ ...form, [field.id]: e.target.value })
+                  }
+                ></input>
+                <span className="w-full h-[85%] border-[#e8e8da] border-2 absolute -bottom-1 left-0 rounded-tr-2xl"></span>
+              </div>
+            ))}
+
+            <div className="flex justify-end gap-2 mt-2">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="px-3 py-1 bg-[#e8e8da] text-[#5a7527] rounded-sm"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                onClick={saveGuest}
+                className="px-3 py-1 bg-[#242D13] text-[#e8e8da] rounded-sm"
+              >
+                {mode === "add" ? "Save" : "Update"}
+              </button>
+            </div>
+          </div>
+          <div
+            className="z-10 fixed inset-0 "
+            onClick={() => setIsModalOpen(false)}
+          />
+        </div>
+      )}
+    </>
+  );
+};
+
+export default Add_Guest;

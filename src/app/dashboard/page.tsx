@@ -104,7 +104,7 @@ export default function ProfilePage() {
     if (loading && !profile.email) {
         return (
             <div className="p-10 flex items-center gap-3 text-[#242D13] font-bold">
-                <Loader2 className="animate-spin" /> Memuat Profil...
+                <Loader2 className="animate-spin" /> Load Profile...
             </div>
         );
     }
@@ -113,7 +113,7 @@ export default function ProfilePage() {
         <div className="space-y-10">
             <header>
                 <h1 className="text-4xl font-extrabold text-[#242D13] tracking-tight">
-                    Profil <span className="text-[#242D13]/30 font-light">Akun</span>
+                    Your <span className="text-[#5a7527] font-light">Profile</span>
                 </h1>
                 <p className="text-gray-500 mt-2 font-medium">Informasi pribadi dan pengaturan identitas Earthsaver-mu.</p>
             </header>

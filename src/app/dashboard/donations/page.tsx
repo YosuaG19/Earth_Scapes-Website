@@ -42,14 +42,14 @@ export default function MyDonationsPage() {
         <div className="space-y-10">
             <header>
                 <h1 className="text-4xl font-extrabold text-[#242D13] tracking-tight">
-                    My <span className="text-[#242D13]/30 font-light">Donation</span>
+                    My <span className="text-[#5a7527] font-light">Donation</span>
                 </h1>
                 <p className="text-gray-500 mt-2 font-medium">Your contribution on restoring Earth.</p>
             </header>
 
-            <div className="bg-white p-6 md:p-10 rounded-[3rem] shadow-xl shadow-gray-200/50 border border-gray-100 min-h-125">
+            <div className="bg-white px-10 pb-8 rounded-[2rem] flex justify-center item-center shadow-xl shadow-gray-200/50 min-h-125">
                 {loading ? (
-                    <div className="flex flex-col items-center justify-center h-75 gap-4">
+                    <div className="flex flex-col items-center justify-center gap-4">
                         <div className="w-12 h-12 border-4 border-[#242D13]/10 border-t-[#242D13] rounded-full animate-spin"></div>
                         <p className="text-[#242D13]/40 font-bold text-sm uppercase tracking-widest">Load Data...</p>
                     </div>

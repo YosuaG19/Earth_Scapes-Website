@@ -76,49 +76,49 @@ export default function OverviewPage() {
 
     if (loading) return (
         <div className="p-10 flex items-center gap-3 text-[#242D13] font-bold">
-            <Loader2 className="animate-spin" /> Sinkronisasi data petualangan...
+            <Loader2 className="animate-spin" /> Synchronizing your journeys data...
         </div>
     );
 
     return (
-        <div className="space-y-10 pb-10">
+        <div className="space-y-10">
             <header>
                 <h1 className="text-4xl font-extrabold text-[#242D13] tracking-tight">
-                    Overview <span className="text-[#242D13]/30 font-light">Petualangan</span>
+                    Journey <span className="text-[#5a7527] font-light">Overview</span>
                 </h1>
-                <p className="text-gray-500 mt-2 font-medium">Pantau kontribusi hijau dan saldo poinmu.</p>
+                <p className="text-gray-500 mt-2 font-medium">Track your green contribution dan your points.</p>
             </header>
 
             {/* STATS GRID */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 flex items-center gap-6 transition-all hover:shadow-md group">
+                <div className="bg-white p-4 rounded-[1rem] shadow-sm border border-gray-100 flex items-center gap-6 transition-all hover:shadow-md group">
                     <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
                         <Map size={24} />
                     </div>
                     <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Total Perjalanan</p>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Total Trips</p>
                         <h3 className="text-3xl font-bold text-[#242D13] tracking-tighter">{stats.trips} <span className="text-sm font-normal text-gray-400">Trips</span></h3>
                     </div>
                 </div>
 
-                <div className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 flex items-center gap-6 transition-all hover:shadow-md group">
+                <div className="bg-white p-4 rounded-[1rem] shadow-sm border border-gray-100 flex items-center gap-6 transition-all hover:shadow-md group">
                     <div className="w-14 h-14 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
                         <Heart size={24} />
                     </div>
                     <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Total Donasi</p>
-                        <h3 className="text-3xl font-bold text-[#242D13] tracking-tighter">{stats.donations} <span className="text-sm font-normal text-gray-400">Donasi</span></h3>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Total Donation</p>
+                        <h3 className="text-3xl font-bold text-[#242D13] tracking-tighter">{stats.donations} <span className="text-sm font-normal text-gray-400">Donation</span></h3>
                     </div>
                 </div>
 
                 {/* EcoPoints - Saldo Real Setelah Belanja */}
-                <div className="bg-[#242D13] p-8 rounded-[2.5rem] shadow-xl shadow-[#242D13]/20 flex items-center gap-6 border border-white/5 relative overflow-hidden group">
+                <div className="bg-[#242D13] p-4 rounded-[1rem] shadow-xl shadow-[#242D13]/20 flex items-center gap-6 border border-white/5 relative overflow-hidden group">
                     <Coins className="absolute -right-2 -bottom-2 w-20 h-20 text-white opacity-5 rotate-12 group-hover:rotate-45 transition-transform duration-700" />
                     <div className="w-14 h-14 bg-yellow-400 text-[#242D13] rounded-2xl flex items-center justify-center shadow-lg shadow-yellow-400/20 relative z-10">
                         <Coins size={24} strokeWidth={2.5} />
                     </div>
                     <div className="relative z-10">
-                        <p className="text-[10px] font-black uppercase tracking-widest text-[#e8e8da]/50">Saldo EcoPoints</p>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-[#e8e8da]/50">EcoPoints Amount</p>
                         <h3 className="text-3xl font-bold text-[#e8e8da] tracking-tighter">{stats.ecoPoints.toLocaleString()}</h3>
                     </div>
                 </div>
@@ -126,38 +126,38 @@ export default function OverviewPage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* DYNAMIC COUNTDOWN CARD */}
-                <div className="bg-white p-10 rounded-[3rem] border border-gray-100 shadow-sm flex flex-col justify-between relative overflow-hidden group min-h-80">
+                <div className="bg-white p-8 rounded-[1.5rem] border border-gray-100 shadow-sm flex flex-col justify-between relative overflow-hidden group min-h-80">
                     <Calendar className="absolute top-10 right-10 text-gray-50 w-32 h-32 z-0" />
                     <div className="relative z-10">
                         <span className="px-4 py-1.5 bg-orange-100 text-orange-600 rounded-full text-[10px] font-black uppercase tracking-widest">
-                            {nextTrip ? 'Perjalanan Terdekat' : 'Status Perjalanan'}
+                            {nextTrip ? 'Closest Trips' : 'On Trips'}
                         </span>
                         {nextTrip ? (
                             <>
-                                <h2 className="text-6xl font-black text-[#242D13] mt-8 tracking-tighter">H-{getDaysUntil(nextTrip.start_date)}</h2>
-                                <p className="text-[#242D13]/60 font-medium mt-2 text-lg italic">Menuju {nextTrip.trips?.title || 'Destinasi Impian'}</p>
+                                <h2 className="text-6xl font-black text-[#242D13] mt-4 tracking-tighter">H-{getDaysUntil(nextTrip.start_date)}</h2>
+                                <p className="text-[#242D13]/60 font-medium mt-2 text-lg italic">Going to {nextTrip.trips?.title || 'Dream destination'}</p>
                             </>
                         ) : (
                             <div className="mt-8">
-                                <h2 className="text-3xl font-bold text-[#242D13] leading-tight">Siap untuk petualangan baru?</h2>
-                                <p className="text-gray-400 mt-2">Belum ada jadwal perjalanan dalam waktu dekat.</p>
+                                <h2 className="text-3xl font-bold text-[#242D13] leading-tight">Ready for new journey?</h2>
+                                <p className="text-gray-400 mt-2">No trip schedule at the moment.</p>
                             </div>
                         )}
                     </div>
                     <Link href="/dashboard/trips" className="mt-10 flex items-center gap-2 text-[#242D13] font-bold group relative z-10">
-                        {nextTrip ? 'Lihat persiapan trip' : 'Mulai cari destinasi'} <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
+                        {nextTrip ? 'See trip boarding' : 'Start search destination'} <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
                     </Link>
                 </div>
 
                 {/* ECOSHOP PREVIEW CARD */}
-                <div className="bg-[#e8e8da] p-10 rounded-[3rem] border border-[#242D13]/10 flex flex-col justify-between relative group overflow-hidden">
+                <div className="bg-white p-8 rounded-[1.5rem] border border-[#242D13]/10 flex flex-col justify-between relative group overflow-hidden">
                     <ShoppingBag className="absolute -bottom-10 -right-10 text-[#242D13]/5 w-48 h-48" />
                     <div className="relative z-10">
                         <h3 className="text-2xl font-bold text-[#242D13]">EcoShop Marketplace</h3>
-                        <p className="text-[#242D13]/60 mt-2 max-w-70">Gunakan poinmu untuk mendapatkan produk ramah lingkungan eksklusif.</p>
+                        <p className="text-[#242D13]/60 mt-2 max-w-70">Use your point to get exclusive Eco-Friendly product.</p>
                     </div>
                     <Link href="/ecoshop" className="relative z-10 mt-10 bg-[#242D13] text-white py-4 px-8 rounded-2xl font-bold text-sm hover:bg-[#2c3818] transition-all shadow-lg shadow-[#242D13]/10 flex items-center justify-center gap-2">
-                        Tukar Poin Sekarang <ShoppingBag size={16} />
+                        Exchange your point <ShoppingBag size={16} />
                     </Link>
                 </div>
             </div>

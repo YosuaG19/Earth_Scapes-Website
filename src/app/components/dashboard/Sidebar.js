@@ -42,7 +42,7 @@ export default function Sidebar() {
         },
         { 
             name: 'My Profile', 
-            path: '/dashboard/profile', 
+            path: '/dashboard', 
             icon: <User size={20} strokeWidth={1.5} /> 
         },
     ];
@@ -54,7 +54,7 @@ export default function Sidebar() {
     };
 
     return (
-        <aside className="w-72 bg-[#242D13] text-[#e8e8da] flex flex-col min-h-screen sticky top-0 border-r border-white/5">
+        <aside className="w-72 max-h-[100vh] h-[100vh] bg-[#242D13] text-[#e8e8da] flex flex-col min-h-screen sticky top-0 border-r border-white/5">
             {/* Logo Area */}
             <div className="p-8">
                 <Link href="/" className="group">

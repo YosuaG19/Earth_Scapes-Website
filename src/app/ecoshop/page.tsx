@@ -79,38 +79,36 @@ export default function EcoShopPage() {
         <div className="min-h-screen flex items-center justify-center bg-[#fcfcf9]">
             <div className="text-center">
                 <Loader2 className="animate-spin w-10 h-10 text-[#242D13] mx-auto mb-4" />
-                <p className="font-bold text-[#242D13]">Menyiapkan Produk Lokal...</p>
+                <p className="font-bold text-[#242D13]">Preparing local products...</p>
             </div>
         </div>
     );
 
     return (
-        <div className="min-h-screen bg-[#fcfcf9]">
-            <Navbar />
+        <div className="min-h-screen">
+            <Navbar/>
 
-            <main className="pb-20 -mt-11">
+            <main className="pb-10 -mt-11">
                 {/* HERO & POINT SUMMARY */}
-                <section className="bg-[#242D13] pt-12 pb-24 px-8 text-[#e8e8da] relative overflow-hidden -mt-px">
-                    <div className="absolute top-0 right-0 w-96 h-96 bg-[#324018] rounded-full blur-[120px] -mr-40 -mt-40 opacity-50"></div>
-                    
-                    <div className="relative z-10 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-10">
-                        <div className="max-w-2xl text-center lg:text-left">
-                            <h1 className="text-7xl md:text-8xl font-black tracking-tighter leading-none">
+                <section className="bg-[#242D13] py-12 px-8 text-[#e8e8da] relative overflow-hidden -mt-px">                    
+                    <div className="relative z-10 w-full flex flex-col lg:flex-row justify-between items-center gap-10">
+                        <div className="max-w-xl text-center lg:text-left">
+                            <h1 className="text-7xl font-black tracking-tighter leading-none">
                                 EcoShop<span className="text-yellow-400">.</span>
                             </h1>
-                            <p className="text-[#e8e8da]/70 mt-6 text-xl font-medium leading-relaxed font-sans">
-                                Ubah jejak petualanganmu menjadi kontribusi nyata. Tukarkan poinmu dengan produk pilihan dari komunitas lokal.
+                            <p className="text-[#e8e8da]/70 mt-6 text-l font-medium leading-relaxed font-sans">
+                                Turn your journey footprint into real impact. Exchange your points for products from local communities.
                             </p>
                         </div>
                         
                         {/* Box Poin yang sudah terupdate */}
-                        <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-[3rem] flex items-center gap-8 shadow-2xl">
-                            <div className="w-16 h-16 bg-yellow-400 text-[#242D13] rounded-2xl flex items-center justify-center shadow-lg shadow-yellow-400/20">
+                        <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-[1.5rem] flex items-center gap-8 shadow-2xl">
+                            <div className="w-16 h-16 bg-yellow-400 text-[#242D13] rounded-2xl flex items-center justify-center">
                                 <Coins size={32} strokeWidth={2.5} />
                             </div>
                             <div>
-                                <p className="text-xs font-black uppercase tracking-[0.2em] text-white/40">Saldo EcoPoints</p>
-                                <h3 className="text-4xl font-bold tracking-tighter font-sans">{userPoints.toLocaleString()}</h3>
+                                <p className="text-xs font-black uppercase tracking-[0.2em] text-white/40">EcoPoints Amount</p>
+                                <h3 className="text-3xl font-bold tracking-tighter font-sans">{userPoints.toLocaleString()}</h3>
                             </div>
                         </div>
                     </div>
@@ -118,22 +116,22 @@ export default function EcoShopPage() {
 
                 {/* Filter & Search Bar */}
                 <section className="max-w-7xl mx-auto px-8 -mt-10 relative z-30">
-                    <div className="bg-white p-4 rounded-[2.5rem] shadow-2xl shadow-[#242D13]/10 border border-gray-100 flex flex-col md:flex-row gap-4 items-center">
-                        <div className="relative grow w-full">
+                    <div className="flex flex-col md:flex-row gap-4 items-center">
+                        <div className="relative grow w-[50%]">
                             <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                             <input 
                                 type="text"
                                 placeholder="Cari produk ramah lingkungan..."
-                                className="w-full pl-16 pr-6 py-5 rounded-3xl bg-gray-50 border-none focus:ring-2 focus:ring-[#242D13]/10 transition-all outline-none text-[#242D13] font-sans"
+                                className="w-full pl-16 pr-6 py-3 rounded-3xl border-none focus:ring-2 focus:ring-[#242D13]/10 transition-all outline-none text-[#242D13] font-sans bg-white"
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
                         </div>
-                        <div className="flex gap-2 overflow-x-auto w-full md:w-auto px-2 md:px-0 no-scrollbar">
+                        <div className="flex gap-2 pb-1 overflow-x-auto w-[50%] md:w-auto px-2 md:px-0 no-scrollbar">
                             {categories.map((cat) => (
                                 <button
                                     key={cat}
                                     onClick={() => setActiveCategory(cat)}
-                                    className={`px-6 py-4 rounded-3xl text-sm font-black whitespace-nowrap transition-all font-sans ${
+                                    className={`px-4 py-2 rounded-xl text-sm font-black whitespace-nowrap transition-all font-sans ${
                                         activeCategory === cat 
                                         ? 'bg-[#242D13] text-white shadow-lg' 
                                         : 'bg-gray-50 text-gray-400 hover:bg-gray-100'
@@ -147,16 +145,16 @@ export default function EcoShopPage() {
                 </section>
 
                 {/* Product Grid */}
-                <section className="max-w-7xl mx-auto px-8 mt-20">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
+                <section className="w-full px-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6">
                         {filteredProducts.map((product) => (
-                            <Link href={`/ecoshop/${product.slug}`} key={product.id} className="group">
-                                <div className="bg-white rounded-[3rem] p-4 shadow-sm border border-gray-50 h-full flex flex-col hover:shadow-2xl hover:shadow-[#242D13]/5 transition-all duration-500">
-                                    <div className="relative aspect-4/5 rounded-[2.5rem] overflow-hidden bg-gray-100 mb-6">
+                            <Link href={`/ecoshop/${product.slug}`} key={product.id} className="group min-h-[40vh] max-h-[40vh]">
+                                <div className="bg-white rounded-t-[3rem] p-4 shadow-sm border border-gray-50 h-full w-full flex flex-col justify-between hover:shadow-2xl hover:shadow-[#242D13]/5 transition-all duration-500">
+                                    <div className="relative h-[60%] w-full rounded-t-[2.5rem] overflow-hidden bg-gray-100">
                                         <Image 
                                             src={product.image_url} 
                                             alt={product.name} 
-                                            fill 
+                                            fill
                                             className="object-cover group-hover:scale-105 transition-transform duration-700"
                                         />
                                         <div className="absolute top-5 left-5 bg-white/90 backdrop-blur-md px-4 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest text-[#242D13] shadow-sm font-sans">
@@ -164,16 +162,13 @@ export default function EcoShopPage() {
                                         </div>
                                     </div>
 
-                                    <div className="px-2 grow space-y-3">
-                                        <h3 className="text-2xl font-bold text-[#242D13] leading-none group-hover:text-[#324018]">
+                                    <div>
+                                        <h3 className="text-xl font-bold text-[#242D13] leading-none group-hover:text-[#324018]">
                                             {product.name}
                                         </h3>
-                                        <p className="text-gray-400 text-sm line-clamp-2 italic font-medium font-sans">
-                                            {product.description}
-                                        </p>
                                     </div>
 
-                                    <div className="mt-8 p-2 flex items-center justify-between">
+                                    <div className="flex items-end justify-between">
                                         <div className="flex flex-col">
                                             <span className="text-[10px] font-black text-gray-300 uppercase tracking-widest font-sans">Price</span>
                                             <div className="flex items-center gap-1 font-sans">
@@ -181,18 +176,12 @@ export default function EcoShopPage() {
                                                 <span className="font-black text-[#242D13] text-xl">{product.price_points.toLocaleString()}</span>
                                             </div>
                                         </div>
-                                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all shadow-sm ${
-                                            userPoints >= product.price_points 
-                                            ? 'bg-[#242D13] text-white group-hover:bg-[#324018] group-hover:translate-x-1' 
-                                            : 'bg-gray-100 text-gray-300 cursor-not-allowed opacity-50'
-                                        }`}>
+                                            
+                                        <div className={`w-16 h-8 rounded-l-2xl flex items-center justify-center transition-all shadow-sm bg-[#242D13] text-white group-hover:bg-[#324018] group-hover:translate-x-1`}>
                                             <ArrowRight size={22} />
                                         </div>
                                     </div>
-                                    {/* Indikator Poin Tidak Cukup */}
-                                    {userPoints < product.price_points && (
-                                        <p className="text-[9px] text-red-400 font-bold uppercase tracking-tighter mt-2 text-center">Poin tidak cukup</p>
-                                    )}
+                                    
                                 </div>
                             </Link>
                         ))}

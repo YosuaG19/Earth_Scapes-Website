@@ -77,9 +77,12 @@ const Trip_List = ({ searchQuery = "", categoryFilter = "" }) => {
       result.sort((a, b) => b.price - a.price);
     }
 
+    console.log(items)
+
     return result;
   }, [items, selectedCat, priceRange, sortBy, searchQuery]);
 
+  console.log(filteredAndSortedItems)
   // Reset ke halaman 1 setiap kali filter/sort/search berubah
   useEffect(() => {
     setCurrentPage(1);
@@ -91,6 +94,7 @@ const Trip_List = ({ searchQuery = "", categoryFilter = "" }) => {
     indexOfFirstItem,
     indexOfLastItem,
   );
+
   const totalPages = Math.ceil(filteredAndSortedItems.length / itemsPerPage);
 
   if (loading)

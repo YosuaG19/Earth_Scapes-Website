@@ -104,16 +104,16 @@ export default function ProfilePage() {
     if (loading && !profile.email) {
         return (
             <div className="p-10 flex items-center gap-3 text-[#242D13] font-bold">
-                <Loader2 className="animate-spin" /> Memuat Profil...
+                <Loader2 className="animate-spin" /> Load Profile...
             </div>
         );
     }
 
     return (
-        <div className="space-y-10 pb-10">
+        <div className="space-y-10">
             <header>
                 <h1 className="text-4xl font-extrabold text-[#242D13] tracking-tight">
-                    Profil <span className="text-[#242D13]/30 font-light">Akun</span>
+                    Your <span className="text-[#5a7527] font-light">Profile</span>
                 </h1>
                 <p className="text-gray-500 mt-2 font-medium">Informasi pribadi dan pengaturan identitas Earthsaver-mu.</p>
             </header>
@@ -155,8 +155,8 @@ export default function ProfilePage() {
                 </div>
 
                 {/* SISI KANAN: FORM EDIT */}
-                <div className="lg:col-span-2 bg-white p-8 md:p-12 rounded-[3rem] shadow-xl shadow-gray-200/40 border border-gray-100">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="lg:col-span-2 bg-white p-4 md:p-6 rounded-[2rem] flex items-center shadow-xl shadow-gray-200/40 border border-gray-100">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                         {/* Username */}
                         <div className="flex flex-col gap-2">
                             <label className="text-[11px] font-black uppercase text-[#242D13]/40 ml-2 tracking-widest flex items-center gap-2">
@@ -166,7 +166,7 @@ export default function ProfilePage() {
                                 type="text" 
                                 value={profile.username}
                                 onChange={(e) => setProfile({...profile, username: e.target.value})}
-                                className="p-4 rounded-2xl bg-[#F5F5F0] border-none focus:ring-2 focus:ring-[#242D13] outline-none font-medium text-[#242D13] transition-all"
+                                className="py-2 px-3 rounded-[.5rem] bg-[#F5F5F0] border-none focus:ring-2 focus:ring-[#242D13] outline-none font-medium text-[#242D13] transition-all"
                                 placeholder="eksplorer_alam"
                             />
                         </div>
@@ -174,39 +174,39 @@ export default function ProfilePage() {
                         {/* Nama Lengkap */}
                         <div className="flex flex-col gap-2">
                             <label className="text-[11px] font-black uppercase text-[#242D13]/40 ml-2 tracking-widest flex items-center gap-2">
-                                <User className="w-3 h-3" /> Nama Lengkap
+                                <User className="w-3 h-3" /> Full Name
                             </label>
                             <input 
                                 type="text" 
                                 value={profile.full_name}
                                 onChange={(e) => setProfile({...profile, full_name: e.target.value})}
-                                className="p-4 rounded-2xl bg-[#F5F5F0] border-none focus:ring-2 focus:ring-[#242D13] outline-none font-medium text-[#242D13] transition-all"
+                                className="py-2 px-3 rounded-[.5rem] bg-[#F5F5F0] border-none focus:ring-2 focus:ring-[#242D13] outline-none font-medium text-[#242D13] transition-all"
                             />
                         </div>
 
                         {/* Email */}
                         <div className="flex flex-col gap-2">
                             <label className="text-[11px] font-black uppercase text-[#242D13]/40 ml-2 tracking-widest flex items-center gap-2">
-                                <Mail className="w-3 h-3" /> Email (🔒)
+                                <Mail className="w-3 h-3" /> Email
                             </label>
                             <input 
                                 type="text" 
                                 value={profile.email}
                                 disabled
-                                className="p-4 rounded-2xl bg-gray-50 text-gray-400 cursor-not-allowed border border-gray-100 outline-none font-medium"
+                                className="py-2 px-3 rounded-[.5rem] bg-gray-50 text-gray-400 cursor-not-allowed border border-gray-100 outline-none font-medium"
                             />
                         </div>
 
                         {/* Telepon */}
                         <div className="flex flex-col gap-2">
                             <label className="text-[11px] font-black uppercase text-[#242D13]/40 ml-2 tracking-widest flex items-center gap-2">
-                                <Phone className="w-3 h-3" /> Nomor Telepon
+                                <Phone className="w-3 h-3" /> Phone Number
                             </label>
                             <input 
                                 type="text" 
                                 value={profile.phone}
                                 onChange={(e) => setProfile({...profile, phone: e.target.value})}
-                                className="p-4 rounded-2xl bg-[#F5F5F0] border-none focus:ring-2 focus:ring-[#242D13] outline-none font-medium text-[#242D13] transition-all"
+                                className="py-2 px-3 rounded-[.5rem] bg-[#F5F5F0] border-none focus:ring-2 focus:ring-[#242D13] outline-none font-medium text-[#242D13] transition-all"
                                 placeholder="+62..."
                             />
                         </div>
@@ -220,21 +220,21 @@ export default function ProfilePage() {
                                 rows={3}
                                 value={profile.bio}
                                 onChange={(e) => setProfile({...profile, bio: e.target.value})}
-                                className="p-4 rounded-2xl bg-[#F5F5F0] border-none focus:ring-2 focus:ring-[#242D13] outline-none font-medium text-[#242D13] resize-none transition-all"
+                                className="py-2 px-3 rounded-[.5rem] bg-[#F5F5F0] border-none focus:ring-2 focus:ring-[#242D13] outline-none font-medium text-[#242D13] resize-none transition-all"
                                 placeholder="Ceritakan petualanganmu..."
                             />
                         </div>
-                    </div>
 
-                    <div className="mt-10 flex justify-end">
-                        <button 
-                            onClick={updateProfile}
-                            disabled={loading}
-                            className="w-full md:w-auto bg-[#242D13] text-[#e8e8da] px-12 py-4 rounded-full font-bold shadow-xl hover:bg-[#2c3818] hover:scale-105 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
-                        >
-                            {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'SIMPAN PERUBAHAN'}
+                        {/* Button Save*/}
+                        <button
+                                onClick={updateProfile}
+                                disabled={loading}
+                                className="col-span-2 w-[70%] border-2 border-[#242D13] m-auto bg-[#242D13] text-[#e8e8da] py-2 rounded-full font-bold shadow-xl hover:text-[#2c3818] hover:bg-white transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                            >
+                                {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : 'Save Changes'}
                         </button>
                     </div>
+                    
                 </div>
             </div>
         </div>

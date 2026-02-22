@@ -21,20 +21,6 @@ const Footer = () => {
                 <div className="min-h-[10%] text-[#e8e8da] w-full flex flex-col items-center justify-center text-[10px]">
                     <p>© 2026 EarthScape All rights reserved. Together, we explore and protect the earth.</p>
                 </div>
-
-                <div className="absolute top-0 right-0 h-full w-[5%] grid gird-rows-3 justify-center items-center py-4">
-                    <Link href="../">
-                        <Image width="25" height="25" src={ig_logo} alt="Instagram"></Image>
-                    </Link>
-
-                    <Link href="../">
-                        <Image width="25" height="25" src={yt_logo} alt="Youtube"></Image>
-                    </Link>
-
-                    <Link href="../">
-                        <Image width="25" height="25" src={x_logo} alt="X"></Image>
-                    </Link>
-                </div>
             </footer>
         </>
     )

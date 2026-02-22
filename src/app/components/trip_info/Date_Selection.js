@@ -3,7 +3,6 @@ import { useState, useMemo } from 'react';
 import { useRouter } from "next/navigation";
 import Payment from '../payment/Payment';
 
-const RANGE_DAYS = 3; 
 const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
 const isSameDay = (a, b) =>
@@ -41,6 +40,7 @@ const buildCalendar = (year, month) => {
 };
 
 export default function DateSelection(props) {
+  const RANGE_DAYS = props.days; 
   const router = useRouter();
   const [baseDate, setBaseDate] = useState(new Date());
   const [startDate, setStartDate] = useState(null);

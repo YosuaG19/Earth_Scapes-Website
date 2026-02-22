@@ -128,8 +128,8 @@ export default function ProductDetailPage() {
 
   if (!product) return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#fcfcf9]">
-      <h1 className="text-2xl font-bold mb-4">Produk tidak ditemukan</h1>
-      <Link href="/ecoshop" className="text-[#242D13] underline">Kembali ke EcoShop</Link>
+      <h1 className="text-2xl font-bold mb-4">Product Not Found</h1>
+      <Link href="/ecoshop" className="text-[#242D13] underline">Back to EcoShop</Link>
     </div>
   );
 

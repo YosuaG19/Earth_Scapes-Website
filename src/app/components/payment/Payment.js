@@ -46,7 +46,7 @@ const Payment = ({ onClose, startDate, endDate, tripData, trip_price }) => {
                 <button className="bg-[#5a7527] text-[#e8e8da] px-6 py-3 rounded-[.5rem]">Pay Now</button> */}
               </div>
             ) : (
-              <button onClick={next} className="bg-[#5a7527] text-[#e8e8da] px-6 py-3 rounded-lg">Next</button>
+              <button type='button' onClick={next} className="bg-[#5a7527] text-[#e8e8da] px-6 py-3 rounded-lg">Next</button>
             )}
           </div>
         </div>

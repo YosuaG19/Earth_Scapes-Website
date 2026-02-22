@@ -115,7 +115,7 @@ export default function ProfilePage() {
                 <h1 className="text-4xl font-extrabold text-[#242D13] tracking-tight">
                     Your <span className="text-[#5a7527] font-light">Profile</span>
                 </h1>
-                <p className="text-gray-500 mt-2 font-medium">Informasi pribadi dan pengaturan identitas Earthsaver-mu.</p>
+                <p className="text-gray-500 mt-2 font-medium">Personal Information and edit your EartScapes identity.</p>
             </header>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

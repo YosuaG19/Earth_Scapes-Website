@@ -10,6 +10,15 @@ const List_Items = (props) =>{
     const formatIDR = (v) =>
         v === "" ? "" : "Rp " + new Intl.NumberFormat("id-ID").format(v);
 
+    const truncateWords = (text, maxWords) => {
+        if (!text) return "";
+
+        const words = text.split(" ");
+        if (words.length <= maxWords) return text;
+
+        return words.slice(0, maxWords).join(" ") + "...";
+    };
+
     return(
         <>
             <div className="w-full flex justify-between min-h-[25vh] h-[25vh]">
@@ -41,8 +50,10 @@ const List_Items = (props) =>{
                         </div>
 
 
-                        <div className="text-[10px]">
-                            <p>{props.desc}</p>
+                        <div className="text-[10px] w-full">
+                            <p className="w-full text-justify">
+                                {truncateWords(props.desc, 35)}
+                            </p>
                         </div>
                     </div>
                 </div>

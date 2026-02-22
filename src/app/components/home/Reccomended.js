@@ -8,29 +8,29 @@ const Recommended = () => {
         {
             name: "Mount Bromo",
             slug: "mount-bromo", 
-            loc: "Jawa Timur",
-            rate: "4.5",
+            loc: "East Java",
+            rate: "4.7",
             img: "/Volcano.png"
         },
         {
-            name: "Mount Ijen",
+            name: "Kawah Ijen",
             slug: "mount-ijen",
-            loc: "Jawa Timur",
-            rate: "4.5",
+            loc: "Banyuwangi, East Java",
+            rate: "4.7",
             img: "/Mountain.png"
         },
         {
             name: "Karimun Jawa",
             slug: "karimunjawa",
-            loc: "Jawa Tengah",
-            rate: "4.5",
+            loc: "Central Java",
+            rate: "4.7",
             img: "/Turtle.png"
         },
         {
-            name: "Raja Ampat",
+            name: "Raja Ampat Island",
             slug: "raja-ampat",
-            loc: "Papua Barat",
-            rate: "4.5",
+            loc: "West Papua",
+            rate: "4.6",
             img: "/Fresh_Water.png"
         },
     ];
@@ -49,7 +49,7 @@ const Recommended = () => {
             >
                 {Recs.map((rec) => (
                     /* contents: Membuat Link 'transparan' secara layout 
-                       agar Rec_Card tetap dibaca sebagai anak langsung Flexbox 
+                    agar Rec_Card tetap dibaca sebagai anak langsung Flexbox 
                     */
                     <Link 
                         key={rec.slug} 

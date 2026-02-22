@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import Navbar from "@/app/components/Navbar";
 
 export default function ProductDetailPage() {
   const { slug } = useParams();
@@ -135,20 +134,18 @@ export default function ProductDetailPage() {
   );
 
   return (
-    <div className="min-h-screen bg-[#fcfcf9]">
-      <Navbar />
-
-      <main className="max-w-7xl mx-auto px-8 py-12">
-        <Link href="/ecoshop" className="inline-flex items-center gap-2 text-[#242D13]/50 hover:text-[#242D13] font-bold mb-12 transition-all group">
+    <div className="min-h-screen px-12 pt-8 flex items-start">
+      <main className="w-full flex flex-col gap-4">
+        <button onClick={() => router.back()} className="flex items-center w-fit gap-2 text-[#242D13]/50 hover:text-[#242D13] font-bold transition-all group">
           <div className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-white transition-all">
             <ArrowLeft size={18} />
           </div>
-          Kembali ke Katalog
-        </Link>
+          Back to Catalog
+        </button>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center h-[80vh]">
           {/* IMAGE SECTION */}
-          <div className="relative aspect-4/5 rounded-[4rem] overflow-hidden shadow-2xl border-12 border-white group">
+          <div className="relative h-full rounded-[2rem] overflow-hidden shadow-2xl border-12 border-white group">
             <Image src={product.image_url} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform duration-1000" />
             <div className="absolute top-8 left-8 bg-white/90 backdrop-blur-md px-6 py-2 rounded-2xl text-xs font-black uppercase tracking-widest text-[#242D13]">
               {product.category}
@@ -156,65 +153,71 @@ export default function ProductDetailPage() {
           </div>
 
           {/* INFO SECTION */}
-          <div className="space-y-10 py-4">
-            <div className="space-y-4">
-              <h1 className="text-7xl font-black text-[#242D13] tracking-tighter leading-[0.9]">
-                {product.name}
-              </h1>
-              <div className="flex items-center gap-4 text-gray-400 font-medium">
+          <div className="flex gap-4 flex-col">
+            <div className="bg-white px-8 py-6 rounded-t-[1.5rem] flex flex-col">
+              <div className="flex items-center gap-4 text-gray-400 text-sm font-medium">
                 <span className="flex items-center gap-1"><ShoppingBag size={16} /> Stock Available</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-gray-300"></span>
                 <span>Local Craftsmanship</span>
               </div>
+
+              <div className="flex flex-col gap-[.5rem] mt-[.5rem]">
+                <h1 className="text-4xl font-black text-[#242D13] tracking-tighter leading-[0.9]">
+                  {product.name}
+                </h1>
+
+                <span className="mt-[.5rem] w-full h-[1px] bg-black"></span>
+
+                <p className="arti text-l text-gray-500 leading-relaxed font-sans font-medium">
+                  {product.description}
+                </p>
+              </div>
             </div>
 
-            <p className="text-xl text-gray-500 leading-relaxed font-sans font-medium">
-              {product.description}
-            </p>
-
             {/* REDEEM CARD */}
-            <div className="bg-white p-10 rounded-[3.5rem] border border-gray-100 shadow-2xl shadow-[#242D13]/5 space-y-8">
+            <div className="bg-white px-8 py-6 rounded-b-[1.5rem] shadow-2xl shadow-[#242D13]/5 space-y-8">
               <div className="flex justify-between items-end">
                 <div className="space-y-2">
-                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Harga Penukaran</p>
+                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Exchange Price</p>
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-yellow-400 rounded-2xl flex items-center justify-center text-[#242D13] shadow-lg shadow-yellow-400/20">
-                      <Coins size={28} />
+                    <div className="w-10 h-10 bg-yellow-400 rounded-2xl flex items-center justify-center text-[#242D13] shadow-lg shadow-yellow-400/20">
+                      <Coins size={20} />
                     </div>
-                    <span className="text-5xl font-black text-[#242D13] tracking-tighter">
+                    <span className="text-3xl font-black text-[#242D13] tracking-tighter">
                       {product.price_points.toLocaleString()}
                       <span className="text-sm font-bold opacity-30 uppercase ml-2 tracking-widest font-sans">Points</span>
                     </span>
                   </div>
                 </div>
+
                 <div className="text-right">
-                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-1">Saldomu</p>
-                  <p className={`font-black text-xl font-sans ${canAfford ? "text-green-600" : "text-red-500"}`}>
-                    {userPoints.toLocaleString()} <span className="text-xs">Pts</span>
+                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-2">Your Balance</p>
+                  <p className={`font-black text-3xl ${canAfford ? "text-green-600" : "text-red-500"}`}>
+                    {userPoints.toLocaleString()} <span className="text-sm">Points</span>
                   </p>
                 </div>
-              </div>
+              </div>  
 
               <button
                 onClick={() => canAfford && setShowModal(true)}
                 disabled={!canAfford}
-                className={`w-full py-7 rounded-[2.5rem] font-black text-xl transition-all flex items-center justify-center gap-4 shadow-xl ${
+                className={`w-full py-4 rounded-[1.5rem] font-black text-xl transition-all flex items-center justify-center gap-4 shadow-xl ${
                   canAfford ? "bg-[#242D13] text-white hover:bg-[#324018] shadow-[#242D13]/20 hover:scale-[1.01] active:scale-[0.98]" : "bg-gray-100 text-gray-400 cursor-not-allowed"
                 }`}
               >
-                {canAfford ? <>Tukar Poin Sekarang <ArrowRight size={22} /></> : "EcoPoints Tidak Cukup"}
+                {canAfford ? <>Exchange Now <ArrowRight size={22} /></> : "Not Enough EcoPoints"}
               </button>
 
               {!canAfford && (
-                <p className="text-center text-sm font-medium text-red-400 font-sans">Kumpulkan lebih banyak poin dengan Trip atau Donasi!</p>
+                <p className="text-center text-sm font-medium text-red-400 font-sans">Get more point with doing Trips!</p>
               )}
             </div>
 
-            <div className="flex items-start gap-5 p-8 bg-green-50 rounded-[2.5rem] border border-green-100">
-              <div className="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center text-white shrink-0"><CheckCircle2 size={24} /></div>
-              <div className="space-y-1">
-                <h4 className="font-bold text-green-900">EarthScapes Verified</h4>
-                <p className="text-sm text-green-800/70 leading-relaxed font-sans">Setiap penukaran poin langsung mendukung pengrajin lokal.</p>
+            <div className="w-fit mx-auto flex items-center gap-4 px-4 py-2 bg-green-50 rounded-full border border-green-100">
+              <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center text-white shrink-0"><CheckCircle2 size={24} /></div>
+              <div>
+                <h4 className="font-bold text-[16px] text-green-900">EarthScapes Verified</h4>
+                <p className="text-[12px] text-green-800/70 leading-relaxed font-sans">Every exchange will help local Craftsmen</p>
               </div>
             </div>
           </div>
@@ -223,28 +226,28 @@ export default function ProductDetailPage() {
 
       {/* MODAL PENGIRIMAN */}
       {showModal && (
-        <div className="fixed inset-0 z-999 flex items-center justify-center p-6 bg-[#242D13]/60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-999 flex items-center justify-center p-6 bg-[#242D13]/60 backdrop-blur-xs ">
           <div className="bg-white w-full max-w-lg rounded-[3.5rem] p-10 shadow-2xl relative animate-in fade-in zoom-in duration-300">
             <button onClick={() => setShowModal(false)} className="absolute top-8 right-8 text-gray-400 hover:text-[#242D13] transition-colors"><X size={24} /></button>
             <div className="mb-8">
-              <h2 className="text-3xl font-black text-[#242D13] tracking-tighter">Detail Pengiriman</h2>
-              <p className="text-gray-500 font-medium font-sans">Barang akan dikirim ke alamat ini.</p>
+              <h2 className="text-3xl font-black text-[#242D13] tracking-tighter">Deliveri Details</h2>
+              <p className="text-gray-500 font-medium font-sans">This item will be deliver to this address.</p>
             </div>
             <form onSubmit={handleRedeem} className="space-y-5">
               <div>
-                <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-2">Nama Penerima</label>
-                <input required type="text" className="w-full bg-gray-50 border-none rounded-3xl py-4 px-6 focus:ring-2 focus:ring-[#242D13]/10 outline-none font-sans" placeholder="Nama Lengkap" onChange={(e) => setAddress({...address, name: e.target.value})} />
+                <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-2">Recipient Name</label>
+                <input required type="text" className="w-full bg-gray-50 border-none rounded-3xl py-4 px-6 focus:ring-2 focus:ring-[#242D13]/10 outline-none font-sans" placeholder="Full Name" onChange={(e) => setAddress({...address, name: e.target.value})} />
               </div>
               <div>
-                <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-2">Nomor HP / WhatsApp</label>
+                <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-2">Phone Number</label>
                 <input required type="tel" className="w-full bg-gray-50 border-none rounded-3xl py-4 px-6 focus:ring-2 focus:ring-[#242D13]/10 outline-none font-sans" placeholder="0812..." onChange={(e) => setAddress({...address, phone: e.target.value})} />
               </div>
               <div>
-                <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-2">Alamat Lengkap</label>
+                <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-2">Full Address</label>
                 <textarea required rows={3} className="w-full bg-gray-50 border-none rounded-3xl py-4 px-6 focus:ring-2 focus:ring-[#242D13]/10 outline-none font-sans resize-none" placeholder="Jl. Raya..." onChange={(e) => setAddress({...address, fullAddress: e.target.value})} />
               </div>
               <button type="submit" disabled={isRedeeming} className="w-full py-5 bg-[#242D13] text-white rounded-[1.8rem] font-black text-lg hover:bg-[#324018] shadow-xl transition-all flex items-center justify-center gap-2">
-                {isRedeeming ? <Loader2 className="animate-spin" /> : 'Konfirmasi & Tukar'}
+                {isRedeeming ? <Loader2 className="animate-spin" /> : 'Confirm & Exchange'}
               </button>
             </form>
           </div>

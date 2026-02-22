@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import {
   ShoppingBag,
@@ -10,10 +11,12 @@ import {
   ChevronRight,
   User,
   Phone,
+  Link,
 } from "lucide-react";
 import Image from "next/image";
 
 export default function EcoShopTransactions() {
+  const router = useRouter();
   const supabase = createClient();
   const [transactions, setTransactions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -59,29 +62,33 @@ export default function EcoShopTransactions() {
 
   if (loading)
     return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="animate-spin text-[#242D13] w-8 h-8" />
+      <div className="flex flex-col items-center justify-center h-[90dvh] gap-4">
+          <div className="w-12 h-12 border-4 border-[#242D13]/10 border-t-[#242D13] rounded-full animate-spin"></div>
+          <p className="text-[#242D13]/40 font-bold text-sm uppercase tracking-widest">Load Data...</p>
       </div>
     );
 
   return (
-    <div className="p-8 max-w-6xl mx-auto">
+    <div className="w-full flex flex-col gap-10">
       {/* Header Section */}
-      <div className="mb-10">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="w-10 h-10 bg-[#242D13] rounded-xl flex items-center justify-center text-white">
-            <ShoppingBag size={20} />
-          </div>
-          <span className="text-xs font-black uppercase tracking-[0.3em] text-[#242D13]/40">
-            EcoShop
-          </span>
+      <div className="flex justify-between">
+        <div>
+          <h1 className="text-4xl font-black text-[#242D13] tracking-tighter">
+            Point Exchange History
+          </h1>
+          <p className="text-gray-500 font-medium mt-1">
+            Track your product delivery status.
+          </p>
         </div>
-        <h1 className="text-4xl font-black text-[#242D13] tracking-tighter">
-          Riwayat Penukaran Poin
-        </h1>
-        <p className="text-gray-500 font-medium mt-1">
-          Pantau status pengiriman barang kontribusi lingkunganmu.
-        </p>
+
+        <div onClick={() => router.push('/ecoshop')} className="flex flex-row-reverse items-center gap-3 mb-2">
+          <button onClick={() => router.push('/ecoshop')}  className="w-10 h-10 bg-[#242D13] cursor-pointer rounded-xl flex items-center justify-center text-white">
+            <ShoppingBag size={20} />
+          </button>
+          <button onClick={() => router.push('/ecoshhop')} className="cursor-pointer text-xs font-black uppercase tracking-[0.3em] text-[#242D13]/40">
+            EcoShop
+          </button>
+        </div>
       </div>
 
       {/* Transactions List */}
@@ -92,11 +99,10 @@ export default function EcoShopTransactions() {
               <Package size={40} />
             </div>
             <h3 className="text-xl font-bold text-[#242D13]">
-              Belum ada transaksi
+              No transaction yet...
             </h3>
             <p className="text-gray-400 max-w-xs mx-auto mt-2">
-              Poin yang kamu kumpulkan bisa ditukar dengan produk lokal ramah
-              lingkungan.
+              Gather your point to be exhange with eco-friendly local product.
             </p>
           </div>
         ) : (
@@ -107,7 +113,7 @@ export default function EcoShopTransactions() {
             >
               <div className="flex flex-col md:flex-row items-stretch">
                 {/* Product Preview */}
-                <div className="relative w-full md:w-64 h-48 md:h-auto overflow-hidden bg-gray-50">
+                <div className="relative w-[30%] overflow-hidden bg-gray-50">
                   {tx.product?.image_url && (
                     <Image
                       src={tx.product.image_url}
@@ -120,14 +126,14 @@ export default function EcoShopTransactions() {
                 </div>
 
                 {/* Details Area */}
-                <div className="grow p-8 flex flex-col justify-between">
-                  <div className="flex justify-between items-start mb-4">
+                <div className="grow px-8 py-6 flex flex-col justify-between">
+                  <div className="flex justify-between items-center">
                     <div>
                       <span className="text-[10px] font-black uppercase tracking-widest text-green-600 bg-green-50 px-3 py-1 rounded-full">
                         {tx.product?.category || "Eco Item"}
                       </span>
                       <h3 className="text-2xl font-black text-[#242D13] mt-2 tracking-tight">
-                        {tx.product?.name || "Produk EarthScapes"}
+                        {tx.product?.name || "EarthScapes Product"}
                       </h3>
                     </div>
                     <div className="text-right">
@@ -142,7 +148,7 @@ export default function EcoShopTransactions() {
                   </div>
 
                   {/* Shipping Info Card */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-[#fcfcf9] p-5 rounded-3xl border border-gray-50 mt-2">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6">
                     <div className="flex items-start gap-3">
                       <User size={14} className="mt-1 text-[#242D13]/30" />
                       <div>

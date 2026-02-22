@@ -19,7 +19,7 @@ const Payment = ({ onClose, startDate, endDate, tripData, trip_price }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-10 flex items-center justify-center bg-black/50">
+    <div className="fixed inset-0 z-10 flex items-center justify-center bg-black/50 backdrop-blur-xs ">
       <div className="h-[90vh] z-11 w-[50vw] bg-[#e8e8da] overflow-hidden rounded-tr-[2.5rem] rounded-bl-[2.5rem]">
         <div className="relative w-full h-full flex flex-col items-center p-6">
           <button onClick={onClose} className="w-15 h-15 absolute left-0 top-0 bg-[#5a7527] rounded-br-4xl text-[#e8e8da]">X</button>

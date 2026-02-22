@@ -6,22 +6,22 @@ const Recommended = () => {
     // Data Hardcoded - Pastikan SLUG sesuai dengan yang ada di database Supabase
     const Recs = [
         {
-            name: "Bromo",
+            name: "Mount Bromo",
             slug: "mount-bromo", 
             loc: "Jawa Timur",
             rate: "4.5",
             img: "/Volcano.png"
         },
         {
-            name: "Kawah Ijen",
-            slug: "kawah-ijen",
+            name: "Mount Ijen",
+            slug: "mount-ijen",
             loc: "Jawa Timur",
             rate: "4.5",
             img: "/Mountain.png"
         },
         {
             name: "Karimun Jawa",
-            slug: "karimun-jawa",
+            slug: "karimunjawa",
             loc: "Jawa Tengah",
             rate: "4.5",
             img: "/Turtle.png"
@@ -32,13 +32,6 @@ const Recommended = () => {
             loc: "Papua Barat",
             rate: "4.5",
             img: "/Fresh_Water.png"
-        },
-        {
-            name: "Pulau Seribu",
-            slug: "pulau-seribu",
-            loc: "DKI Jakarta",
-            rate: "4.5",
-            img: "/Coastal.png"
         },
     ];
 
@@ -52,7 +45,7 @@ const Recommended = () => {
             {/* Carousel Container */}
             <div 
                 id="carou" 
-                className="h-[75%] w-full flex overflow-x-auto gap-6 pb-10 pt-2 px-8 no-scrollbar shrink-0"
+                className="h-[75%] w-full grid grid-cols-4 gap-6 pb-10 pt-2 px-4 shrink-0"
             >
                 {Recs.map((rec) => (
                     /* contents: Membuat Link 'transparan' secara layout 

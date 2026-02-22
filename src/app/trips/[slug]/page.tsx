@@ -49,7 +49,6 @@ export default async function BookTripPage({ params }: PageProps) {
         slot={trip.slot}
         rating={trip.rating}
         others={safeOthers}
-        // ... props lain ...
         banner={trip.banner_url}
         // Jika trip.img kosong, kita kasih trip.banner_url sebagai cadangan
         img={trip.images}

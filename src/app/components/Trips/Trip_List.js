@@ -95,15 +95,15 @@ const Trip_List = ({ searchQuery = "", categoryFilter = "" }) => {
 
   if (loading)
     return (
-      <div className="w-full p-[1.5rem] text-center font-bold text-[#324018]">
+      <div className="w-full p-6 text-center font-bold text-[#324018]">
         Loading Trips...
       </div>
     );
 
   return (
     <>
-      <div className="w-full p-[1.5rem] flex justify-between items-start relative">
-        <div className="w-[32.5%] h-full sticky top-[25vh] left-[1.5rem]">
+      <div className="w-full p-6 flex justify-between items-start relative">
+        <div className="w-[32.5%] h-full sticky top-[25vh] left-6">
           <Trip_Filter
             selectedCat={selectedCat}
             setSelectedCat={setSelectedCat}
@@ -114,7 +114,7 @@ const Trip_List = ({ searchQuery = "", categoryFilter = "" }) => {
           />
         </div>
 
-        <div className="w-[65%] h-full gap-[1rem] flex flex-col items-end">
+        <div className="w-[65%] h-full gap-4 flex flex-col items-end">
           {currentItems.length > 0 ? (
             currentItems.map((item) => (
               <List_Items

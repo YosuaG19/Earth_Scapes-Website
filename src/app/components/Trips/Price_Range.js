@@ -110,7 +110,7 @@ const Price_Range = ({ priceRange, setPriceRange }) => {
     }, [priceRange]);
 
     return (
-        <div className="border-[#324018] text-[#324018] border-[2px] rounded-tr-[1.5rem] p-[.75rem] flex flex-col gap-4">
+        <div className="border-[#324018] text-[#324018] border-2 rounded-tr-3xl p-3 flex flex-col gap-4">
             <h3>Price Range</h3>
             <div className="range-slider">
                 <div className="range">

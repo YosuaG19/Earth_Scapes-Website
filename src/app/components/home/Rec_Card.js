@@ -5,7 +5,7 @@ function Rec_Card(props) {
     return (
         /* Ganti Link jadi div, karena Link sudah ada di file Recommended.js */
         /* Pastikan lebar w-[25%] tetap ada di sini agar proporsi kembali normal */
-        <div id="rec_card" className="group w-[25vw] min-w-75 h-full bg-[#e8e8da] relative flex items-end rounded-tl-4xl rounded-br-2xl overflow-hidden shadow-lg cursor-pointer">
+        <div id="rec_card" className="group w-[25%] min-w-75 h-full bg-[#e8e8da] relative flex items-end rounded-tl-4xl rounded-br-2xl overflow-hidden shadow-lg cursor-pointer">
             
             {/* BACKGROUND IMAGE SECTION */}
             <div className="absolute w-full h-full top-0 left-0 z-2">

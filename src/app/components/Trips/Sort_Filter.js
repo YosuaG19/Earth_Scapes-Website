@@ -9,14 +9,14 @@ const Sort_Filter = ({ sortBy, setSortBy }) => {
 
     return (
         <>
-            <div className="border-[#324018] text-[#324018] border-[2px] rounded-tr-[1.5rem] h-full w-full p-[.75rem] flex flex-col gap-[.2rem]">
+            <div className="border-[#324018] text-[#324018] border-2 rounded-tr-3xl h-full w-full p-3 flex flex-col gap-[.2rem]">
                 <div className="flex w-full justify-between">
                     <h3>Sort by</h3>
                     {/* Clear button sekarang mengosongkan state di Parent */}
                     <button 
                         type="button" 
                         onClick={() => setSortBy("")} 
-                        className="self-end text-[12px] px-[.75rem] py-[.25rem] rounded-tr-[.5rem] hover:bg-[#324018] hover:text-[#e8e8da] transition"
+                        className="self-end text-[12px] px-3 py-1 rounded-tr-lg hover:bg-[#324018] hover:text-[#e8e8da] transition"
                     >
                         Clear
                     </button>
@@ -25,7 +25,7 @@ const Sort_Filter = ({ sortBy, setSortBy }) => {
                 <div className="grid grid-cols-2 grid-rows-auto gap-[.35rem]">
                     {sort.map((value) => {
                         return (
-                            <span key={value} className="flex gap-[.5rem] text-[12px]">
+                            <span key={value} className="flex gap-2 text-[12px]">
                                 <input 
                                     className="cursor-pointer" 
                                     id={value} 

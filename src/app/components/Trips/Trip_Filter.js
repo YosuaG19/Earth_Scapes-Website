@@ -26,7 +26,7 @@ const Trip_Filter = (props) => {
 
     return (
         <>
-            <div className="flex flex-col min-h-[65vh] gap-[1rem]">
+            <div className="flex flex-col min-h-[65vh] gap-4">
                 {/* 2. Oper semua props ke Sort_Filter */}
                 <Sort_Filter 
                     sortBy={props.sortBy} 
@@ -39,7 +39,7 @@ const Trip_Filter = (props) => {
                     setSelectedCat={props.setSelectedCat} 
                 />
 
-                <div className="border-[#324018] text-[#324018] border-[2px] rounded-tr-[1.5rem] h-full w-full p-[.75rem] flex flex-col gap-[.2rem]">
+                <div className="border-[#324018] text-[#324018] border-2 rounded-tr-3xl h-full w-full p-3 flex flex-col gap-[.2rem]">
                     <h3>Price</h3>
                     {/* 4. Oper semua props ke Price_Range */}
                     <Price_Range 

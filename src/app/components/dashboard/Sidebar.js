@@ -1,15 +1,15 @@
 'use client'
+
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-// Tambahkan ShoppingBag ke daftar import
 import { 
   LayoutDashboard, 
   Map, 
   Sprout, 
   LogOut, 
   User,
-  ShoppingBag, // Import ikon baru
+  ShoppingBag,
   Settings 
 } from 'lucide-react';
 
@@ -34,15 +34,14 @@ export default function Sidebar() {
             path: '/dashboard/donations', 
             icon: <Sprout size={20} strokeWidth={1.5} /> 
         },
-        { 
-            // MENU BARU: Riwayat Belanja EcoShop
+        {
             name: 'EcoShop Transaksi', 
             path: '/dashboard/transactions', 
             icon: <ShoppingBag size={20} strokeWidth={1.5} /> 
         },
         { 
             name: 'Profil Saya', 
-            path: '/dashboard/profile', 
+            path: '/dashboard', 
             icon: <User size={20} strokeWidth={1.5} /> 
         },
     ];

@@ -17,7 +17,7 @@ export default function SignupPage() {
         <div className="absolute inset-0 bg-black/30"></div>
       </div>
       
-      {/* Container - HAPUS section, langsung div */}
+      {/* Container */}
       <div className="fixed inset-0 flex justify-center items-center z-10" style={{ margin: 0, padding: 0 }}>
         <SignIn />
       </div>

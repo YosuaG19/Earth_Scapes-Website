@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff } from "lucide-react"; // Import ikon
+import { Eye, EyeOff } from "lucide-react";
 
 export default function UpdatePassword() {
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // State untuk toggle
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
@@ -48,7 +48,7 @@ export default function UpdatePassword() {
         <form onSubmit={handleUpdate} className="space-y-4">
           <div className="relative">
             <input
-              type={showPassword ? "text" : "password"} // Toggle tipe input
+              type={showPassword ? "text" : "password"}
               placeholder="New Password"
               className="w-full bg-[#FFFFE3] text-[#242D13] p-3 pr-12 rounded-lg outline-none focus:ring-2 focus:ring-[#626F47]"
               value={password}
@@ -56,7 +56,6 @@ export default function UpdatePassword() {
               required
               minLength={8}
             />
-            {/* Tombol Ikon Mata */}
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}

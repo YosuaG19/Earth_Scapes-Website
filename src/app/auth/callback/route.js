@@ -11,7 +11,6 @@ export async function GET(request) {
   }
 
   try {
-    // DI SINI PERUBAHANNYA: Tambahkan await pada cookies()
     const cookieStore = await cookies() 
     
     const supabase = createServerClient(

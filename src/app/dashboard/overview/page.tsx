@@ -16,19 +16,16 @@ export default function OverviewPage() {
                 const { data: { user } } = await supabase.auth.getUser();
 
                 if (user) {
-                    // 1. Hitung jumlah perjalanan
                     const { count: tripCount } = await supabase
                         .from('bookings')
                         .select('*', { count: 'exact', head: true })
                         .eq('user_id', user.id);
 
-                    // 2. Hitung jumlah donasi
                     const { count: donationCount } = await supabase
                         .from('donations')
                         .select('*', { count: 'exact', head: true })
                         .eq('user_id', user.id);
 
-                    // 3. AMBIL TOTAL POIN YANG SUDAH DIBELANJAKAN (NEW LOGIC)
                     const { data: spentData } = await supabase
                         .from('ecoshop_transactions')
                         .select('points_spent')
@@ -36,12 +33,9 @@ export default function OverviewPage() {
 
                     const totalSpent = spentData?.reduce((acc, curr) => acc + (curr.points_spent || 0), 0) || 0;
 
-                    // 4. KALKULASI AKHIR
-                    // Rumus: (Trip * 500) + (Donasi * 100) - (Poin yang dibelanjakan)
                     const grossPoints = (tripCount || 0) * 500 + (donationCount || 0) * 100;
                     const netPoints = grossPoints - totalSpent;
 
-                    // 5. Cari Perjalanan Terdekat
                     const { data: upcoming } = await supabase
                         .from('bookings')
                         .select('*, trips(*)')
@@ -54,7 +48,7 @@ export default function OverviewPage() {
                     setStats({
                         trips: tripCount || 0,
                         donations: donationCount || 0,
-                        ecoPoints: netPoints < 0 ? 0 : netPoints // Pastikan poin tidak minus
+                        ecoPoints: netPoints < 0 ? 0 : netPoints
                     });
                     
                     setNextTrip(upcoming);
@@ -91,7 +85,7 @@ export default function OverviewPage() {
 
             {/* STATS GRID */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white p-4 rounded-[1rem] shadow-sm border border-gray-100 flex items-center gap-6 transition-all hover:shadow-md group">
+                <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-6 transition-all hover:shadow-md group">
                     <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
                         <Map size={24} />
                     </div>
@@ -101,7 +95,7 @@ export default function OverviewPage() {
                     </div>
                 </div>
 
-                <div className="bg-white p-4 rounded-[1rem] shadow-sm border border-gray-100 flex items-center gap-6 transition-all hover:shadow-md group">
+                <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-6 transition-all hover:shadow-md group">
                     <div className="w-14 h-14 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
                         <Heart size={24} />
                     </div>
@@ -112,7 +106,7 @@ export default function OverviewPage() {
                 </div>
 
                 {/* EcoPoints - Saldo Real Setelah Belanja */}
-                <div className="bg-[#242D13] p-4 rounded-[1rem] shadow-xl shadow-[#242D13]/20 flex items-center gap-6 border border-white/5 relative overflow-hidden group">
+                <div className="bg-[#242D13] p-4 rounded-2xl shadow-xl shadow-[#242D13]/20 flex items-center gap-6 border border-white/5 relative overflow-hidden group">
                     <Coins className="absolute -right-2 -bottom-2 w-20 h-20 text-white opacity-5 rotate-12 group-hover:rotate-45 transition-transform duration-700" />
                     <div className="w-14 h-14 bg-yellow-400 text-[#242D13] rounded-2xl flex items-center justify-center shadow-lg shadow-yellow-400/20 relative z-10">
                         <Coins size={24} strokeWidth={2.5} />
@@ -126,7 +120,7 @@ export default function OverviewPage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* DYNAMIC COUNTDOWN CARD */}
-                <div className="bg-white p-8 rounded-[1.5rem] border border-gray-100 shadow-sm flex flex-col justify-between relative overflow-hidden group min-h-80">
+                <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm flex flex-col justify-between relative overflow-hidden group min-h-80">
                     <Calendar className="absolute top-10 right-10 text-gray-50 w-32 h-32 z-0" />
                     <div className="relative z-10">
                         <span className="px-4 py-1.5 bg-orange-100 text-orange-600 rounded-full text-[10px] font-black uppercase tracking-widest">
@@ -150,7 +144,7 @@ export default function OverviewPage() {
                 </div>
 
                 {/* ECOSHOP PREVIEW CARD */}
-                <div className="bg-white p-8 rounded-[1.5rem] border border-[#242D13]/10 flex flex-col justify-between relative group overflow-hidden">
+                <div className="bg-white p-8 rounded-3xl border border-[#242D13]/10 flex flex-col justify-between relative group overflow-hidden">
                     <ShoppingBag className="absolute -bottom-10 -right-10 text-[#242D13]/5 w-48 h-48" />
                     <div className="relative z-10">
                         <h3 className="text-2xl font-bold text-[#242D13]">EcoShop Marketplace</h3>

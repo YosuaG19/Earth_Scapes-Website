@@ -51,7 +51,7 @@ export default function MyTripsPage() {
                 <p className="text-gray-500 mt-2 font-medium">Logs of your journey around Indonesia.</p>
             </header>
 
-            <div className="bg-white px-10 pb-8 rounded-[2rem] flex items-center justify-center border border-gray-200/50 min-h-125">
+            <div className="bg-white px-10 pb-8 rounded-4xl flex items-center justify-center border border-gray-200/50 min-h-125">
                 {loading ? (
                     <div className="flex flex-col items-center justify-center gap-4">
                         <div className="w-12 h-12 border-4 border-[#242D13]/10 border-t-[#242D13] rounded-full animate-spin"></div>

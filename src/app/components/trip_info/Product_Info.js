@@ -18,7 +18,6 @@ const Product_Info = (props) => {
                 />
 
                 <Book_Form 
-                    // TAMBAHKAN INI BIAR GAK ERROR
                     tripData={props.tripData} 
                     price={props.price}
                     desc={props.desc} 

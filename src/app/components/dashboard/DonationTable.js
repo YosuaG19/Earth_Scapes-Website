@@ -17,11 +17,9 @@ export default function DonationTable({ donations }) {
                         <td className="px-6 py-5">
                             <div className="flex items-center gap-3">
                                 <div className="w-10 h-10 bg-[#242D13] rounded-full flex items-center justify-center text-lg shadow-inner">
-                                    {/* Logika Emoji berdasarkan kata kunci di judul */}
                                     {item.type?.toLowerCase().includes('marine') ? '🌊' : 
                                         item.type?.toLowerCase().includes('forest') ? '🌳' : '🌿'}
                                 </div>
-                                {/* Langsung tampilkan item.type karena sudah berisi nama lengkap */}
                                 <span className="font-bold text-[#242D13]">{item.type}</span>
                             </div>
                         </td>

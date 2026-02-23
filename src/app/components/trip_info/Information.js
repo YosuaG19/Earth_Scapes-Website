@@ -70,7 +70,7 @@ const Information = (props) => {
         <DateSelection 
           onApply={handleDateApplied}
           days={props.days}
-          tripData={props.tripData} // KABEL DATA DISAMBUNG DI SINI
+          tripData={props.tripData}
           price={props.tripData?.price || props.price} 
         />
       </div>

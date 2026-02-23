@@ -51,7 +51,7 @@ const Book_Form = (props) => {
 
         <div className="w-[70%] h-full flex justify-center">
           <Information
-            tripData={props.tripData} // Kabel data tersambung
+            tripData={props.tripData}
             desc={props.desc}
             days={props.days}
             slot={props.slot}

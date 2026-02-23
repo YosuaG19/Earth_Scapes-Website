@@ -28,7 +28,6 @@ export default async function BookTripPage({ params }: PageProps) {
 
   console.log("LOG SERVER - HARGA DARI DB:", trip.price);
 
-  // Amankan data Object (untuk ikon dan gambar tambahan)
   const safeOthers =
     typeof trip.others === "string"
       ? JSON.parse(trip.others)
@@ -49,9 +48,7 @@ export default async function BookTripPage({ params }: PageProps) {
         slot={trip.slot}
         rating={trip.rating}
         others={safeOthers}
-        // ... props lain ...
         banner={trip.banner_url}
-        // Jika trip.img kosong, kita kasih trip.banner_url sebagai cadangan
         img={trip.images}
         map={trip.map_url}
       />

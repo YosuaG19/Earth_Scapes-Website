@@ -3,10 +3,9 @@ import Rec_Card from "./Rec_Card";
 import Link from "next/link";
 
 const Recommended = () => {
-    // Data Hardcoded - Pastikan SLUG sesuai dengan yang ada di database Supabase
     const Recs = [
         {
-            name: "Bromo",
+            name: "Mount Bromo",
             slug: "mount-bromo", 
             loc: "East Java",
             rate: "4.7",
@@ -48,9 +47,6 @@ const Recommended = () => {
                 className="h-[75%] w-full grid grid-cols-4 gap-6 pb-10 pt-2 px-4 shrink-0"
             >
                 {Recs.map((rec) => (
-                    /* contents: Membuat Link 'transparan' secara layout 
-                       agar Rec_Card tetap dibaca sebagai anak langsung Flexbox 
-                    */
                     <Link 
                         key={rec.slug} 
                         href={`/trips/${rec.slug}`} 

@@ -79,7 +79,7 @@ export default function DateSelection(props) {
         <Payment
           startDate={startDate} 
           endDate={endDate}
-          tripData={props.tripData} // DATA DITERUSKAN KE PAYMENT
+          tripData={props.tripData}
           trip_price={props.price}
           onClose={() => setShowPayment(false)}
         />

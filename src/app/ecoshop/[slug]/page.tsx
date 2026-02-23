@@ -19,7 +19,6 @@ export default function ProductDetailPage() {
   const router = useRouter();
   const supabase = createClient();
   
-  // State untuk Modal & Form
   const [showModal, setShowModal] = useState(false);
   const [address, setAddress] = useState({
     name: '',
@@ -89,7 +88,6 @@ export default function ProductDetailPage() {
         return;
       }
 
-      // 1. Simpan transaksi ke database dengan detail pengiriman
       const { error: txError } = await supabase
         .from("ecoshop_transactions")
         .insert([
@@ -128,7 +126,7 @@ export default function ProductDetailPage() {
 
   if (!product) return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#fcfcf9]">
-      <h1 className="text-2xl font-bold mb-4">Product Not Found</h1>
+      <h1 className="text-2xl font-bold mb-4">Sorry, the product you’re looking for was not found.</h1>
       <Link href="/ecoshop" className="text-[#242D13] underline">Back to EcoShop</Link>
     </div>
   );
@@ -145,7 +143,7 @@ export default function ProductDetailPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center h-[80vh]">
           {/* IMAGE SECTION */}
-          <div className="relative h-full rounded-[2rem] overflow-hidden shadow-2xl border-12 border-white group">
+          <div className="relative h-full rounded-4xl overflow-hidden shadow-2xl border-12 border-white group">
             <Image src={product.image_url} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform duration-1000" />
             <div className="absolute top-8 left-8 bg-white/90 backdrop-blur-md px-6 py-2 rounded-2xl text-xs font-black uppercase tracking-widest text-[#242D13]">
               {product.category}
@@ -154,19 +152,19 @@ export default function ProductDetailPage() {
 
           {/* INFO SECTION */}
           <div className="flex gap-4 flex-col">
-            <div className="bg-white px-8 py-6 rounded-t-[1.5rem] flex flex-col">
+            <div className="bg-white px-8 py-6 rounded-t-3xl flex flex-col">
               <div className="flex items-center gap-4 text-gray-400 text-sm font-medium">
                 <span className="flex items-center gap-1"><ShoppingBag size={16} /> Stock Available</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-gray-300"></span>
                 <span>Local Craftsmanship</span>
               </div>
 
-              <div className="flex flex-col gap-[.5rem] mt-[.5rem]">
+              <div className="flex flex-col gap-2 mt-2">
                 <h1 className="text-4xl font-black text-[#242D13] tracking-tighter leading-[0.9]">
                   {product.name}
                 </h1>
 
-                <span className="mt-[.5rem] w-full h-[1px] bg-black"></span>
+                <span className="mt-2 w-full h-px bg-black"></span>
 
                 <p className="arti text-l text-gray-500 leading-relaxed font-sans font-medium">
                   {product.description}
@@ -175,7 +173,7 @@ export default function ProductDetailPage() {
             </div>
 
             {/* REDEEM CARD */}
-            <div className="bg-white px-8 py-6 rounded-b-[1.5rem] shadow-2xl shadow-[#242D13]/5 space-y-8">
+            <div className="bg-white px-8 py-6 rounded-b-3xl shadow-2xl shadow-[#242D13]/5 space-y-8">
               <div className="flex justify-between items-end">
                 <div className="space-y-2">
                   <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Exchange Price</p>
@@ -201,7 +199,7 @@ export default function ProductDetailPage() {
               <button
                 onClick={() => canAfford && setShowModal(true)}
                 disabled={!canAfford}
-                className={`w-full py-4 rounded-[1.5rem] font-black text-xl transition-all flex items-center justify-center gap-4 shadow-xl ${
+                className={`w-full py-4 rounded-3xl font-black text-xl transition-all flex items-center justify-center gap-4 shadow-xl ${
                   canAfford ? "bg-[#242D13] text-white hover:bg-[#324018] shadow-[#242D13]/20 hover:scale-[1.01] active:scale-[0.98]" : "bg-gray-100 text-gray-400 cursor-not-allowed"
                 }`}
               >
@@ -230,7 +228,7 @@ export default function ProductDetailPage() {
           <div className="bg-white w-full max-w-lg rounded-[3.5rem] p-10 shadow-2xl relative animate-in fade-in zoom-in duration-300">
             <button onClick={() => setShowModal(false)} className="absolute top-8 right-8 text-gray-400 hover:text-[#242D13] transition-colors"><X size={24} /></button>
             <div className="mb-8">
-              <h2 className="text-3xl font-black text-[#242D13] tracking-tighter">Deliveri Details</h2>
+              <h2 className="text-3xl font-black text-[#242D13] tracking-tighter">Delivery Details</h2>
               <p className="text-gray-500 font-medium font-sans">This item will be deliver to this address.</p>
             </div>
             <form onSubmit={handleRedeem} className="space-y-5">

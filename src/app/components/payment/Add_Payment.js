@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react"; // Tambahkan useEffect
+import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase/client";
 
 const Add_Payment = ({
@@ -12,11 +12,10 @@ const Add_Payment = ({
   onClose,
 }) => {
   const [loading, setLoading] = useState(false);
-  const [snapReady, setSnapReady] = useState(false); // State baru untuk cek status Snap
+  const [snapReady, setSnapReady] = useState(false);
 
-  // 1. OTOMATIS LOAD SCRIPT MIDTRANS JIKA BELUM ADA
   useEffect(() => {
-    const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js"; // Ganti ke app.midtrans.com jika sudah produksi
+    const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
     const clientKey = process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY;
 
     let script = document.querySelector(`script[src="${midtransScriptUrl}"]`);
@@ -32,13 +31,11 @@ const Add_Payment = ({
     }
   }, []);
 
-  // Perhitungan Harga
   const actualPrice = Number(tripData?.price || trip_price || 0);
   const totalGuests = (booking?.passengers?.length || 0) + (booking?.includeOwner ? 1 : 0);
   const total_spent = totalGuests * actualPrice;
 
   const handleConfirmAndPay = async () => {
-    // Cek apakah Snap sudah siap di window
     if (!window.snap) {
       alert("Payment system is still initializing. Please try again in a second.");
       return;
@@ -74,7 +71,7 @@ const Add_Payment = ({
               start_date: startDate,
               end_date: endDate,
               total_price: total_spent,
-              status: "settlement", // Idealnya ini diupdate via webhook, tapi untuk demo ini oke
+              status: "settlement",
               passengers: booking?.passengers || [],
             };
 
@@ -88,6 +85,24 @@ const Add_Payment = ({
               .insert([payload]);
 
             if (dbError) throw dbError;
+
+            // --- KIRIM EMAIL KONFIRMASI ---
+            try {
+              await fetch("/api/send-confirmation", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  email: user?.email,
+                  customerName: user?.user_metadata?.full_name || user?.email?.split('@')[0] || "Traveler",
+                  tripTitle: payload.trip_title,
+                  totalPrice: payload.total_price,
+                  orderId: payload.order_id,
+                }),
+              });
+            } catch (emailErr) {
+              // Jika email gagal, log aja biar user tetep lanjut
+              console.error("Email notification failed:", emailErr);
+            }
 
             alert("Payment & Booking Successful!");
             window.location.href = "/dashboard/trips";
@@ -161,13 +176,13 @@ const Add_Payment = ({
       <div className="flex flex-col gap-3">
         <button
           onClick={handleConfirmAndPay}
-          disabled={loading || !snapReady} // Tombol mati jika script belum siap
+          disabled={loading || !snapReady}
           className="w-full py-5 bg-[#242D13] text-[#e8e8da] rounded-3xl font-black text-lg shadow-xl shadow-[#242D13]/20 hover:bg-[#2c3818] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
         >
           {!snapReady ? "INITIALIZING..." : loading ? "PREPARING..." : "CONFIRM & PAY"}
         </button>
         <p className="text-center text-[10px] opacity-40 font-medium px-8 leading-relaxed">
-          Pembayaran aman & terenkripsi melalui Midtrans Secure Gateway.
+          Secure and encrypted payments through the Midtrans Secure Gateway.
         </p>
       </div>
     </div>

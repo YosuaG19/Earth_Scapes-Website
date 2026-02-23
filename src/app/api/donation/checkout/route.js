@@ -1,4 +1,3 @@
-// Copy-paste ini untuk menggantikan isi file route.js kamu
 import Midtrans from "midtrans-client";
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
@@ -24,21 +23,18 @@ export async function POST(request) {
 
     const orderId = `DON-${Date.now()}`;
     
-    // 1. SIMPAN KE SUPABASE DENGAN NAMA KATEGORI ASLI
     const { error: dbError } = await supabaseAdmin
       .from('donations')
       .insert([{
         order_id: orderId,
         user_id: userId,
         amount: Number(amount),
-        // Menggunakan donationType dari frontend (misal: "Marine Restoration")
         type: donationType || "General Donation", 
         status: 'pending'
       }]);
 
     if (dbError) throw dbError;
 
-    // 2. PARAMETER MIDTRANS
     const parameter = {
       transaction_details: {
         order_id: orderId,
@@ -49,7 +45,6 @@ export async function POST(request) {
           id: donationType?.replace(/\s+/g, '-').toLowerCase() || "donation",
           price: Number(amount),
           quantity: 1,
-          // Nama di struk Midtrans juga jadi sesuai kategori
           name: donationType || "General Donation", 
         },
       ],

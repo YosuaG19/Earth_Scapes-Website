@@ -19,7 +19,6 @@ export default function TripTable({ trips }) {
                                     <div className="w-10 h-10 bg-[#242D13] rounded-full flex items-center justify-center text-lg">
                                         🏝️
                                     </div>
-                                    {/* Membaca kolom trip_title */}
                                     <span className="font-bold text-[#242D13]">{item.trip_title}</span>
                                 </div>
                             </td>

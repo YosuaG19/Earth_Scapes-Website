@@ -59,7 +59,6 @@ export default function Navbar() {
                     <li>
                         <Link href="/donate" className={`hover:opacity-70 transition-all ${pathname === '/donate' ? 'font-bold border-b-2 border-[#242D13]' : ''}`}>Donate</Link>
                     </li>
-                    {/* MENU BARU: ECOSHOP */}
                     <li>
                         <Link href="/ecoshop" className={`hover:opacity-70 transition-all flex items-center gap-1 ${pathname === '/ecoshop' ? 'font-bold border-b-2 border-[#242D13]' : ''}`}>
                             EcoShop

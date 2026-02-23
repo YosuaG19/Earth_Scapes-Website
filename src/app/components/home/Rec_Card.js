@@ -3,8 +3,6 @@ import arrow from "../../../../public/arrow.svg"
 
 function Rec_Card(props) {
     return (
-        /* Ganti Link jadi div, karena Link sudah ada di file Recommended.js */
-        /* Pastikan lebar w-[25%] tetap ada di sini agar proporsi kembali normal */
         <div id="rec_card" className="group w-[full] min-w-75 h-full bg-[#e8e8da] relative flex items-end rounded-tl-4xl rounded-br-2xl overflow-hidden shadow-lg cursor-pointer">
             
             {/* BACKGROUND IMAGE SECTION */}
@@ -36,7 +34,7 @@ function Rec_Card(props) {
                 </div>
             </div>
 
-            <div className="absolute flex gap-[.25rem] right-4 top-4 arti z-[2] text-[28px] items-center justify-center text-[#e8e8da] font-light">
+            <div className="absolute flex gap-1 right-4 top-4 arti z-2 text-[28px] items-center justify-center text-[#e8e8da] font-light">
                 <p>{props.rate}</p>
                 <Image width={28} height={28} src={"/star.svg"} alt="star"></Image>
             </div>

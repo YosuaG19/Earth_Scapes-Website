@@ -15,12 +15,12 @@ const Trip_Page = ({ totalPages, currentPage, onPageChange }) => {
     }
 
     return (
-        <div className="flex gap-[.75rem] justify-end pl-[2rem] pr-[2rem] pb-[2rem] items-center">
+        <div className="flex gap-3 justify-end pl-8 pr-8 pb-8 items-center">
             {/* Tombol Back/Previous (Opsional tapi membantu jika sudah di page > 5) */}
             {startWindow > 1 && (
                 <p 
                     onClick={() => onPageChange(startWindow - 1)}
-                    className="cursor-pointer flex items-center justify-center w-[30px] h-[30px] bg-[#324018] text-[#e8e8da] rounded-tl-[.75rem] hover:bg-[#4a5f24]"
+                    className="cursor-pointer flex items-center justify-center w-7.5 h-7.5 bg-[#324018] text-[#e8e8da] rounded-tl-xl hover:bg-[#4a5f24]"
                 >
                     ...
                 </p>
@@ -31,7 +31,7 @@ const Trip_Page = ({ totalPages, currentPage, onPageChange }) => {
                 <p 
                     key={page}
                     onClick={() => onPageChange(page)}
-                    className={`cursor-pointer flex items-center justify-center w-[30px] h-[30px] text-[15px] rounded-tl-[.75rem] transition-all
+                    className={`cursor-pointer flex items-center justify-center w-7.5 h-7.5 text-[15px] rounded-tl-xl transition-all
                         ${currentPage === page 
                             ? "bg-[#88ab41] text-[#e8e8da] scale-110 shadow-lg" 
                             : "bg-[#324018] text-[#e8e8da] hover:bg-[#4a5f24]"
@@ -45,7 +45,7 @@ const Trip_Page = ({ totalPages, currentPage, onPageChange }) => {
             {endWindow < totalPages && (
                 <p 
                     onClick={() => onPageChange(endWindow + 1)}
-                    className="cursor-pointer flex items-center justify-center w-[30px] h-[30px] bg-[#324018] text-[#e8e8da] rounded-tl-[.75rem] hover:bg-[#4a5f24]"
+                    className="cursor-pointer flex items-center justify-center w-7.5 h-7.5 bg-[#324018] text-[#e8e8da] rounded-tl-xl hover:bg-[#4a5f24]"
                 >
                     ...
                 </p>

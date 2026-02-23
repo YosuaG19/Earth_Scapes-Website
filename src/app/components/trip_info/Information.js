@@ -69,7 +69,7 @@ const Information = (props) => {
       <div hidden={activeTab !== "Select Date"}>
         <DateSelection 
           onApply={handleDateApplied} 
-          tripData={props.tripData} // KABEL DATA DISAMBUNG DI SINI
+          tripData={props.tripData}
           price={props.tripData?.price || props.price} 
         />
       </div>

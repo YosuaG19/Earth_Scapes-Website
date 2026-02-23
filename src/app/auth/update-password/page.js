@@ -56,7 +56,6 @@ export default function UpdatePassword() {
               required
               minLength={8}
             />
-            {/* Tombol Ikon Mata */}
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}

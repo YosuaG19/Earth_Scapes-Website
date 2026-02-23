@@ -5,7 +5,7 @@ const Categories = () => {
     const Cats = [
         {
             name: "Mountain",
-            slug: "Mountain", // Tambahkan slug agar sesuai dengan database
+            slug: "Mountain",
             detail: "Scenic mountain landscapes and highland trails.",
             img: "/Mountain.png"
         },
@@ -51,10 +51,6 @@ const Categories = () => {
                 <div className="h-[80%] w-full grid grid-cols-3 grid-rows-2 gap-6 pb-2 pt-2 pl-10 pr-10">
                     {Cats.map((cat) => {
                         return (
-                            /* Bungkus Cat_Card dengan Link. 
-                               Gunakan query params ?category= agar dibaca oleh Trips page.
-                               Gunakan className="contents" agar Grid CSS tidak rusak.
-                            */
                             <Link 
                                 key={cat.name} 
                                 href={`/trips?category=${cat.slug}`} 

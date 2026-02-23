@@ -33,7 +33,7 @@ const Payment = ({ onClose, startDate, endDate, tripData, trip_price }) => {
                 booking={booking}
                 card={card}
                 setCard={setCard}
-                tripData={tripData} // DATA SAMPAI DI TUJUAN AKHIR
+                tripData={tripData}
                 trip_price={tripData?.price || trip_price}
                 onClose={onClose}
               />

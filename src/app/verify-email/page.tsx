@@ -40,7 +40,6 @@ export default function VerifyEmailPage() {
       } catch (error: any) {
         console.error("Verification error:", error);
         setStatus("error");
-        // Menggunakan error: any agar TypeScript mengizinkan akses ke properti .message
         setMessage(error.message || "Gagal memverifikasi email");
 
         // Redirect ke signin setelah 5 detik

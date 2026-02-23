@@ -22,26 +22,22 @@ export default function EcoShopPage() {
             try {
                 const { data: { user } } = await supabase.auth.getUser();
                 
-                // 1. Ambil Data Produk
                 const { data: productData } = await supabase
                     .from('ecoshop_products')
                     .select('*')
                     .order('created_at', { ascending: false });
 
                 if (user) {
-                    // 2. Ambil Jumlah Trip
                     const { count: trips } = await supabase
                         .from('bookings')
                         .select('*', { count: 'exact', head: true })
                         .eq('user_id', user.id);
 
-                    // 3. Ambil Jumlah Donasi
                     const { count: donations } = await supabase
                         .from('donations')
                         .select('*', { count: 'exact', head: true })
                         .eq('user_id', user.id);
 
-                    // 4. Ambil Total Poin Terpakai (Kunci Sinkronisasi)
                     const { data: spentData } = await supabase
                         .from('ecoshop_transactions')
                         .select('points_spent')
@@ -49,7 +45,6 @@ export default function EcoShopPage() {
 
                     const totalSpent = spentData?.reduce((acc, curr) => acc + (curr.points_spent || 0), 0) || 0;
                     
-                    // 5. Kalkulasi Saldo Akhir
                     const grossPoints = (trips || 0) * 500 + (donations || 0) * 100;
                     const netPoints = grossPoints - totalSpent;
 
@@ -67,7 +62,6 @@ export default function EcoShopPage() {
         loadShopData();
     }, []);
 
-    // Filter Logic tetap sama
     useEffect(() => {
         let result = products;
         if (activeCategory !== 'All') result = result.filter(p => p.category === activeCategory);
@@ -102,7 +96,7 @@ export default function EcoShopPage() {
                         </div>
                         
                         {/* Box Poin yang sudah terupdate */}
-                        <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-[1.5rem] flex items-center gap-8 shadow-2xl">
+                        <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-3xl flex items-center gap-8 shadow-2xl">
                             <div className="w-16 h-16 bg-yellow-400 text-[#242D13] rounded-2xl flex items-center justify-center">
                                 <Coins size={32} strokeWidth={2.5} />
                             </div>

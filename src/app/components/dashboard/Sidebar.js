@@ -35,7 +35,6 @@ export default function Sidebar() {
             icon: <Sprout size={20} strokeWidth={1.5} /> 
         },
         { 
-            // MENU BARU: Riwayat Belanja EcoShop
             name: 'EcoShop Transaction', 
             path: '/dashboard/transactions', 
             icon: <ShoppingBag size={20} strokeWidth={1.5} /> 

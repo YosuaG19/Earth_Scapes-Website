@@ -1,16 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase/client"; // Pastikan path ke supabase client benar
+import { supabase } from "@/lib/supabase/client";
 
 const Add_Guest = ({ booking, setBooking }) => {
-  // State untuk menampung data user yang login
   const [owner, setOwner] = useState({
     name: "Loading...",
     phone: "-",
     email: "...",
   });
 
-  // Ambil data user dari Supabase Auth saat komponen di-mount
   useEffect(() => {
     const getUserData = async () => {
       const {
@@ -19,7 +17,6 @@ const Add_Guest = ({ booking, setBooking }) => {
 
       if (user) {
         setOwner({
-          // Mengambil nama dari metadata, atau email sebagai fallback
           name: user.user_metadata?.full_name || user.email.split("@")[0],
           phone: user.user_metadata?.phone || user.phone || "Not Set",
           email: user.email,
@@ -76,10 +73,6 @@ const Add_Guest = ({ booking, setBooking }) => {
     { id: "email", label: "Email", value: p.email },
   ];
 
-  /* =====================
-        HANDLERS
-    ===================== */
-
   const openAdd = () => {
     setMode("add");
     setForm({ name: "", email: "", phone: "" });
@@ -126,7 +119,6 @@ const Add_Guest = ({ booking, setBooking }) => {
       <div className="w-full h-full flex flex-col justify-between">
         <span className="w-full h-0.5 bg-[#242D13]"></span>
 
-        {/* TOP COUNTER + ADD */}
         <div className="w-full text-[18px] text-[#e8e8da] flex justify-end gap-3">
           <input
             type="text"
@@ -134,7 +126,6 @@ const Add_Guest = ({ booking, setBooking }) => {
             value={passengers.length + (includeOwner ? 1 : 0)}
             readOnly
           />
-          {/* TAMBAHKAN type="button" DI SINI */}
           <button
             type="button"
             onClick={openAdd}
@@ -146,7 +137,6 @@ const Add_Guest = ({ booking, setBooking }) => {
 
         {/* LIST */}
         <div className="h-[90%] w-full grid auto-rows-[30%] gap-2 overflow-y-scroll pr-1 custom-scrollbar">
-          {/* OWNER (DYNAMICALLY FROM SUPABASE) */}
           <div className="h-full w-full bg-[#5a7527] flex flex-col justify-between p-3 text-[#e8e8da]">
             <div className="grid grid-cols-2 gap-2 h-full">
               {ownerFields.map((field) => (
@@ -183,7 +173,6 @@ const Add_Guest = ({ booking, setBooking }) => {
                       setBooking({
                         ...booking,
                         includeOwner: !includeOwner,
-                        // Secara teknis, ownerData bisa disimpan di sini jika ingin dibawa ke Payment
                         ownerData: !includeOwner ? owner : null,
                       })
                     }

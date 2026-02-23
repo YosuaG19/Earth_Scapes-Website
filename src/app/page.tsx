@@ -16,7 +16,6 @@ export default function App() {
 
   useEffect(() => {
     const handleOAuthCallback = async () => {
-      // Cek jika ada OAuth code dari callback
       const oauthCode = searchParams.get("oauth_code");
       const error = searchParams.get("error");
 
@@ -24,7 +23,6 @@ export default function App() {
 
       if (error) {
         console.error("OAuth error from callback:", error);
-        // Redirect ke signin dengan error message
         router.push(`/signin?error=${encodeURIComponent(error)}`);
         return;
       }
@@ -33,7 +31,6 @@ export default function App() {
         console.log("Processing OAuth code exchange...");
 
         try {
-          // Exchange OAuth code untuk session
           const { data, error: exchangeError } =
             await supabase.auth.exchangeCodeForSession(oauthCode);
 
@@ -45,15 +42,13 @@ export default function App() {
             return;
           }
 
-          console.log("✅ OAuth successful! User:", data.user?.email);
+          console.log("OAuth successful! User:", data.user?.email);
 
-          // Hapus parameter dari URL tanpa reload page
           const newUrl = new URL(window.location.href);
           newUrl.searchParams.delete("oauth_code");
           newUrl.searchParams.delete("error");
           window.history.replaceState({}, "", newUrl.toString());
 
-          // Refresh untuk update auth state di seluruh app
           router.refresh();
         } catch (error) {
           console.error("OAuth handling error:", error);
@@ -65,7 +60,6 @@ export default function App() {
     handleOAuthCallback();
   }, [searchParams, supabase, router]);
 
-  // Cek session untuk debugging
   useEffect(() => {
     const checkUser = async () => {
       const {

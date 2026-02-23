@@ -1,7 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
-// Import Ikon Modern
 import { 
   User, 
   Mail, 
@@ -122,7 +121,6 @@ export default function ProfilePage() {
                 {/* SISI KIRI: AVATAR CARD */}
                 <div className="lg:col-span-1 space-y-6">
                     <div className="bg-white p-10 rounded-[3rem] shadow-xl shadow-gray-200/40 border border-gray-100 flex flex-col items-center relative overflow-hidden">
-                        {/* Gimmick: Watermark Ikon di Background */}
                         <User className="absolute -top-10 -right-10 w-40 h-40 text-gray-50 opacity-[0.03] rotate-12" />
                         
                         <div className="relative group">
@@ -155,7 +153,7 @@ export default function ProfilePage() {
                 </div>
 
                 {/* SISI KANAN: FORM EDIT */}
-                <div className="lg:col-span-2 bg-white p-4 md:p-6 rounded-[2rem] flex items-center shadow-xl shadow-gray-200/40 border border-gray-100">
+                <div className="lg:col-span-2 bg-white p-4 md:p-6 rounded-4xl flex items-center shadow-xl shadow-gray-200/40 border border-gray-100">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                         {/* Username */}
                         <div className="flex flex-col gap-2">
@@ -166,7 +164,7 @@ export default function ProfilePage() {
                                 type="text" 
                                 value={profile.username}
                                 onChange={(e) => setProfile({...profile, username: e.target.value})}
-                                className="py-2 px-3 rounded-[.5rem] bg-[#F5F5F0] border-none focus:ring-2 focus:ring-[#242D13] outline-none font-medium text-[#242D13] transition-all"
+                                className="py-2 px-3 rounded-lg bg-[#F5F5F0] border-none focus:ring-2 focus:ring-[#242D13] outline-none font-medium text-[#242D13] transition-all"
                                 placeholder="eksplorer_alam"
                             />
                         </div>
@@ -180,7 +178,7 @@ export default function ProfilePage() {
                                 type="text" 
                                 value={profile.full_name}
                                 onChange={(e) => setProfile({...profile, full_name: e.target.value})}
-                                className="py-2 px-3 rounded-[.5rem] bg-[#F5F5F0] border-none focus:ring-2 focus:ring-[#242D13] outline-none font-medium text-[#242D13] transition-all"
+                                className="py-2 px-3 rounded-lg bg-[#F5F5F0] border-none focus:ring-2 focus:ring-[#242D13] outline-none font-medium text-[#242D13] transition-all"
                             />
                         </div>
 
@@ -193,7 +191,7 @@ export default function ProfilePage() {
                                 type="text" 
                                 value={profile.email}
                                 disabled
-                                className="py-2 px-3 rounded-[.5rem] bg-gray-50 text-gray-400 cursor-not-allowed border border-gray-100 outline-none font-medium"
+                                className="py-2 px-3 rounded-lg bg-gray-50 text-gray-400 cursor-not-allowed border border-gray-100 outline-none font-medium"
                             />
                         </div>
 
@@ -206,7 +204,7 @@ export default function ProfilePage() {
                                 type="text" 
                                 value={profile.phone}
                                 onChange={(e) => setProfile({...profile, phone: e.target.value})}
-                                className="py-2 px-3 rounded-[.5rem] bg-[#F5F5F0] border-none focus:ring-2 focus:ring-[#242D13] outline-none font-medium text-[#242D13] transition-all"
+                                className="py-2 px-3 rounded-lg bg-[#F5F5F0] border-none focus:ring-2 focus:ring-[#242D13] outline-none font-medium text-[#242D13] transition-all"
                                 placeholder="+62..."
                             />
                         </div>
@@ -220,8 +218,8 @@ export default function ProfilePage() {
                                 rows={3}
                                 value={profile.bio}
                                 onChange={(e) => setProfile({...profile, bio: e.target.value})}
-                                className="py-2 px-3 rounded-[.5rem] bg-[#F5F5F0] border-none focus:ring-2 focus:ring-[#242D13] outline-none font-medium text-[#242D13] resize-none transition-all"
-                                placeholder="Ceritakan petualanganmu..."
+                                className="py-2 px-3 rounded-lg bg-[#F5F5F0] border-none focus:ring-2 focus:ring-[#242D13] outline-none font-medium text-[#242D13] resize-none transition-all"
+                                placeholder="Share your adventure..."
                             />
                         </div>
 

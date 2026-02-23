@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import DonationTable from '@/app/components/dashboard/DonationTable';
 
-// Definisikan tipe data donasi
 interface Donation {
     id: string;
     amount: number;
@@ -23,7 +22,7 @@ export default function MyDonationsPage() {
             
             if (user) {
                 const { data, error } = await supabase
-                    .from('donations') // Pastikan nama tabel di Supabase kamu 'donations'
+                    .from('donations')
                     .select('*')
                     .eq('user_id', user.id)
                     .order('created_at', { ascending: false });
@@ -47,7 +46,7 @@ export default function MyDonationsPage() {
                 <p className="text-gray-500 mt-2 font-medium">Your contribution on restoring Earth.</p>
             </header>
 
-            <div className="bg-white px-10 pb-8 rounded-[2rem] flex justify-center item-center shadow-xl shadow-gray-200/50 min-h-125">
+            <div className="bg-white px-10 pb-8 rounded-4xl flex justify-center item-center shadow-xl shadow-gray-200/50 min-h-125">
                 {loading ? (
                     <div className="flex flex-col items-center justify-center gap-4">
                         <div className="w-12 h-12 border-4 border-[#242D13]/10 border-t-[#242D13] rounded-full animate-spin"></div>

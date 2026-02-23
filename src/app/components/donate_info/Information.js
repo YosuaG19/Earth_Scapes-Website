@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Image_Damper from "../Image_Damper";
 import Script from "next/script";
-import { createClient } from "@/lib/supabase/client"; // IMPORT SUPABASE
+import { createClient } from "@/lib/supabase/client";
+import { useParams } from "next/navigation";
 
 const Information = (props) => {
   const [activeTab, setActiveTab] = useState("overview");
@@ -12,10 +13,9 @@ const Information = (props) => {
   const [currentProgress, setCurrentProgress] = useState(props.proggNow);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Inisialisasi Supabase Client
+  const params = useParams();
   const supabase = createClient();
 
-  // FUNGSI PEMBAYARAN MIDTRANS
   const handlePayment = async () => {
     if (!selectedAmount || selectedAmount < 1000) {
       alert("Minimal donasi adalah Rp 1.000");
@@ -25,18 +25,15 @@ const Information = (props) => {
     setIsLoading(true);
 
     try {
-      // --- STEP BARU: AMBIL USER DARI SUPABASE ---
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      const { data: { user } } = await supabase.auth.getUser();
 
       if (!user) {
         alert("Silakan login terlebih dahulu untuk berdonasi.");
         setIsLoading(false);
         return;
       }
-      // ------------------------------------------
-      console.log("DEBUG: Mengirim judul ke API ->", props.title);
+
+      const donorName = user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email.split('@')[0];
 
       const response = await fetch("/api/donation/checkout", {
         method: "POST",
@@ -44,8 +41,8 @@ const Information = (props) => {
         body: JSON.stringify({
           amount: selectedAmount,
           donationType: props.title,
-          userId: user.id, // KIRIM USER ID KE BACKEND
-          userEmail: user.email, // KIRIM EMAIL KE BACKEND
+          userId: user.id,
+          userEmail: user.email,
         }),
       });
 
@@ -55,12 +52,31 @@ const Information = (props) => {
 
       if (data.token) {
         window.snap.pay(data.token, {
-          onSuccess: (result) => {
+          onSuccess: async (result) => {
+            const { error: dbError } = await supabase.rpc('increment_donation', { 
+              row_slug: params.slug, 
+              amount_to_add: parseInt(selectedAmount) 
+            });
+
+            if (dbError) console.error("DB Update Error:", dbError.message);
+
+            await fetch("/api/send-donation", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                email: user.email,
+                donorName: donorName,
+                campaignTitle: props.title,
+                amount: selectedAmount,
+                orderId: result.order_id,
+              }),
+            });
+
             const newTotal = currentProgress + Number(selectedAmount);
             setCurrentProgress(newTotal);
             setSelectedAmount(0);
+            
             alert("Donasi berhasil! Terima kasih.");
-            // Redirect ke dashboard biar user bisa lihat history-nya
             window.location.href = "/dashboard/donations";
           },
           onPending: (result) => {

@@ -68,7 +68,8 @@ const Information = (props) => {
 
       <div hidden={activeTab !== "Select Date"}>
         <DateSelection 
-          onApply={handleDateApplied} 
+          onApply={handleDateApplied}
+          days={props.days}
           tripData={props.tripData}
           price={props.tripData?.price || props.price} 
         />

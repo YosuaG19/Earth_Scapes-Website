@@ -37,7 +37,7 @@ export default function DonationTable({ donations }) {
                                 ? 'bg-green-100 text-green-700' 
                                 : 'bg-yellow-100 text-yellow-700'
                             }`}>
-                                {item.status === 'settlement' || item.status === 'success' ? 'Berhasil' : 'Pending'}
+                                {item.status === 'settlement' || item.status === 'success' ? 'Success' : 'Pending'}
                             </span>
                         </td>
                     </tr>

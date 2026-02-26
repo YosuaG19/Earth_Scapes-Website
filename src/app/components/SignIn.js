@@ -75,6 +75,23 @@ export default function SignIn() {
     }
   };
 
+  // const handleOAuthLogin = async (provider) => {
+  //   setOauthLoading((prev) => ({ ...prev, [provider]: true }));
+  //   setError("");
+  //   try {
+  //     const { error } = await supabase.auth.signInWithOAuth({
+  //       provider: provider,
+  //       options: {
+  //         redirectTo: `${window.location.origin}/auth/callback?next=/`,
+  //       },
+  //     });
+  //     if (error) throw error;
+  //   } catch (error) {
+  //     setError(`Failed to login with ${provider}`);
+  //     setOauthLoading((prev) => ({ ...prev, [provider]: false }));
+  //   }
+  // };
+
   const handleOAuthLogin = async (provider) => {
     setOauthLoading((prev) => ({ ...prev, [provider]: true }));
     setError("");
@@ -82,6 +99,11 @@ export default function SignIn() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: provider,
         options: {
+          // Tambahkan queryParams di sini
+          queryParams: {
+            prompt: 'select_account',
+            access_type: 'offline',
+          },
           redirectTo: `${window.location.origin}/auth/callback?next=/`,
         },
       });
